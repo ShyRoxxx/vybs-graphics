@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { FinalCta } from "@/components/final-cta";
-import { aboutPhillip, workCategories } from "@/lib/content";
+import { aboutPhillip } from "@/lib/content";
 import { site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
@@ -28,7 +29,7 @@ export default function AboutPage() {
                 <p className="text-sm text-text-2">Gestaltung, Vybs Graphics</p>
               </div>
             </div>
-            <a href={site.instagram} target="_blank" rel="noopener" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">
               <InstagramLogoIcon size={20} aria-hidden />
               Aktuelle Arbeiten auf Instagram: {site.instagramHandle}
             </a>
@@ -62,16 +63,20 @@ export default function AboutPage() {
 
       <section className="pb-[var(--section)]">
         <div className="container-x">
-          <Reveal as="h2" className="max-w-[16ch] text-[clamp(2rem,4vw,3.25rem)]">
-            Für wen ich bisher gearbeitet habe.
-          </Reveal>
-          <Reveal stagger={0.08} className="mt-10 grid gap-6 md:grid-cols-3">
-            {workCategories.map((w) => (
-              <div key={w.slug} className="relative overflow-hidden rounded-[var(--radius-card)] shadow-[inset_0_0_0_1px_var(--line)]">
-                <Image src={w.image} alt={w.alt} width={486} height={470} sizes="(min-width:768px) 30vw, 90vw" className="h-auto w-full" />
-                <p className="absolute inset-x-0 bottom-0 bg-[linear-gradient(to_top,rgba(7,11,18,.95),transparent)] p-5 pt-12 text-sm font-semibold text-white">{w.client}</p>
+          <Reveal className="card relative overflow-hidden p-8 md:p-12">
+            <div aria-hidden className="orb right-[-10%] top-[-50%] h-[20rem] w-[20rem] bg-accent opacity-20" />
+            <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+              <div>
+                <h2 className="text-[clamp(1.75rem,3.5vw,2.75rem)]">Für wen ich bisher gearbeitet habe.</h2>
+                <p className="measure mt-4 text-text-2">
+                  Eine Gebäudereinigung, zwei Beratungen und einige kleinere Betriebe aus dem Umfeld. Die drei Serien, die
+                  am meisten über die Arbeitsweise sagen, stehen mit Hintergrund im Portfolio.
+                </p>
               </div>
-            ))}
+              <Link href="/portfolio" className="btn btn-ghost btn-lg">
+                Zu den Arbeiten
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

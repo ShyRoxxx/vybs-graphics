@@ -1,11 +1,8 @@
 "use client";
 
-import { useRef, type ElementType, type ReactNode } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { useRef, type ComponentPropsWithoutRef, type ElementType, type ReactNode } from "react";
+import { useGsapScene } from "@/lib/gsap";
+import { reduceMotion } from "@/lib/motion";
 
 type Direction = "up" | "down" | "left" | "right" | "scale" | "none";
 
@@ -20,15 +17,14 @@ type Props = {
   /** Stagger direct children instead of animating the wrapper. */
   stagger?: number;
   start?: string;
-  id?: string;
-};
+} & Omit<ComponentPropsWithoutRef<"div">, "children" | "className">;
 
 const offsets: Record<Direction, { x?: number; y?: number; scale?: number }> = {
   up: { y: 1 },
   down: { y: -1 },
   left: { x: 1 },
   right: { x: -1 },
-  scale: { scale: 0.92 },
+  scale: { scale: 0.94 },
   none: {},
 };
 
@@ -38,55 +34,45 @@ export function Reveal({
   className = "",
   from = "up",
   delay = 0,
-  duration = 0.9,
-  distance = 40,
+  duration = 0.75,
+  distance = 28,
   stagger,
   start = "top 85%",
-  id,
+  ...rest
 }: Props) {
   const ref = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      const reduce = document.documentElement.classList.contains("reduce-motion");
+  useGsapScene(ref, (gsap, _ScrollTrigger, el) => {
       const targets: Element[] = stagger ? Array.from(el.children) : [el];
-      if (stagger) {
-        gsap.set(el, { opacity: 1 });
-      }
-      if (reduce) {
+      if (reduceMotion()) {
         gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1 });
         return;
       }
       const o = offsets[from];
-      gsap.fromTo(
+      const tween = gsap.fromTo(
         targets,
-        {
-          opacity: 0,
-          x: (o.x ?? 0) * distance,
-          y: (o.y ?? 0) * distance,
-          scale: o.scale ?? 1,
-        },
+        { opacity: 0, x: (o.x ?? 0) * distance, y: (o.y ?? 0) * distance, scale: o.scale ?? 1 },
         {
           opacity: 1,
           x: 0,
           y: 0,
           scale: 1,
           duration,
-          delay,
+          delay: Math.min(delay, 0.15),
           ease: "expo.out",
           stagger: stagger ?? 0,
           overwrite: "auto",
           scrollTrigger: { trigger: el, start, once: true },
         },
       );
-    },
-    { scope: ref, dependencies: [] },
-  );
+      // keyboard users tabbing into hidden content must see it at once
+      const onFocus = () => tween.progress(1);
+      el.addEventListener("focusin", onFocus, { once: true });
+      return () => el.removeEventListener("focusin", onFocus);
+  });
 
   return (
-    <Tag ref={ref} id={id} className={className} data-reveal={stagger ? undefined : ""} data-reveal-group={stagger ? "" : undefined}>
+    <Tag ref={ref} className={className} data-reveal={stagger ? undefined : ""} data-reveal-group={stagger ? "" : undefined} {...rest}>
       {children}
     </Tag>
   );

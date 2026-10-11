@@ -9,6 +9,7 @@ export const site = {
   url: "https://vybs-graphics.vercel.app",
   serviceArea: "Deutschlandweit, komplett digital",
   replyTime: "Rückmeldung in der Regel innerhalb von zwei Werktagen",
+  replyTimeShort: "in der Regel innerhalb von zwei Werktagen",
   year: 2026,
 } as const;
 

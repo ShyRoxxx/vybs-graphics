@@ -22,7 +22,7 @@ export default function PortfolioPage() {
         text="Drei Serien, drei Betriebe, drei Farbwelten. Keine Vorlage mit getauschtem Logo, sondern Beiträge, die zum jeweiligen Unternehmen gehören. Das Portfolio wächst mit jedem Auftrag und ist so angelegt, dass neue Arbeiten einfach dazukommen."
       />
 
-      <section className="pb-[var(--section)]">
+      <section className="overflow-hidden pb-[var(--section)]">
         <div className="container-x space-y-[clamp(5rem,10vw,9rem)]">
           {workCategories.map((w, i) => {
             const flip = i % 2 === 1;

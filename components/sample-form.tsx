@@ -2,7 +2,7 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { designFormats, priceTiers } from "@/lib/content";
 import { site } from "@/lib/site";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
@@ -55,7 +55,7 @@ export function SampleForm() {
     if (!values.email.trim()) er.email = "Bitte eine E-Mail-Adresse angeben, an die ich das Beispiel schicken kann.";
     else if (!emailOk(values.email)) er.email = "Diese E-Mail-Adresse sieht unvollständig aus, bitte prüfen Sie sie kurz.";
     if (!values.format) er.format = "Bitte wählen Sie, welche Art Design Sie sehen möchten.";
-    if (values.message.trim().length < 10) er.message = "Zwei, drei Sätze reichen: Worum soll es gehen, was soll der Beitrag erreichen?";
+    if (values.message.replace(/^Branche:.*\n?/, "").trim().length < 10) er.message = "Zwei, drei Sätze reichen: Worum soll es gehen, was soll der Beitrag erreichen?";
     return er;
   };
 
@@ -71,7 +71,7 @@ export function SampleForm() {
     const tier = priceTiers.find((t) => t.id === values.tier);
     const body = [
       `Unternehmen: ${values.company}`,
-      `Ansprechpartner: ${values.contact}`,
+      `Ansprechperson: ${values.contact}`,
       `E-Mail: ${values.email}`,
       `Website / Profil: ${values.link || "–"}`,
       `Gewünschtes Design: ${values.format}`,
@@ -106,7 +106,7 @@ export function SampleForm() {
       {children}
       <AnimatePresence>
         {errors[name] && (
-          <motion.p
+          <m.p
             id={`${id}-${name}-error`}
             role="alert"
             initial={{ opacity: 0, y: -4 }}
@@ -115,7 +115,7 @@ export function SampleForm() {
             className="mt-2 text-sm text-danger"
           >
             {errors[name]}
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
     </div>
@@ -129,14 +129,19 @@ export function SampleForm() {
 
   if (sent) {
     return (
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="card p-8 md:p-10">
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink">
+      <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="card p-8 md:p-10">
+        <m.span
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0.2, delay: 0.08 }}
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink"
+        >
           <CheckIcon size={22} weight="bold" aria-hidden />
-        </span>
+        </m.span>
         <h2 className="mt-6 text-[2rem]">Ihr E-Mail-Programm sollte sich jetzt geöffnet haben.</h2>
         <p className="measure mt-4 text-text-2">
           Die Anfrage ist darin vorbereitet. Schicken Sie sie einfach ab, Logo oder Fotos können Sie direkt anhängen.
-          Ich melde mich mit dem Beispieldesign zurück, {site.replyTime.toLowerCase()}.
+          Ich melde mich mit dem Beispieldesign zurück, {site.replyTimeShort}.
         </p>
         <p className="measure mt-4 text-text-2">
           Hat sich nichts geöffnet? Dann schreiben Sie mir direkt an{" "}
@@ -144,7 +149,7 @@ export function SampleForm() {
             {site.email}
           </a>{" "}
           oder per Instagram an{" "}
-          <a href={site.instagram} target="_blank" rel="noopener" className="link-u text-text">
+          <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
             {site.instagramHandle}
           </a>
           .
@@ -152,7 +157,7 @@ export function SampleForm() {
         <button type="button" onClick={() => setSent(false)} className="btn btn-ghost mt-8">
           Zurück zum Formular
         </button>
-      </motion.div>
+      </m.div>
     );
   }
 
@@ -160,19 +165,19 @@ export function SampleForm() {
     <form onSubmit={onSubmit} noValidate className="card p-6 md:p-10">
       <div className="grid gap-6 md:grid-cols-2">
         {field({ name: "company", label: "Name des Unternehmens", children: (
-          <input {...aria("company")} className="field" value={values.company} onChange={set("company")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />
+          <input {...aria("company")} aria-required className="field" value={values.company} onChange={set("company")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />
 ) })}
-        {field({ name: "contact", label: "Ansprechpartner", children: (
-          <input {...aria("contact")} className="field" value={values.contact} onChange={set("contact")} autoComplete="name" placeholder="Vor- und Nachname" />
+        {field({ name: "contact", label: "Ansprechperson", children: (
+          <input {...aria("contact")} aria-required className="field" value={values.contact} onChange={set("contact")} autoComplete="name" placeholder="Vor- und Nachname" />
 ) })}
         {field({ name: "email", label: "E-Mail-Adresse", children: (
-          <input {...aria("email")} type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" placeholder="name@firma.de" />
+          <input {...aria("email")} aria-required type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" placeholder="name@firma.de" />
 ) })}
         {field({ name: "link", label: "Website oder Social-Media-Profil", hint: "optional", children: (
-          <input {...aria("link")} type="text" className="field" value={values.link} onChange={set("link")} inputMode="url" placeholder="www.firma.de oder @instagramname" />
+          <input {...aria("link")} type="text" className="field" value={values.link} onChange={set("link")} inputMode="url" autoComplete="url" spellCheck={false} autoCapitalize="none" placeholder="www.firma.de oder @instagramname" />
 ) })}
         {field({ name: "format", label: "Gewünschte Designart", children: (
-          <select {...aria("format")} className="field" value={values.format} onChange={set("format")}>
+          <select {...aria("format")} aria-required className="field" value={values.format} onChange={set("format")}>
             <option value="">Bitte wählen</option>
             {designFormats.map((f) => (
               <option key={f.id} value={f.label}>
@@ -196,6 +201,7 @@ export function SampleForm() {
           {field({ name: "message", label: "Was schwebt Ihnen vor?", children: (
             <textarea
               {...aria("message")}
+              aria-required
               className="field min-h-[9rem] resize-y"
               value={values.message}
               onChange={set("message")}

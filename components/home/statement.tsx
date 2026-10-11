@@ -1,11 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { useGsapScene } from "@/lib/gsap";
+import { reduceMotion, scrubFor } from "@/lib/motion";
 
 type Piece = { text: string; accent?: boolean };
 
@@ -19,13 +16,9 @@ const sentence: Piece[] = [
 export function Statement() {
   const root = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      const el = root.current;
-      if (!el) return;
-      const reduce = document.documentElement.classList.contains("reduce-motion");
+  useGsapScene(root, (gsap, _ScrollTrigger, el) => {
       const words = gsap.utils.toArray<HTMLElement>("[data-word]");
-      if (reduce) {
+      if (reduceMotion()) {
         gsap.set(words, { opacity: 1 });
         return;
       }
@@ -38,7 +31,7 @@ export function Statement() {
       const between = (a: number, b: number) => a + (b - a) * rnd();
       const tl = gsap.timeline({
         defaults: { ease: "power3.out" },
-        scrollTrigger: { trigger: el, start: "top 85%", end: "center 45%", scrub: 0.9 },
+        scrollTrigger: { trigger: el, start: "top 85%", end: "center 45%", scrub: scrubFor() },
       });
       words.forEach((w) => {
         tl.fromTo(
@@ -54,16 +47,15 @@ export function Statement() {
           between(0, 0.35),
         );
       });
-    },
-    { scope: root },
-  );
+  });
 
   const plain = sentence.map((p) => p.text).join("").replace(/\s+/g, " ").trim();
 
   return (
     <section ref={root} className="section relative overflow-hidden">
       <div className="container-x">
-        <p className="display max-w-[22ch] text-[clamp(1.9rem,4.6vw,4rem)] leading-[1.08] tracking-[-0.025em]" aria-label={plain}>
+        <p className="display max-w-[22ch] text-[clamp(1.9rem,4.6vw,4rem)] leading-[1.08] tracking-[-0.025em]">
+          <span className="sr-only">{plain}</span>
           {sentence.map((piece, pi) =>
             piece.text.split(/(\s+)/).map((chunk, ci) =>
               /^\s+$/.test(chunk) ? (
@@ -73,8 +65,7 @@ export function Statement() {
                   key={`${pi}-${ci}`}
                   data-word
                   aria-hidden
-                  className={`inline-block will-change-transform ${piece.accent ? "text-accent" : ""}`}
-                  style={{ opacity: 0 }}
+                  className={`statement-word inline-block will-change-transform ${piece.accent ? "text-accent" : ""}`}
                 >
                   {chunk}
                 </span>

@@ -5,6 +5,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { MotionProvider } from "@/components/motion-provider";
 import { site } from "@/lib/site";
 
 const display = Bricolage_Grotesque({
@@ -37,7 +38,6 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: `${site.name} – Erst sehen, dann entscheiden.`,
     description: "Social-Media-Design und Branding. Das erste Beispieldesign für Ihren Betrieb ist kostenlos.",
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Vybs Graphics" }],
   },
   icons: {
     icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],
@@ -67,11 +67,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Zum Inhalt springen
         </a>
-        <SiteHeader />
-        <main id="inhalt" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        <MotionProvider>
+          <SiteHeader />
+          <main id="inhalt" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+        </MotionProvider>
       </body>
     </html>
   );

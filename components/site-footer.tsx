@@ -22,16 +22,16 @@ export function SiteFooter() {
 
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.12em] text-text-3">Seiten</h2>
-          <ul className="mt-5 space-y-3">
+          <ul className="mt-3">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="link-u text-text-2">
+                <Link href={item.href} className="link-u inline-flex min-h-11 items-center text-text-2">
                   {item.label}
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/kostenloses-beispiel" className="link-u text-text-2">
+              <Link href="/kostenloses-beispiel" className="link-u inline-flex min-h-11 items-center text-text-2">
                 Kostenloses Beispiel
               </Link>
             </li>
@@ -40,20 +40,21 @@ export function SiteFooter() {
 
         <div>
           <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.12em] text-text-3">Kontakt</h2>
-          <ul className="mt-5 space-y-3 text-text-2">
+          <ul className="mt-3 text-text-2">
             <li>
-              <a href={`mailto:${site.email}`} className="link-u inline-flex items-center gap-2">
+              <a href={`mailto:${site.email}`} className="link-u inline-flex min-h-11 items-center gap-2">
                 <EnvelopeSimpleIcon size={18} aria-hidden />
                 {site.email}
               </a>
             </li>
             <li>
-              <a href={site.instagram} target="_blank" rel="noopener" className="link-u inline-flex items-center gap-2">
+              <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u inline-flex min-h-11 items-center gap-2">
                 <InstagramLogoIcon size={18} aria-hidden />
                 {site.instagramHandle}
+                <span className="sr-only">(öffnet in neuem Tab)</span>
               </a>
             </li>
-            <li className="pt-2 text-text-3">{site.serviceArea}</li>
+            <li className="pt-3 text-text-3">{site.serviceArea}</li>
             <li className="text-text-3">{site.replyTime}</li>
           </ul>
         </div>
@@ -63,13 +64,13 @@ export function SiteFooter() {
         <div className="container-x flex flex-col gap-3 py-6 text-sm text-text-3 md:flex-row md:items-center md:justify-between">
           <p>© {site.year} {site.name}. Alle Rechte vorbehalten.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link href="/impressum" className="link-u">
+            <Link href="/impressum" className="link-u inline-flex min-h-11 items-center">
               Impressum
             </Link>
-            <Link href="/datenschutz" className="link-u">
+            <Link href="/datenschutz" className="link-u inline-flex min-h-11 items-center">
               Datenschutz
             </Link>
-            <a href="https://bilbaoconsulting.com" target="_blank" rel="noopener" className="link-u">
+            <a href="https://bilbaoconsulting.com" target="_blank" rel="noopener" className="link-u inline-flex min-h-11 items-center">
               Website von Bilbao Consulting
             </a>
           </div>

@@ -3,23 +3,18 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useGsapScene } from "@/lib/gsap";
 import { workCategories } from "@/lib/content";
 import { Arrow } from "@/components/ui/arrow";
 import { Reveal } from "@/components/reveal";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { reduceMotion, scrubFor } from "@/lib/motion";
 
 export function WorkColumns() {
   const root = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      const el = root.current;
-      if (!el) return;
-      if (document.documentElement.classList.contains("reduce-motion")) return;
+  useGsapScene(root, (gsap, _ScrollTrigger, el) => {
+      if (reduceMotion()) return;
+      const scrub = scrubFor();
       const mm = gsap.matchMedia();
       // adapted from Animorio's "columns going opposite ways": outer columns rise, middle sinks, no pinning
       mm.add("(min-width: 1024px)", () => {
@@ -32,7 +27,7 @@ export function WorkColumns() {
             {
               y: dir * 90,
               ease: "none",
-              scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.7 },
+              scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub },
             },
           );
         });
@@ -42,12 +37,10 @@ export function WorkColumns() {
         gsap.fromTo(
           img,
           { yPercent: -6 },
-          { yPercent: 6, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub: 0.5 } },
+          { yPercent: 6, ease: "none", scrollTrigger: { trigger: img, start: "top bottom", end: "bottom top", scrub } },
         );
       });
-    },
-    { scope: root },
-  );
+  });
 
   return (
     <section ref={root} id="arbeiten" className="section relative overflow-hidden scroll-mt-20">
@@ -81,7 +74,7 @@ export function WorkColumns() {
                       alt={w.alt}
                       fill
                       sizes="(min-width: 1024px) 30vw, 90vw"
-                      className="scale-[1.14] object-cover transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.2]"
+                      className="scale-[1.14] object-cover transition-transform duration-[400ms] ease-[var(--ease-out)] group-hover:scale-[1.2]"
                     />
                   </div>
                 </Link>

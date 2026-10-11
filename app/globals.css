@@ -52,8 +52,11 @@
 }
 
 /* ------------------------------------------------------------------ base */
+@layer base {
 html {
   color-scheme: dark;
+  overflow-x: clip;
+  scroll-padding-top: 5.5rem;
   background: var(--ink);
   scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
@@ -130,7 +133,10 @@ p {
   text-wrap: pretty;
 }
 
-/* ------------------------------------------------------------------ utilities */
+}
+
+/* ------------------------------------------------------------------ components */
+@layer components {
 .container-x {
   width: 100%;
   max-width: 88rem;
@@ -156,10 +162,11 @@ p {
   border-radius: var(--radius-pill);
   font-weight: 600;
   font-size: 1rem;
-  line-height: 1;
-  white-space: nowrap;
+  line-height: 1.15;
+  text-align: center;
+  max-width: 100%;
   transition:
-    transform 200ms var(--ease-out),
+    transform 160ms var(--ease-out),
     background-color 200ms var(--ease-out),
     color 200ms var(--ease-out),
     box-shadow 200ms var(--ease-out);
@@ -204,10 +211,12 @@ p {
   text-decoration: none;
 }
 .link-arrow svg {
-  transition: transform 250ms var(--ease-out);
+  transition: transform 200ms var(--ease-out);
 }
-.link-arrow:hover svg {
-  transform: translateX(4px);
+@media (hover: hover) and (pointer: fine) {
+  .link-arrow:hover svg {
+    transform: translateX(4px);
+  }
 }
 .link-u {
   text-decoration: underline;
@@ -271,36 +280,46 @@ select.field {
   opacity: 0.045;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
-  mix-blend-mode: screen;
 }
 
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(70px);
+  filter: blur(60px);
   pointer-events: none;
-  will-change: transform;
 }
 
 @keyframes drift-a {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(6%, -8%, 0) scale(1.08); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(6%, -8%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 @keyframes drift-b {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-7%, 6%, 0) scale(0.94); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-7%, 6%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@media (pointer: coarse) {
+  .drift-a,
+  .drift-b {
+    animation: none;
+  }
 }
 .drift-a { animation: drift-a 22s ease-in-out infinite; }
 .drift-b { animation: drift-b 26s ease-in-out infinite; }
 
+}
+
 /* reveal defaults (GSAP sets final state; this keeps first paint invisible for js users) */
-.js [data-reveal] {
+.js [data-reveal],
+.js [data-reveal-group] > *,
+.js .statement-word {
   opacity: 0;
 }
 html.reduce-motion [data-reveal],
-html.reduce-motion .js [data-reveal] {
+html.reduce-motion [data-reveal-group] > *,
+html.reduce-motion .statement-word,
+html.reduce-motion [data-word] {
   opacity: 1 !important;
   transform: none !important;
 }
@@ -308,14 +327,12 @@ html.reduce-motion .drift-a,
 html.reduce-motion .drift-b {
   animation: none;
 }
-html.reduce-motion *,
-html.reduce-motion *::before,
-html.reduce-motion *::after {
-  transition-duration: 0.01ms !important;
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
+html.reduce-motion :is(.btn, .link-arrow svg, [data-img], .group:hover [class*="group-hover:translate"], .group:hover [class*="group-hover:rotate"], .group:hover [class*="group-hover:scale"]) {
+  transform: none !important;
+  transition-property: color, background-color, box-shadow, opacity, text-decoration-color !important;
 }
 
+@layer components {
 /* tabular numbers for prices */
 .tnum {
   font-variant-numeric: tabular-nums;
@@ -324,10 +341,45 @@ html.reduce-motion *::after {
 /* mock post card (used in builder & process) */
 .mock {
   font-family: var(--font-sans), system-ui, sans-serif;
+  container-type: inline-size;
   position: relative;
   overflow: hidden;
   border-radius: 1.25rem;
   box-shadow:
     0 40px 80px -30px rgba(0, 0, 0, 0.8),
     0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+}
+
+@layer components {
+/* hero entrance: CSS-driven so the first paint does not wait for hydration */
+@keyframes hero-rise {
+  from { transform: translateY(110%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes hero-fade {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@keyframes hero-card {
+  from { transform: translateY(160px) scale(0.9); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+.hero-line > span {
+  animation: hero-rise 1.1s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+.hero-fade {
+  animation: hero-fade 0.9s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+.hero-card {
+  animation: hero-card 1.3s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+html.reduce-motion .hero-line > span,
+html.reduce-motion .hero-fade,
+html.reduce-motion .hero-card {
+  animation: none;
+}
 }

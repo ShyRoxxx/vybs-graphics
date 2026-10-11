@@ -28,7 +28,7 @@ export default function FaqPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x max-w-4xl">
           <Reveal>
-            <FaqList items={faqs} />
+            <FaqList items={faqs} headingLevel={2} />
           </Reveal>
         </div>
       </section>

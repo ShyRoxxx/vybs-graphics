@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { PricePicker } from "@/components/price-picker";
 import { FinalCta } from "@/components/final-cta";
 import { services } from "@/lib/content";
+import { ServicePreview } from "@/components/service-preview";
 
 export const metadata: Metadata = {
   title: "Leistungen & Preise",
@@ -16,7 +16,7 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        title="Leistungen und"
+        title="Leistungen &"
         accent="Preise."
         text="Alles, was ein kleiner Betrieb nach außen zeigt, aus einer Hand und zum festen Preis. Hier steht, was jede Leistung umfasst, wofür sie sich eignet und in welchem Format Sie die Dateien bekommen."
       >
@@ -32,7 +32,7 @@ export default function ServicesPage() {
         </nav>
       </PageHero>
 
-      <section className="pb-[var(--section)]">
+      <section className="overflow-hidden pb-[var(--section)]">
         <div className="container-x divide-y divide-line border-t border-line">
           {services.map((s, i) => (
             <article key={s.slug} id={s.slug} className="grid scroll-mt-28 gap-8 py-14 md:py-20 lg:grid-cols-[1fr_1.4fr_0.8fr] lg:gap-12">
@@ -54,10 +54,9 @@ export default function ServicesPage() {
                 </dl>
               </Reveal>
               <Reveal from={i % 2 ? "scale" : "right"} delay={0.15} className="relative">
-                <div aria-hidden className="orb absolute inset-0 -z-10 opacity-25" style={{ background: s.tint }} />
-                <div className="overflow-hidden rounded-[var(--radius-card)] shadow-[inset_0_0_0_1px_var(--line)]" style={{ rotate: i % 2 ? "3deg" : "-3deg" }}>
-                  <Image src={s.image} alt="" width={486} height={470} sizes="(min-width:1024px) 22vw, 70vw" className="h-auto w-full" />
-                </div>
+                <div aria-hidden className="orb absolute inset-[10%] -z-10 opacity-30" style={{ background: s.tint }} />
+                <ServicePreview kind={s.slug as Parameters<typeof ServicePreview>[0]["kind"]} />
+                <p className="mt-4 text-center text-xs text-text-3">Beispielmotiv zur Veranschaulichung</p>
               </Reveal>
             </article>
           ))}

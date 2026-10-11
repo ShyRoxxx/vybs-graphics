@@ -32,7 +32,7 @@ export default function ContactPage() {
                 <span className="block font-semibold text-text">{site.email}</span>
               </span>
             </a>
-            <a href={site.instagram} target="_blank" rel="noopener" className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <InstagramLogoIcon size={22} aria-hidden />
               </span>
@@ -46,7 +46,7 @@ export default function ContactPage() {
                 <SparkleIcon size={22} weight="fill" aria-hidden />
               </span>
               <span>
-                <span className="block text-sm opacity-70">Noch kein Kunde?</span>
+                <span className="block text-sm opacity-85">Noch kein Kunde?</span>
                 <span className="block font-semibold">Kostenloses Beispieldesign anfordern</span>
               </span>
             </Link>

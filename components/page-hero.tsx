@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-import { Reveal } from "@/components/reveal";
+import type { CSSProperties, ReactNode } from "react";
 
 export function PageHero({
   title,
@@ -18,7 +17,7 @@ export function PageHero({
     <section className="relative overflow-hidden pt-[9rem] pb-[clamp(3rem,7vw,5.5rem)]">
       <div aria-hidden className="orb drift-a right-[-15%] top-[-20%] h-[34rem] w-[34rem] opacity-40" style={{ background: tint }} />
       <div className="container-x relative">
-        <Reveal as="h1" className="max-w-[18ch] text-[clamp(2.75rem,7.5vw,6.5rem)]" from="up" distance={30}>
+        <h1 className="hero-fade max-w-[18ch] text-[clamp(2.5rem,7.5vw,6.5rem)]" style={{ "--d": "0.05s" } as CSSProperties}>
           {title}
           {accent && (
             <>
@@ -26,16 +25,16 @@ export function PageHero({
               <span className="text-accent">{accent}</span>
             </>
           )}
-        </Reveal>
+        </h1>
         {text && (
-          <Reveal as="p" className="measure mt-8 text-lg text-text-2 md:text-xl" delay={0.1}>
+          <p className="hero-fade measure mt-8 text-lg text-text-2 md:text-xl" style={{ "--d": "0.18s" } as CSSProperties}>
             {text}
-          </Reveal>
+          </p>
         )}
         {children && (
-          <Reveal className="mt-10" delay={0.2}>
+          <div className="hero-fade mt-10" style={{ "--d": "0.3s" } as CSSProperties}>
             {children}
-          </Reveal>
+          </div>
         )}
       </div>
     </section>

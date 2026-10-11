@@ -3,25 +3,20 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useGsapScene } from "@/lib/gsap";
 import { services } from "@/lib/content";
 import { Arrow } from "@/components/ui/arrow";
 import { Reveal } from "@/components/reveal";
 import { PricePicker } from "@/components/price-picker";
-
-gsap.registerPlugin(useGSAP);
 
 export function Services() {
   const root = useRef<HTMLElement>(null);
   const floater = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<number | null>(null);
 
-  useGSAP(
-    () => {
-      const el = root.current;
+  useGsapScene(root, (gsap, _ScrollTrigger, el) => {
       const fl = floater.current;
-      if (!el || !fl) return;
+      if (!fl) return;
       const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
       const reduce = document.documentElement.classList.contains("reduce-motion");
       if (!fine || reduce) return;
@@ -43,8 +38,8 @@ export function Services() {
         lastX = e.clientX;
         toR(vx);
       };
-      const onEnter = () => gsap.to(fl, { opacity: 1, scale: 1, duration: 0.35, ease: "power3.out" });
-      const onLeave = () => gsap.to(fl, { opacity: 0, scale: 0.9, duration: 0.3, ease: "power3.out" });
+      const onEnter = () => gsap.to(fl, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out", overwrite: "auto" });
+      const onLeave = () => gsap.to(fl, { opacity: 0, scale: 0.9, duration: 0.25, ease: "power3.out", overwrite: "auto" });
       list.addEventListener("pointermove", onMove);
       list.addEventListener("pointerenter", onEnter);
       list.addEventListener("pointerleave", onLeave);
@@ -53,9 +48,7 @@ export function Services() {
         list.removeEventListener("pointerenter", onEnter);
         list.removeEventListener("pointerleave", onLeave);
       };
-    },
-    { scope: root },
-  );
+  });
 
   const shown = services[active ?? 0];
 
@@ -68,8 +61,9 @@ export function Services() {
               Was Sie bei mir bekommen.
             </Reveal>
             <Reveal as="p" className="measure mt-6 text-text-2" delay={0.1}>
-              Alles, was ein kleiner Betrieb zeigt: im Feed, in der Anzeige, auf dem Tresen. Fahren Sie über die
-              Liste, um ein Beispiel zu sehen, oder öffnen Sie die Leistungsseite für Details und Formate.
+              Alles, was ein kleiner Betrieb zeigt: im Feed, in der Anzeige, auf dem Tresen.
+              <span className="hidden lg:inline"> Fahren Sie über die Liste, um ein Beispiel zu sehen.</span> Details und
+              Formate stehen auf der Leistungsseite.
             </Reveal>
             <Reveal delay={0.2} className="mt-8">
               <Link href="/leistungen" className="link-arrow min-h-11 text-text-2 hover:text-text">
@@ -94,14 +88,14 @@ export function Services() {
                 <li key={s.slug} className="group" onPointerEnter={() => setActive(i)} onFocus={() => setActive(i)}>
                   <Link
                     href={`/leistungen#${s.slug}`}
-                    className="grid min-h-[5.5rem] grid-cols-[1fr_auto] items-center gap-6 py-6 transition-[padding] duration-300 ease-[var(--ease-out)] hover:pl-3"
+                    className="grid min-h-[5.5rem] grid-cols-[1fr_auto] items-center gap-6 py-6"
                   >
-                    <div>
+                    <div className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-3">
                       <h3 className="text-[clamp(1.5rem,2.6vw,2.125rem)] transition-colors duration-200 group-hover:text-accent">{s.title}</h3>
                       <p className="mt-1.5 text-text-2">{s.short}</p>
                     </div>
                     <span
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_var(--line-strong)] transition-all duration-300 group-hover:bg-accent group-hover:text-accent-ink group-hover:shadow-none"
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full shadow-[inset_0_0_0_1px_var(--line-strong)] transition-[background-color,color,box-shadow] duration-200 group-hover:bg-accent group-hover:text-accent-ink group-hover:shadow-none"
                       aria-hidden
                     >
                       <Arrow className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />

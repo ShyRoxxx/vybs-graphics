@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function SamplePage() {
   return (
     <>
-      <section className="relative overflow-hidden pt-[9rem] pb-[var(--section)]">
+      <section className="relative overflow-x-clip pt-[9rem] pb-[var(--section)]">
         <div aria-hidden className="orb drift-a left-[-15%] top-[-10%] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-60" />
         <div aria-hidden className="orb drift-b right-[-10%] top-[30%] h-[30rem] w-[30rem] bg-accent opacity-[0.1]" />
         <div className="container-x relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -50,7 +50,7 @@ export default function SamplePage() {
               </ol>
               <p className="mt-6 text-sm text-text-3">
                 Lieber direkt schreiben? <a href={`mailto:${site.email}`} className="link-u">{site.email}</a> oder{" "}
-                <a href={site.instagram} target="_blank" rel="noopener" className="link-u">
+                <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u">
                   {site.instagramHandle}
                 </a>
               </p>

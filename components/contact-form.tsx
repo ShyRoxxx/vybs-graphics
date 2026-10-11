@@ -1,8 +1,9 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { m } from "motion/react";
 import { site } from "@/lib/site";
+import { DUR, EASE_OUT } from "@/lib/motion";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 type Values = { name: string; email: string; topic: string; message: string };
@@ -39,10 +40,15 @@ export function ContactForm() {
 
   if (sent) {
     return (
-      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="card p-8">
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink">
+      <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8">
+        <m.span
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0.2, delay: 0.08 }}
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink"
+        >
           <CheckIcon size={22} weight="bold" aria-hidden />
-        </span>
+        </m.span>
         <h2 className="mt-6 text-[1.75rem]">Ihre Nachricht liegt jetzt in Ihrem E-Mail-Programm.</h2>
         <p className="measure mt-4 text-text-2">
           Einmal auf Senden klicken, dann ist sie bei mir. Falls sich nichts geöffnet hat, schreiben Sie direkt an{" "}
@@ -54,17 +60,15 @@ export function ContactForm() {
         <button type="button" onClick={() => setSent(false)} className="btn btn-ghost mt-8">
           Neue Nachricht
         </button>
-      </motion.div>
+      </m.div>
     );
   }
 
   const err = (k: keyof Values) =>
     errors[k] ? (
-      <AnimatePresence>
-        <motion.p id={`${id}-${k}-error`} role="alert" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="mt-2 text-sm text-danger">
-          {errors[k]}
-        </motion.p>
-      </AnimatePresence>
+      <p id={`${id}-${k}-error`} role="alert" className="mt-2 text-sm text-danger">
+        {errors[k]}
+      </p>
     ) : null;
 
   return (
@@ -74,14 +78,14 @@ export function ContactForm() {
           <label htmlFor={`${id}-name`} className="mb-2 block text-sm font-semibold">
             Ihr Name
           </label>
-          <input id={`${id}-name`} className="field" value={values.name} onChange={set("name")} autoComplete="name" aria-invalid={!!errors.name || undefined} aria-describedby={errors.name ? `${id}-name-error` : undefined} />
+          <input id={`${id}-name`} type="text" aria-required className="field" value={values.name} onChange={set("name")} autoComplete="name" aria-invalid={!!errors.name || undefined} aria-describedby={errors.name ? `${id}-name-error` : undefined} />
           {err("name")}
         </div>
         <div>
           <label htmlFor={`${id}-email`} className="mb-2 block text-sm font-semibold">
             E-Mail-Adresse
           </label>
-          <input id={`${id}-email`} type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" aria-invalid={!!errors.email || undefined} aria-describedby={errors.email ? `${id}-email-error` : undefined} />
+          <input id={`${id}-email`} type="email" aria-required className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" aria-invalid={!!errors.email || undefined} aria-describedby={errors.email ? `${id}-email-error` : undefined} />
           {err("email")}
         </div>
         <div className="sm:col-span-2">
@@ -99,7 +103,7 @@ export function ContactForm() {
           <label htmlFor={`${id}-message`} className="mb-2 block text-sm font-semibold">
             Ihre Nachricht
           </label>
-          <textarea id={`${id}-message`} className="field min-h-[9rem] resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message || undefined} aria-describedby={errors.message ? `${id}-message-error` : undefined} />
+          <textarea id={`${id}-message`} aria-required className="field min-h-[9rem] resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message || undefined} aria-describedby={errors.message ? `${id}-message-error` : undefined} />
           {err("message")}
         </div>
       </div>

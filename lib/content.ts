@@ -68,7 +68,7 @@ export const services: Service[] = [
     description:
       "Ein einzelner Beitrag, der im Feed auffällt und trotzdem wie aus einem Guss mit dem Rest Ihres Profils wirkt. Ich übernehme Ihr Logo, Ihre Farben und ein Foto von Ihnen und gestalte daraus eine Kachel, die man ohne Nachdenken liest.",
     useCase: "Für Angebote, Neuigkeiten, Teamvorstellungen oder einfach regelmäßigen Content.",
-    format: "1080 × 1350 px oder quadratisch, als PNG und als Vorlage",
+    format: "1080 × 1350 px oder quadratisch, als PNG und als Vorlage",
     image: "/images/work-branding.webp",
     tint: "#8B5CF6",
   },
@@ -79,7 +79,7 @@ export const services: Service[] = [
     description:
       "Ein Carousel hält Leute länger auf Ihrem Beitrag, weil sie weiterwischen. Ich baue die Dramaturgie: eine Frage oder Aussage auf Slide eins, Argumente in der Mitte, auf dem letzten Slide die Handlungsaufforderung.",
     useCase: "Für Erklärungen, Vorher-nachher, Leistungsübersichten und Tipps aus Ihrem Fach.",
-    format: "3 bis 10 Slides, 1080 × 1350 px",
+    format: "3 bis 10 Slides, 1080 × 1350 px",
     image: "/images/work-carousel.webp",
     tint: "#5BC276",
   },
@@ -101,7 +101,7 @@ export const services: Service[] = [
     description:
       "Gedrucktes wird in der Hand gehalten, deshalb muss es anders funktionieren als ein Beitrag im Feed: größere Schrift, klare Reihenfolge, ein Weg zu Ihnen. Sie bekommen druckfertige Daten mit Beschnitt und können bei Ihrer Druckerei bestellen.",
     useCase: "Für Postwurfsendungen, Auslagen im Laden, Messen und Veranstaltungen.",
-    format: "DIN A6 bis A2, druckfertiges PDF mit 3 mm Beschnitt",
+    format: "DIN A6 bis A2, druckfertiges PDF mit 3 mm Beschnitt",
     image: "/images/work-carousel.webp",
     tint: "#5BC276",
   },
@@ -118,7 +118,7 @@ export const services: Service[] = [
   },
   {
     slug: "visitenkarten",
-    title: "Visitenkarten & Kleinkram",
+    title: "Visitenkarten & Co.",
     short: "Visitenkarten, Signaturen, Profilbilder, Highlight-Cover.",
     description:
       "Die vielen kleinen Dinge, die ein Unternehmen jeden Tag zeigt: Visitenkarte, E-Mail-Signatur, Instagram-Highlight-Cover, Profilbild, Google-Profil-Bild. Jedes für sich eine Kleinigkeit, zusammen der Unterschied zwischen Hobby und Betrieb.",
@@ -294,11 +294,11 @@ export type DesignFormat = {
 };
 
 export const designFormats: DesignFormat[] = [
-  { id: "post", label: "Instagram-Post", ratio: "portrait", note: "1080 × 1350" },
+  { id: "post", label: "Instagram-Post", ratio: "portrait", note: "1080 × 1350" },
   { id: "carousel", label: "Carousel", ratio: "portrait", note: "3 bis 10 Slides" },
-  { id: "story", label: "Story / Reel-Cover", ratio: "story", note: "1080 × 1920" },
+  { id: "story", label: "Story / Reel-Cover", ratio: "story", note: "1080 × 1920" },
   { id: "anzeige", label: "Werbeanzeige", ratio: "square", note: "Meta & Google" },
-  { id: "flyer", label: "Flyer", ratio: "portrait", note: "DIN A6 / A5" },
+  { id: "flyer", label: "Flyer", ratio: "portrait", note: "DIN A6 / A5" },
   { id: "logo", label: "Logo", ratio: "square", note: "Bildmarke & Wortmarke" },
 ];
 

@@ -63,9 +63,9 @@ export function MockPost({
   return (
     <div
       className={`mock bg-white text-[#101828] ${className}`}
-      style={{ aspectRatio: ratios[format.ratio], containerType: "inline-size", ...vars, ...style }}
+      style={{ aspectRatio: ratios[format.ratio], ...vars, ...style }}
       role="img"
-      aria-label={`Vorschau eines ${format.label}s für ${name}: „${industry.headline}“`}
+      aria-label={`Vorschau, ${format.label} für ${name}: „${industry.headline}“`}
     >
       {/* soft tinted background shapes */}
       <div aria-hidden className="absolute inset-0 bg-[var(--ts)]" />

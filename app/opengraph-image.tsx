@@ -20,7 +20,7 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ position: "absolute", right: 60, top: 60, width: 220, height: 220, borderRadius: 999, background: "#5cc8ff", opacity: 0.18, filter: "blur(40px)" }} />
+        <div style={{ position: "absolute", right: -40, top: -40, width: 420, height: 420, borderRadius: 999, background: "radial-gradient(circle, rgba(92,200,255,0.35) 0%, rgba(92,200,255,0) 70%)" }} />
         <div style={{ fontSize: 28, color: "#5cc8ff", fontWeight: 700, letterSpacing: 4 }}>VYBS GRAPHICS</div>
         <div style={{ marginTop: 20, fontSize: 84, fontWeight: 800, lineHeight: 1, letterSpacing: -3 }}>
           Erst das Design. Dann die Entscheidung.

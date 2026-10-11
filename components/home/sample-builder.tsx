@@ -2,7 +2,8 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
+import { m } from "motion/react";
+import { DUR } from "@/lib/motion";
 import { designFormats, industries } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 import { Reveal } from "@/components/reveal";
@@ -23,7 +24,7 @@ export function SampleBuilder() {
 
   return (
     <section id="konfigurator" className="section relative scroll-mt-20 overflow-hidden">
-      <div aria-hidden className="orb drift-a right-[-20%] top-[0%] h-[40rem] w-[40rem] opacity-30" style={{ background: industry.tint, transition: "background 600ms ease" }} />
+      <div aria-hidden className="orb drift-a right-[-20%] top-[0%] h-[40rem] w-[40rem] opacity-30" style={{ background: industry.tint }} />
       <div className="container-x relative">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
           <div>
@@ -61,7 +62,7 @@ export function SampleBuilder() {
                       <label key={ind.id} className="relative">
                         <input type="radio" name="branche" value={ind.id} checked={on} onChange={() => setIndustryId(ind.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-all duration-200 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
                             on ? "bg-text text-ink shadow-[0_10px_30px_-12px_rgba(242,246,252,.6)]" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
                           }`}
                         >
@@ -82,12 +83,12 @@ export function SampleBuilder() {
                       <label key={f.id} className="relative">
                         <input type="radio" name="format" value={f.id} checked={on} onChange={() => setFormatId(f.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold transition-all duration-200 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
                             on ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
                           }`}
                         >
                           {f.label}
-                          <span className={`text-xs font-normal ${on ? "text-accent-ink/70" : "text-text-3"}`}>{f.note}</span>
+                          <span className={`text-xs font-normal ${on ? "text-accent-ink/85" : "text-text-3"}`}>{f.note}</span>
                         </span>
                       </label>
                     );
@@ -105,16 +106,11 @@ export function SampleBuilder() {
           </div>
 
           <Reveal from="scale" className="relative mx-auto w-full max-w-[22rem] lg:max-w-[24rem]" delay={0.15}>
-            <motion.div layout transition={{ type: "spring", stiffness: 260, damping: 30 }} className="relative" style={{ rotate: -3 }}>
-              <motion.div
-                key={`${industry.id}-${format.id}`}
-                initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              >
+            <div className="relative" style={{ rotate: "-3deg" }}>
+              <m.div key={format.id} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: DUR.ui }}>
                 <MockPost company={company} industry={industry} format={format} />
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </div>
             <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Ihr Design wird individuell gestaltet.</p>
           </Reveal>
         </div>
