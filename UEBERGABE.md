@@ -8,6 +8,8 @@ Stand: 11. Oktober 2026. Demo für die Neukundengewinnung, nicht für den Livega
   Leitsatz, drei Arbeitsfamilien, Leistungen mit Hover-Bild, Preiswähler (15 / 20 / 30 €),
   Ablauf mit Sticky-Handyvorschau, Beispiel-Konfigurator (Firmenname, Branche, Format → Live-Vorschau),
   Über Phillip, FAQ, Abschluss-Aufruf.
+- Portfolio mit Lightbox (Klick auf ein Bild, Pfeiltasten blättern, Escape schließt) und der kompletten
+  Portfolio-Grafik als großem Überblick.
 - Unterseiten: /portfolio, /leistungen, /ueber-mich, /kostenloses-beispiel, /kontakt, /faq,
   /impressum, /datenschutz, eigene 404-Seite.
 - Visuelle Richtung: siehe DIRECTION.md („Studio bei Nacht“).
@@ -33,8 +35,8 @@ Stand: 11. Oktober 2026. Demo für die Neukundengewinnung, nicht für den Livega
 3. Rechtstexte: Impressum und Datenschutz sind sichtbar als Platzhalter markiert; finale Texte kommen von Bilbao Consulting.
 4. Bildrechte: Alle Bilder stammen aus den vom Lead übergebenen Dateien.
    - `public/images/logo.png`: freigestellt aus dem gelieferten Logo (1.webp).
-   - `public/images/work-branding.webp`, `work-carousel.webp`, `work-social.webp`: Ausschnitte aus der
-     gelieferten Portfolio-Grafik (2.webp). Auflösung nur 486 px breit; für den Livegang die Originaldateien
+   - `public/images/showcase.webp` (Gesamtgrafik) sowie `work-branding.webp`, `work-carousel.webp`,
+     `work-social.webp`: Ausschnitte aus der gelieferten Portfolio-Grafik (2.webp). Auflösung nur 486 px breit; für den Livegang die Originaldateien
      der Designs bei Phillip anfordern (Instagram-Kacheln in 1080 px).
    - Keine Stockfotos, keine KI-Bilder. Die Vorschau-Kacheln im Konfigurator sind CSS-gebaute Mock-ups mit Beispieltexten.
 5. Motivliste für echte Fotos (optional): Phillip am Arbeitsplatz (Hochformat), Bildschirm mit laufendem Design,
@@ -69,5 +71,4 @@ Stand: 11. Oktober 2026. Demo für die Neukundengewinnung, nicht für den Livega
 
 - Einfache Portfolio-Pflege: neue Arbeiten sind heute ein Eintrag in `lib/content.ts` plus Bild in `public/images/`.
   Ein kleines CMS (z. B. Markdown-Ordner) wäre der nächste Schritt, wenn Phillip selbst pflegen will.
-- Lightbox für Portfolio-Bilder, sobald Originaldateien in hoher Auflösung vorliegen.
 - Google-Unternehmensprofil und Instagram-Verknüpfung (siehe Lead-Analyse) parallel aufsetzen.
