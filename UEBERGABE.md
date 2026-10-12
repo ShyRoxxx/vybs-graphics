@@ -1,6 +1,36 @@
 # Übergabe – Demo-Website Vybs Graphics
 
-Stand: 11. Oktober 2026. Demo für die Neukundengewinnung, nicht für den Livegang gedacht (noindex).
+Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Neukundengewinnung, nicht für den Livegang gedacht (noindex).
+
+## Umgesetzt aus Phillips Feedback
+
+- Positionierung: „Professionelles Grafikdesign für dein Unternehmen.“ Social Media, Print und Branding stehen
+  gleichberechtigt nebeneinander (Startseite, /leistungen).
+- Einzelpreise je Leistung statt Basic/Standard/Custom, jeweils mit Beschreibung, Hinweis zum Umfang, „Enthalten“
+  und direktem Link zum kostenlosen Beispiel. Carousel-Preis gilt ausdrücklich pro Carousel bis 5 Slides.
+- Ablauf in sechs Schritten (Leistung wählen → Anfrage → Beispiel → Entscheidung → Kauf zum Festpreis → Anpassungen
+  und Dateien), mit Sticky-Vorschau.
+- Startseiten-Reihenfolge: Hero mit Beispiel-CTA und zweitem Button zu den Arbeiten → Leitsatz → Arbeiten →
+  Leistungen → Preise → Ablauf → Konfigurator → Über Phillip (kurz) → FAQ → Abschluss.
+- Portfolio: jede Arbeit als zusammenhängendes 3-Slide-Carousel mit Kennzeichnung „Kundenprojekt“ bzw. „Konzept“
+  (Feld `kind` in `lib/content.ts`), Lightbox, Gesamtübersicht. Flyer/Visitenkarten/Logos folgen mit der ZIP.
+- Formular: Name/Unternehmen, E-Mail, Leistung, Beschreibung, optionaler Link. Datenschutzhinweis am Formular.
+  Direkte Übermittlung über eine Server-Action, sobald `RESEND_API_KEY` gesetzt ist; ohne Key öffnet sich das
+  E-Mail-Programm mit vorbereiteter Nachricht, und die Bestätigung sagt das ehrlich.
+- FAQ mit den zwölf gewünschten Fragen.
+- Ansprache auf „du“ umgestellt, weil Phillips Beispieltexte durchgehend „dein Unternehmen“ verwenden.
+  Impressum/Datenschutz bleiben in Sie-Form. Rückstellung auf Sie ist möglich, betrifft `lib/content.ts` und einige Komponenten.
+
+## Noch offen aus Phillips Feedback
+
+- ZIP mit Fotos/Originaldateien: sobald sie da ist, Carousels als vollständige Slide-Reihen, Flyer und Visitenkarten
+  in Mockups, Kennzeichnung Kundenprojekt/Konzept pro Arbeit prüfen.
+- Endgültige Preise und Leistungsumfang: die eingetragenen Werte (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide,
+  Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €, Plakat 60 €, Logo ab 150 €, 2 Korrekturrunden)
+  sind Vorschläge auf Basis seiner früheren 15/20/30-€-Angabe und müssen von Phillip bestätigt werden.
+- Eigene Domain vybs.graphics (derzeit nicht registriert) nach Vertragsschluss einrichten; `lib/site.ts` → `url`.
+- Kundenstimmen, sobald echte vorliegen.
+
 
 ## Was die Demo zeigt
 
@@ -29,9 +59,9 @@ Stand: 11. Oktober 2026. Demo für die Neukundengewinnung, nicht für den Livega
 ## Vor einem echten Livegang umstellen
 
 1. `robots: { index: false }` in `app/layout.tsx` entfernen und `app/robots.ts` auf `allow` umstellen.
-2. Formular-Backend: beide Formulare öffnen heute eine vorbefüllte `mailto:`-Nachricht. Für den Livegang
-   einen Mail-Dienst (z. B. Resend) mit Server-Action anbinden; Umgebungsvariable `RESEND_API_KEY` (Zweck: Versand
-   der Anfragen an Phillips Postfach) und Empfängeradresse eintragen. Datei-Upload (Logo, Fotos) dann ergänzen.
+2. Formular-Backend: Server-Action `app/actions/inquiry.ts` ist fertig. Umgebungsvariablen in Vercel setzen:
+   `RESEND_API_KEY` (Versand über Resend), `INQUIRY_TO` (Phillips Postfach), optional `INQUIRY_FROM`
+   (verifizierte Absenderadresse der Domain). Ohne Key läuft der mailto-Fallback. Datei-Upload danach ergänzen.
 3. Rechtstexte: Impressum und Datenschutz sind sichtbar als Platzhalter markiert; finale Texte kommen von Bilbao Consulting.
 4. Bildrechte: Alle Bilder stammen aus den vom Lead übergebenen Dateien.
    - `public/images/logo.png`: freigestellt aus dem gelieferten Logo (1.webp).

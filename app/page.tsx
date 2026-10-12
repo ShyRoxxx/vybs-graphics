@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/hero";
 import { Statement } from "@/components/home/statement";
 import { WorkColumns } from "@/components/home/work-columns";
 import { Services } from "@/components/home/services";
+import { Prices } from "@/components/home/prices";
 import { Process } from "@/components/home/process";
 import { SampleBuilder } from "@/components/home/sample-builder";
 import { AboutTeaser } from "@/components/home/about-teaser";
@@ -13,13 +14,13 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: site.name,
-  description: "Social-Media-Design, Werbeanzeigen, Flyer und Logos für Unternehmen, Selbstständige und lokale Geschäfte.",
+  description: "Grafikdesign für Unternehmen, Selbstständige und lokale Betriebe: Instagram-Designs, Flyer, Visitenkarten, Logos. Feste Preise, kostenloses Beispiel vorab.",
   url: site.url,
   email: site.email,
   sameAs: [site.instagram],
   areaServed: "DE",
   founder: { "@type": "Person", name: "Phillip" },
-  priceRange: "15 € – 30 € pro Design",
+  priceRange: "15 € – 150 €",
 };
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
       <Statement />
       <WorkColumns />
       <Services />
+      <Prices />
       <Process />
       <SampleBuilder />
       <AboutTeaser />

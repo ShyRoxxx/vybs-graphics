@@ -7,10 +7,10 @@ import { reduceMotion, scrubFor } from "@/lib/motion";
 type Piece = { text: string; accent?: boolean };
 
 const sentence: Piece[] = [
-  { text: "Die meisten Betriebe wissen nicht, wie gut ihre Beiträge aussehen könnten." },
-  { text: " Deshalb " },
-  { text: "zeige ich es Ihnen,", accent: true },
-  { text: " bevor Sie etwas bezahlen." },
+  { text: "Du musst nicht erst bezahlen, um zu sehen, ob dir mein Stil gefällt." },
+  { text: " Ich gestalte " },
+  { text: "zuerst ein Beispiel für deinen Betrieb,", accent: true },
+  { text: " dann entscheidest du." },
 ];
 
 export function Statement() {

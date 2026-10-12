@@ -23,10 +23,10 @@ export default function OpenGraphImage() {
         <div style={{ position: "absolute", right: -40, top: -40, width: 420, height: 420, borderRadius: 999, background: "radial-gradient(circle, rgba(92,200,255,0.35) 0%, rgba(92,200,255,0) 70%)" }} />
         <div style={{ fontSize: 28, color: "#5cc8ff", fontWeight: 700, letterSpacing: 4 }}>VYBS GRAPHICS</div>
         <div style={{ marginTop: 20, fontSize: 84, fontWeight: 800, lineHeight: 1, letterSpacing: -3 }}>
-          Erst das Design. Dann die Entscheidung.
+          Professionelles Grafikdesign für dein Unternehmen.
         </div>
         <div style={{ marginTop: 28, fontSize: 30, color: "#a4b4cc" }}>
-          Social-Media-Design und Branding. Das erste Beispiel ist kostenlos.
+          Feste Preise pro Design. Das erste Beispiel ist kostenlos.
         </div>
       </div>
     ),

@@ -10,7 +10,7 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo"
 
 export const metadata: Metadata = {
   title: "Über Phillip",
-  description: "Wer hinter Vybs Graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
+  description: "Wer hinter vybs.graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
 };
 
 export default function AboutPage() {
@@ -48,7 +48,7 @@ export default function AboutPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x">
           <Reveal as="h2" className="max-w-[16ch] text-[clamp(2.25rem,5vw,4.25rem)]">
-            Vier Dinge, auf die Sie sich verlassen können.
+            Vier Dinge, auf die du dich verlassen kannst.
           </Reveal>
           <Reveal stagger={0.1} className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] bg-line sm:grid-cols-2">
             {aboutPhillip.principles.map((p) => (

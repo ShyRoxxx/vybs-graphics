@@ -12,8 +12,8 @@ export function SiteFooter() {
         <div className="max-w-md">
           <Logo size={40} />
           <p className="mt-6 text-text-2">
-            Social-Media-Design, Anzeigen, Flyer und Logos für Unternehmen, Selbstständige und lokale Geschäfte.
-            Das erste Beispieldesign ist kostenlos.
+            Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel für Unternehmen, Selbstständige
+            und lokale Betriebe. Feste Preise, das erste Beispieldesign ist kostenlos.
           </p>
           <Link href={primaryCta.href} className="btn btn-primary mt-8">
             {primaryCta.label}

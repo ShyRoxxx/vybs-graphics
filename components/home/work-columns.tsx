@@ -47,7 +47,7 @@ export function WorkColumns() {
       <div className="container-x">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <Reveal as="h2" className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">
-            Drei Arten von Arbeit, die ich am häufigsten mache.
+            Ausgewählte Arbeiten.
           </Reveal>
           <Reveal delay={0.15}>
             <Link href="/portfolio" className="link-arrow min-h-11 text-text-2 hover:text-text">
@@ -82,7 +82,9 @@ export function WorkColumns() {
                   <h3 className="text-[clamp(1.75rem,3vw,2.5rem)]">
                     {w.title} <span style={{ color: w.tint }}>{w.titleAccent}</span>
                   </h3>
-                  <p className="mt-1 text-sm font-semibold uppercase tracking-[0.12em] text-text-3">{w.client}</p>
+                  <p className="mt-1 text-sm text-text-3">
+                    <span className="font-semibold text-text-2">{w.kind}</span> · {w.client} · {w.format}
+                  </p>
                   <p className="mt-4 text-text-2">{w.description}</p>
                 </div>
               </article>

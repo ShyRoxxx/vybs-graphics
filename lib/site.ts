@@ -1,7 +1,7 @@
 export const site = {
   name: "Vybs Graphics",
   owner: "Phillip",
-  tagline: "Social-Media-Design und Branding für kleine Unternehmen",
+  tagline: "Grafikdesign für Unternehmen, Selbstständige und lokale Betriebe",
   // Platzhalter bis zur Bestätigung durch den Inhaber (siehe Übergabeliste).
   email: "hallo@vybs.graphics",
   instagram: "https://www.instagram.com/vybs.graphics/",
@@ -23,6 +23,6 @@ export const nav = [
 
 export const primaryCta = {
   href: "/kostenloses-beispiel",
-  label: "Kostenloses Beispiel anfordern",
+  label: "Kostenloses Beispieldesign anfordern",
   short: "Kostenloses Beispiel",
 } as const;

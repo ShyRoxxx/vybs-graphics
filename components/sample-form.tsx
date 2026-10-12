@@ -1,23 +1,18 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useId, useState, useTransition, type FormEvent } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, m } from "motion/react";
-import { designFormats, priceTiers } from "@/lib/content";
+import { m } from "motion/react";
+import { priceItems } from "@/lib/content";
 import { site } from "@/lib/site";
+import { DUR, EASE_OUT } from "@/lib/motion";
+import { sendInquiry, type InquiryResult } from "@/app/actions/inquiry";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
+import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
-type Values = {
-  company: string;
-  contact: string;
-  email: string;
-  link: string;
-  format: string;
-  tier: string;
-  message: string;
-};
-
+type Values = { name: string; email: string; service: string; message: string; link: string };
 type Errors = Partial<Record<keyof Values, string>>;
 
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -25,111 +20,74 @@ const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 export function SampleForm() {
   const params = useSearchParams();
   const id = useId();
+  const [pending, startTransition] = useTransition();
   const [values, setValues] = useState<Values>(() => {
+    const leistung = params.get("leistung") ?? params.get("format") ?? "";
     const firma = params.get("firma") ?? "";
-    const format = params.get("format") ?? "";
     const branche = params.get("branche");
-    const paket = params.get("paket") ?? "";
     return {
-      company: firma,
-      contact: "",
+      name: firma,
       email: "",
-      link: "",
-      format: designFormats.some((f) => f.label === format) ? format : "",
-      tier: priceTiers.some((t) => t.id === paket) ? paket : "",
+      service: priceItems.some((p) => p.name === leistung) ? leistung : leistung ? "Etwas anderes" : "",
       message: branche ? `Branche: ${branche}\n` : "",
+      link: "",
     };
   });
   const [errors, setErrors] = useState<Errors>({});
-  const [sent, setSent] = useState(false);
+  const [result, setResult] = useState<InquiryResult | null>(null);
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
     setErrors((er) => ({ ...er, [k]: undefined }));
   };
 
-  const validate = (): Errors => {
-    const er: Errors = {};
-    if (!values.company.trim()) er.company = "Bitte den Namen Ihres Unternehmens angeben, damit das Beispiel in Ihrem Namen entsteht.";
-    if (!values.contact.trim()) er.contact = "Bitte sagen Sie mir, wen ich ansprechen darf.";
-    if (!values.email.trim()) er.email = "Bitte eine E-Mail-Adresse angeben, an die ich das Beispiel schicken kann.";
-    else if (!emailOk(values.email)) er.email = "Diese E-Mail-Adresse sieht unvollständig aus, bitte prüfen Sie sie kurz.";
-    if (!values.format) er.format = "Bitte wählen Sie, welche Art Design Sie sehen möchten.";
-    if (values.message.replace(/^Branche:.*\n?/, "").trim().length < 10) er.message = "Zwei, drei Sätze reichen: Worum soll es gehen, was soll der Beitrag erreichen?";
-    return er;
-  };
-
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const er = validate();
+    const er: Errors = {};
+    if (!values.name.trim()) er.name = "Bitte deinen Namen oder dein Unternehmen angeben, damit das Beispiel in deinem Namen entsteht.";
+    if (!values.email.trim()) er.email = "Bitte eine E-Mail-Adresse angeben, an die ich das Beispiel schicken kann.";
+    else if (!emailOk(values.email)) er.email = "Diese E-Mail-Adresse sieht unvollständig aus, bitte prüf sie kurz.";
+    if (!values.service) er.service = "Bitte wähl aus, welche Art Design du sehen möchtest.";
+    if (values.message.replace(/^Branche:.*\n?/, "").trim().length < 10) er.message = "Zwei, drei Sätze reichen: Worum soll es gehen, was soll das Design erreichen?";
     setErrors(er);
     const first = Object.keys(er)[0];
     if (first) {
       document.getElementById(`${id}-${first}`)?.focus();
       return;
     }
-    const tier = priceTiers.find((t) => t.id === values.tier);
-    const body = [
-      `Unternehmen: ${values.company}`,
-      `Ansprechperson: ${values.contact}`,
-      `E-Mail: ${values.email}`,
-      `Website / Profil: ${values.link || "–"}`,
-      `Gewünschtes Design: ${values.format}`,
-      `Preisstufe (optional): ${tier ? `${tier.name} (${tier.price} €)` : "noch offen"}`,
-      "",
-      "Vorstellungen:",
-      values.message,
-      "",
-      "Logo oder Fotos schicke ich nach Ihrer Rückmeldung als Anhang.",
-    ].join("\n");
-    const href = `mailto:${site.email}?subject=${encodeURIComponent(`Kostenloses Beispieldesign: ${values.company}`)}&body=${encodeURIComponent(body)}`;
-    window.location.href = href;
-    setSent(true);
+    startTransition(async () => {
+      const res = await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message });
+      if (res.status === "mailto") window.location.href = res.href;
+      setResult(res);
+    });
   };
 
-  const field = ({
-    name,
-    label,
-    hint,
-    children,
-  }: {
-    name: keyof Values;
-    label: string;
-    hint?: string;
-    children: React.ReactNode;
-  }) => (
+  const field = (name: keyof Values, label: string, hint: string | undefined, control: React.ReactNode) => (
     <div key={name}>
       <label htmlFor={`${id}-${name}`} className="mb-2 block text-sm font-semibold text-text">
         {label}
         {hint && <span className="ml-2 font-normal text-text-3">{hint}</span>}
       </label>
-      {children}
-      <AnimatePresence>
-        {errors[name] && (
-          <m.p
-            id={`${id}-${name}-error`}
-            role="alert"
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="mt-2 text-sm text-danger"
-          >
-            {errors[name]}
-          </m.p>
-        )}
-      </AnimatePresence>
+      {control}
+      {errors[name] && (
+        <p id={`${id}-${name}-error`} role="alert" className="mt-2 text-sm text-danger">
+          {errors[name]}
+        </p>
+      )}
     </div>
   );
 
-  const aria = (name: keyof Values) => ({
+  const aria = (name: keyof Values, required = true) => ({
     id: `${id}-${name}`,
+    "aria-required": required || undefined,
     "aria-invalid": errors[name] ? true : undefined,
     "aria-describedby": errors[name] ? `${id}-${name}-error` : undefined,
   });
 
-  if (sent) {
+  if (result && result.status !== "error") {
+    const direct = result.status === "sent";
     return (
-      <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="card p-8 md:p-10">
+      <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8 md:p-10" role="status">
         <m.span
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -138,25 +96,33 @@ export function SampleForm() {
         >
           <CheckIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 className="mt-6 text-[2rem]">Ihr E-Mail-Programm sollte sich jetzt geöffnet haben.</h2>
+        <h2 className="mt-6 text-[2rem]">{direct ? "Deine Anfrage ist angekommen." : "Dein E-Mail-Programm sollte sich jetzt geöffnet haben."}</h2>
         <p className="measure mt-4 text-text-2">
-          Die Anfrage ist darin vorbereitet. Schicken Sie sie einfach ab, Logo oder Fotos können Sie direkt anhängen.
-          Ich melde mich mit dem Beispieldesign zurück, {site.replyTimeShort}.
+          {direct
+            ? `Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, ${site.replyTimeShort}. Logo oder Fotos kannst du mir einfach per Antwort auf meine E-Mail schicken.`
+            : `Die Anfrage ist darin vorbereitet. Schick sie einfach ab, Logo oder Fotos kannst du direkt anhängen. Ich melde mich mit dem Beispieldesign, ${site.replyTimeShort}.`}
         </p>
-        <p className="measure mt-4 text-text-2">
-          Hat sich nichts geöffnet? Dann schreiben Sie mir direkt an{" "}
-          <a href={`mailto:${site.email}`} className="link-u text-text">
-            {site.email}
-          </a>{" "}
-          oder per Instagram an{" "}
-          <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
-            {site.instagramHandle}
-          </a>
-          .
-        </p>
-        <button type="button" onClick={() => setSent(false)} className="btn btn-ghost mt-8">
-          Zurück zum Formular
-        </button>
+        {!direct && (
+          <p className="measure mt-4 text-text-2">
+            Hat sich nichts geöffnet? Dann schreib mir direkt an{" "}
+            <a href={`mailto:${site.email}`} className="link-u text-text">
+              {site.email}
+            </a>{" "}
+            oder per Instagram an{" "}
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
+              {site.instagramHandle}
+            </a>
+            .
+          </p>
+        )}
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="/portfolio" className="btn btn-ghost">
+            Arbeiten ansehen
+          </Link>
+          <button type="button" onClick={() => setResult(null)} className="btn btn-ghost">
+            Noch eine Anfrage
+          </button>
+        </div>
       </m.div>
     );
   }
@@ -164,64 +130,78 @@ export function SampleForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="card p-6 md:p-10">
       <div className="grid gap-6 md:grid-cols-2">
-        {field({ name: "company", label: "Name des Unternehmens", children: (
-          <input {...aria("company")} aria-required className="field" value={values.company} onChange={set("company")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />
-) })}
-        {field({ name: "contact", label: "Ansprechperson", children: (
-          <input {...aria("contact")} aria-required className="field" value={values.contact} onChange={set("contact")} autoComplete="name" placeholder="Vor- und Nachname" />
-) })}
-        {field({ name: "email", label: "E-Mail-Adresse", children: (
-          <input {...aria("email")} aria-required type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" placeholder="name@firma.de" />
-) })}
-        {field({ name: "link", label: "Website oder Social-Media-Profil", hint: "optional", children: (
-          <input {...aria("link")} type="text" className="field" value={values.link} onChange={set("link")} inputMode="url" autoComplete="url" spellCheck={false} autoCapitalize="none" placeholder="www.firma.de oder @instagramname" />
-) })}
-        {field({ name: "format", label: "Gewünschte Designart", children: (
-          <select {...aria("format")} aria-required className="field" value={values.format} onChange={set("format")}>
+        {field("name", "Name oder Unternehmen", undefined, <input {...aria("name")} className="field" value={values.name} onChange={set("name")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />)}
+        {field(
+          "email",
+          "E-Mail-Adresse",
+          undefined,
+          <input {...aria("email")} type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" placeholder="name@firma.de" />,
+        )}
+        {field(
+          "service",
+          "Gewünschte Designleistung",
+          undefined,
+          <select {...aria("service")} className="field" value={values.service} onChange={set("service")}>
             <option value="">Bitte wählen</option>
-            {designFormats.map((f) => (
-              <option key={f.id} value={f.label}>
-                {f.label}
+            {priceItems.map((p) => (
+              <option key={p.id} value={p.name}>
+                {p.name}
+                {p.price !== null ? ` · ${p.priceNote.startsWith("ab") ? "ab " : ""}${p.price} €` : " · Angebot"}
               </option>
             ))}
             <option value="Etwas anderes">Etwas anderes</option>
-          </select>
-) })}
-        {field({ name: "tier", label: "Preisstufe, falls Sie schon eine im Blick haben", hint: "optional", children: (
-          <select {...aria("tier")} className="field" value={values.tier} onChange={set("tier")}>
-            <option value="">Noch offen</option>
-            {priceTiers.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.name} – {t.price} € pro Design
-              </option>
-            ))}
-          </select>
-) })}
+          </select>,
+        )}
+        {field(
+          "link",
+          "Website oder Instagram-Profil",
+          "optional",
+          <input {...aria("link", false)} type="text" className="field" value={values.link} onChange={set("link")} inputMode="url" autoComplete="url" spellCheck={false} autoCapitalize="none" placeholder="www.firma.de oder @instagramname" />,
+        )}
         <div className="md:col-span-2">
-          {field({ name: "message", label: "Was schwebt Ihnen vor?", children: (
+          {field(
+            "message",
+            "Was soll das Design zeigen?",
+            undefined,
             <textarea
               {...aria("message")}
-              aria-required
-              className="field min-h-[9rem] resize-y"
+              className="field min-h-[8rem] resize-y"
               value={values.message}
               onChange={set("message")}
-              placeholder="Worum soll es gehen? Ein Angebot, eine Leistung, eine Neuigkeit? Gibt es Farben oder Beiträge, die Ihnen gefallen?"
-            />
-) })}
+              placeholder="Worum geht es? Ein Angebot, eine Leistung, eine Neuigkeit? Hast du Farben oder Beiträge, die dir gefallen?"
+            />,
+          )}
         </div>
       </div>
 
-      <div className="mt-6 rounded-[var(--radius-field)] bg-ink-3/60 px-4 py-3 text-sm text-text-2">
-        Logo, Fotos oder andere Dateien? Antworten Sie einfach auf meine Rückmeldung mit Anhang, das ist der einfachste Weg.
-      </div>
+      {result?.status === "error" && (
+        <p role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
+          {result.message} Schreib mir alternativ direkt an{" "}
+          <a href={`mailto:${site.email}`} className="underline">
+            {site.email}
+          </a>{" "}
+          oder per Instagram.
+        </p>
+      )}
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button type="submit" className="btn btn-primary btn-lg">
-          Kostenloses Beispiel anfordern
-          <ArrowUpRightIcon size={18} weight="bold" aria-hidden />
+        <button type="submit" className="btn btn-primary btn-lg" disabled={pending} aria-busy={pending}>
+          {pending ? "Wird gesendet …" : "Kostenloses Beispieldesign anfordern"}
+          {!pending && <ArrowUpRightIcon size={18} weight="bold" aria-hidden />}
         </button>
-        <p className="text-sm text-text-3">Kein Kauf, kein Vertrag. Die Anfrage geht als E-Mail an {site.email}.</p>
+        <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm text-text-2 hover:text-text">
+          <InstagramLogoIcon size={18} aria-hidden />
+          Oder per Instagram schreiben
+          <span className="sr-only">(öffnet in neuem Tab)</span>
+        </a>
       </div>
+      <p className="mt-5 text-xs leading-relaxed text-text-3">
+        Kein Kauf, kein Vertrag. Deine Angaben verwende ich nur für dieses Beispiel und die Antwort darauf. Mehr dazu in der{" "}
+        <Link href="/datenschutz" className="link-u">
+          Datenschutzerklärung
+        </Link>
+        .
+      </p>
     </form>
   );
 }
