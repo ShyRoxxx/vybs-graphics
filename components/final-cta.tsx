@@ -3,7 +3,7 @@ import { Reveal } from "@/components/reveal";
 import { primaryCta, site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
-export function FinalCta({ title = "Ihr erstes Design wartet.", text }: { title?: string; text?: string }) {
+export function FinalCta({ title = "Dein erstes Design wartet.", text }: { title?: string; text?: string }) {
   return (
     <section className="relative overflow-hidden">
       <div className="container-x py-6">
@@ -15,7 +15,7 @@ export function FinalCta({ title = "Ihr erstes Design wartet.", text }: { title?
           </Reveal>
           <Reveal as="p" className="mx-auto mt-6 max-w-[48ch] text-lg text-[#d8ecfb]" delay={0.1}>
             {text ??
-              "Zwei Minuten Formular, ein echtes Beispieldesign in Ihrem Namen. Kostenlos und ohne Verpflichtung."}
+              "Zwei Minuten Formular, ein echtes Beispieldesign in deinem Namen. Kostenlos, unverbindlich, und du kaufst nur, wenn es dir gefällt."}
           </Reveal>
           <Reveal className="mt-10 flex flex-col items-center gap-4" delay={0.2}>
             <Link href={primaryCta.href} className="btn btn-lg bg-white text-[#0b2d47] shadow-[0_20px_50px_-20px_rgba(0,0,0,.6)] hover:bg-[#eaf5ff]">

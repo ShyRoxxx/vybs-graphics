@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import Link from "next/link";
 import { m } from "motion/react";
 import { DUR } from "@/lib/motion";
-import { designFormats, industries } from "@/lib/content";
+import { designFormats, industries, priceItems } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 import { Reveal } from "@/components/reveal";
 
@@ -20,7 +20,7 @@ export function SampleBuilder() {
   const params = new URLSearchParams();
   if (company.trim()) params.set("firma", company.trim());
   params.set("branche", industry.label);
-  params.set("format", format.label);
+  params.set("leistung", priceItems.find((p) => p.id === format.priceId)?.name ?? format.label);
 
   return (
     <section id="konfigurator" className="section relative scroll-mt-20 overflow-hidden">
@@ -29,18 +29,18 @@ export function SampleBuilder() {
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
           <div>
             <Reveal as="h2" className="max-w-[14ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">
-              Probieren Sie es aus. Mit Ihrem Namen.
+              Probier es aus. Mit deinem Namen.
             </Reveal>
             <Reveal as="p" className="measure mt-6 text-text-2" delay={0.1}>
-              Tippen Sie Ihren Firmennamen ein und wählen Sie Branche und Format. Die Vorschau zeigt, in welche
-              Richtung ein Beitrag gehen kann. Ihr echtes Beispiel gestalte ich dann individuell, mit Ihrem Logo,
-              Ihren Fotos und Ihrem Thema.
+              Tipp deinen Firmennamen ein und wähl Branche und Leistung. Die Vorschau zeigt, in welche Richtung
+              ein Design gehen kann. Dein echtes Beispiel gestalte ich dann individuell, mit deinem Logo, deinen
+              Fotos und deinem Thema.
             </Reveal>
 
             <Reveal className="mt-10 space-y-8" delay={0.2}>
               <div>
                 <label htmlFor={inputId} className="mb-2 block text-sm font-semibold text-text-2">
-                  Firmenname
+                  Dein Firmenname
                 </label>
                 <input
                   id={inputId}
@@ -75,7 +75,7 @@ export function SampleBuilder() {
               </fieldset>
 
               <fieldset>
-                <legend className="mb-3 text-sm font-semibold text-text-2">Format</legend>
+                <legend className="mb-3 text-sm font-semibold text-text-2">Leistung</legend>
                 <div className="flex flex-wrap gap-2">
                   {designFormats.map((f) => {
                     const on = f.id === formatId;
@@ -100,7 +100,7 @@ export function SampleBuilder() {
                 <Link href={`/kostenloses-beispiel?${params.toString()}`} className="btn btn-primary btn-lg">
                   Genau so ein Beispiel anfordern
                 </Link>
-                <p className="text-sm text-text-3">Kostenlos, unverbindlich, in Ihrem Namen.</p>
+                <p className="text-sm text-text-3">Kostenlos, unverbindlich, in deinem Namen.</p>
               </div>
             </Reveal>
           </div>
@@ -111,7 +111,7 @@ export function SampleBuilder() {
                 <MockPost company={company} industry={industry} format={format} />
               </m.div>
             </div>
-            <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Ihr Design wird individuell gestaltet.</p>
+            <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Dein Design wird individuell gestaltet.</p>
           </Reveal>
         </div>
       </div>

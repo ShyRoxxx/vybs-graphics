@@ -52,4 +52,4 @@ Bildschirm angesehen, die Kacheln sind bunt und brauchen Ruhe drumherum), nicht 
   neben weiterscrollendem Text; Beispiel-Konfigurator mit Live-Vorschau). Nichts wird mitten auf
   der Seite angehalten. `prefers-reduced-motion` zeigt den Endzustand.
 - **Bildwelt:** nur Phillips eigene Arbeiten (Portfolio-Grafik) und sein Logo. Keine Stockfotos.
-- **Tonfall:** Sie-Form, kurze Sätze, konkret („Instagram-Post“, „Carousel“, „Flyer“), Preise sichtbar.
+- **Tonfall:** Du-Form (nach Phillips Feedback), kurze Sätze, konkret („Instagram-Post“, „Flyer“, „Visitenkarte“), Festpreise sichtbar, kostenloses Beispiel als roter Faden.

@@ -10,15 +10,15 @@ import { SparkleIcon } from "@phosphor-icons/react/dist/ssr/Sparkle";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: "Allgemeine Anfragen, individuelle Projekte und laufende Zusammenarbeit: So erreichen Sie Vybs Graphics.",
+  description: "Allgemeine Anfragen, individuelle Projekte und laufende Zusammenarbeit: So erreichst du Vybs Graphics.",
 };
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
-        title="Schreiben Sie mir."
-        text="Für individuelle Projekte, Logos, komplette Brandings oder eine laufende Zusammenarbeit. Wenn Sie zuerst sehen wollen, wie ich arbeite, ist das kostenlose Beispieldesign der schnellere Weg."
+        title="Schreib mir."
+        text="Für individuelle Projekte, Logos, komplette Brandings oder eine laufende Zusammenarbeit. Wenn du zuerst sehen willst, wie ich arbeite, ist das kostenlose Beispieldesign der schnellere Weg."
       />
       <section className="pb-[var(--section)]">
         <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -46,7 +46,7 @@ export default function ContactPage() {
                 <SparkleIcon size={22} weight="fill" aria-hidden />
               </span>
               <span>
-                <span className="block text-sm opacity-85">Noch kein Kunde?</span>
+                <span className="block text-sm opacity-85">Noch unsicher?</span>
                 <span className="block font-semibold">Kostenloses Beispieldesign anfordern</span>
               </span>
             </Link>

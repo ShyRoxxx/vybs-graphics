@@ -24,7 +24,7 @@ export default function FaqPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <PageHero title="Häufige" accent="Fragen." text="Was Betriebe mich meist fragen, bevor sie das erste Beispiel anfordern. Fehlt Ihre Frage, schreiben Sie mir einfach." />
+      <PageHero title="Häufige" accent="Fragen." text="Kostenloses Beispiel, Festpreise, Dateien, Dauer: die Fragen, die vor der ersten Anfrage kommen. Fehlt deine, schreib mir einfach." />
       <section className="pb-[var(--section)]">
         <div className="container-x max-w-4xl">
           <Reveal>

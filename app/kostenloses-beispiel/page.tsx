@@ -8,7 +8,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 export const metadata: Metadata = {
   title: "Kostenloses Beispieldesign anfordern",
-  description: "Beschreiben Sie kurz Ihren Betrieb, Sie bekommen ein echtes Beispieldesign in Ihrem Namen. Kostenlos und unverbindlich.",
+  description: "Beschreib kurz deinen Betrieb und bekomm ein echtes Beispieldesign in deinem Namen. Kostenlos und unverbindlich.",
 };
 
 export default function SamplePage() {
@@ -38,7 +38,7 @@ export default function SamplePage() {
             <Reveal delay={0.3} className="mt-10 border-t border-line pt-8">
               <h2 className="font-sans text-sm font-semibold uppercase tracking-[0.12em] text-text-3">Was danach passiert</h2>
               <ol className="mt-4 space-y-3">
-                {processSteps.slice(1, 4).map((s, i) => (
+                {processSteps.slice(2, 5).map((s, i) => (
                   <li key={s.title} className="flex gap-4">
                     <span className="display text-xl leading-none text-accent">{i + 1}</span>
                     <div>

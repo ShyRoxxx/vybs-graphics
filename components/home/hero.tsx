@@ -6,10 +6,9 @@ import Link from "next/link";
 import { useGsapScene } from "@/lib/gsap";
 import { workCategories } from "@/lib/content";
 import { primaryCta } from "@/lib/site";
-import { Arrow } from "@/components/ui/arrow";
 import { reduceMotion, scrubFor } from "@/lib/motion";
 
-const lines = ["Erst das Design.", "Dann die", "Entscheidung."];
+const lines = ["Professionelles", "Grafikdesign für", "dein Unternehmen."];
 const rotations = [-9, 0, 9];
 
 export function Hero() {
@@ -78,31 +77,30 @@ export function Hero() {
 
       <div className="container-x grid items-end gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-8">
         <div data-hero-copy className="relative z-10 max-w-[44rem]">
-          <h1 className="text-[clamp(2.5rem,6.5vw,5.75rem)] leading-[0.95]">
+          <h1 className="text-[clamp(2.4rem,6vw,5.5rem)] leading-[0.95]">
             {lines.map((line, i) => (
               <span key={line} className="hero-line block overflow-hidden pb-[0.08em] -mb-[0.08em] pr-[0.12em]">
-                <span className={`block ${i === 0 ? "text-accent" : ""}`} style={{ "--d": `${0.15 + i * 0.09}s` } as React.CSSProperties}>
+                <span className={`block ${i === 2 ? "text-accent" : ""}`} style={{ "--d": `${0.15 + i * 0.09}s` } as React.CSSProperties}>
                   {line}
                 </span>
               </span>
             ))}
           </h1>
           <p className="hero-fade measure mt-8 text-lg leading-relaxed text-text-2 md:text-xl" style={{ "--d": "0.55s" } as React.CSSProperties}>
-            Vybs Graphics gestaltet Instagram-Posts, Carousels, Anzeigen, Flyer und Logos für Unternehmen,
-            Selbstständige und lokale Geschäfte. Das erste Beispieldesign für Ihren Betrieb ist kostenlos und
-            unverbindlich.
+            Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel für Unternehmen, Selbstständige
+            und lokale Betriebe. Feste Preise pro Design. Und bevor du etwas bezahlst, bekommst du ein kostenloses
+            Beispieldesign für deinen Betrieb.
           </p>
           <div className="hero-fade mt-9 flex flex-wrap items-center gap-x-7 gap-y-4" style={{ "--d": "0.65s" } as React.CSSProperties}>
             <Link href={primaryCta.href} className="btn btn-primary btn-lg">
               {primaryCta.label}
             </Link>
-            <a href="#arbeiten" className="link-arrow min-h-11 text-text-2 hover:text-text">
+            <Link href="/portfolio" className="btn btn-ghost btn-lg">
               Arbeiten ansehen
-              <Arrow className="h-4 w-4 rotate-90" />
-            </a>
+            </Link>
           </div>
           <p className="hero-fade mt-8 text-sm text-text-3" style={{ "--d": "0.75s" } as React.CSSProperties}>
-            Ab 15 € pro Design · Komplett digital · Ohne Vertragslaufzeit
+            Kostenloses Beispiel · Festpreise ab 15 € · Komplett digital
           </p>
         </div>
 

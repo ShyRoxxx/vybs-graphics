@@ -26,18 +26,18 @@ const sans = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – Social-Media-Design und Branding für kleine Unternehmen`,
+    default: `${site.name} – Grafikdesign für dein Unternehmen`,
     template: `%s – ${site.name}`,
   },
   description:
-    "Instagram-Posts, Carousels, Anzeigen, Flyer und Logos für Unternehmen, Selbstständige und lokale Geschäfte. Das erste Beispieldesign ist kostenlos.",
+    "Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel. Feste Preise pro Design, kostenloses Beispieldesign vorab.",
   robots: { index: false, follow: false },
   openGraph: {
     type: "website",
     locale: "de_DE",
     siteName: site.name,
-    title: `${site.name} – Erst sehen, dann entscheiden.`,
-    description: "Social-Media-Design und Branding. Das erste Beispieldesign für Ihren Betrieb ist kostenlos.",
+    title: `${site.name} – Professionelles Grafikdesign für dein Unternehmen`,
+    description: "Feste Preise pro Design. Das erste Beispieldesign für deinen Betrieb ist kostenlos.",
   },
   icons: {
     icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],

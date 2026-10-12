@@ -19,7 +19,7 @@ export default function PortfolioPage() {
       <PageHero
         title="Arbeiten, die man dem Betrieb"
         accent="zuordnen kann."
-        text="Drei Serien, drei Betriebe, drei Farbwelten. Keine Vorlage mit getauschtem Logo, sondern Beiträge, die zum jeweiligen Unternehmen gehören. Das Portfolio wächst mit jedem Auftrag und ist so angelegt, dass neue Arbeiten einfach dazukommen."
+        text="Wenige, dafür vollständige Arbeiten: drei Instagram-Carousels als zusammenhängende Serien, jeweils mit allen Slides. Kundenprojekte sind als solche gekennzeichnet, Konzeptarbeiten ebenfalls. Flyer, Visitenkarten und Logos folgen, sobald die Druckdaten in Mockups fotografiert sind."
       />
 
       <section className="pb-[clamp(4rem,8vw,7rem)]">
@@ -27,7 +27,7 @@ export default function PortfolioPage() {
           <Reveal from="scale" distance={0}>
             <WorkOverview />
           </Reveal>
-          <p className="mt-4 text-center text-sm text-text-3">Klicken Sie auf ein Bild, um es groß zu sehen. Pfeiltasten blättern.</p>
+          <p className="mt-4 text-center text-sm text-text-3">Klick auf ein Bild, um es groß zu sehen. Pfeiltasten blättern.</p>
         </div>
       </section>
 
@@ -46,8 +46,11 @@ export default function PortfolioPage() {
                     <Reveal as="h2" className="text-[clamp(2.25rem,5vw,4.25rem)]">
                       {w.title} <span style={{ color: w.tint }}>{w.titleAccent}</span>
                     </Reveal>
-                    <Reveal as="p" delay={0.05} className="mt-2 text-sm font-semibold uppercase tracking-[0.12em] text-text-3">
-                      {w.client}
+                    <Reveal as="p" delay={0.05} className="mt-3 flex flex-wrap items-center gap-2 text-sm text-text-3">
+                      <span className={`inline-flex items-center rounded-full px-3 py-1 font-semibold ${w.kind === "Kundenprojekt" ? "bg-accent/15 text-accent" : "bg-ink-3 text-text-2"}`}>{w.kind}</span>
+                      <span>{w.client}</span>
+                      <span aria-hidden>·</span>
+                      <span>{w.format}</span>
                     </Reveal>
                     <Reveal as="p" delay={0.1} className="measure mt-6 text-lg text-text-2">
                       {w.description}
@@ -78,7 +81,7 @@ export default function PortfolioPage() {
               <div>
                 <h2 className="text-[clamp(1.75rem,3.5vw,2.75rem)]">Das nächste Beispiel hier könnte Ihres sein.</h2>
                 <p className="measure mt-4 text-text-2">
-                  Ich zeige lieber ein Design für Ihren Betrieb als zehn für andere. Fordern Sie es kostenlos an, danach entscheiden Sie.
+                  Ich zeige dir lieber ein Design für deinen Betrieb als zehn für andere. Fordere es kostenlos an, danach entscheidest du.
                 </p>
               </div>
               <Link href={primaryCta.href} className="btn btn-primary btn-lg">
@@ -88,7 +91,7 @@ export default function PortfolioPage() {
           </Reveal>
         </div>
       </section>
-      <FinalCta title="Lieber gleich Ihr eigenes sehen?" />
+      <FinalCta title="Lieber gleich dein eigenes sehen?" />
     </>
   );
 }

@@ -9,7 +9,7 @@ export default function NotFound() {
         <p aria-hidden className="display text-[clamp(6rem,22vw,16rem)] leading-none text-ink-3">404</p>
         <h1 className="mt-2 max-w-[16ch] text-[clamp(2rem,5vw,4rem)]">Diese Seite gibt es nicht. Ein Design dafür schon.</h1>
         <p className="measure mt-6 text-lg text-text-2">
-          Der Link ist vermutlich veraltet oder vertippt. Von hier geht es zurück zur Startseite oder direkt zum kostenlosen Beispiel.
+          Der Link ist vermutlich veraltet oder vertippt. Von hier kommst du zurück zur Startseite oder direkt zu deinem kostenlosen Beispiel.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Link href="/" className="btn btn-ghost btn-lg">

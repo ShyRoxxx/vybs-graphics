@@ -17,13 +17,10 @@ export function AboutTeaser() {
           </Reveal>
           <div>
             <Reveal as="h2" className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">
-              Ein Designer, kein Ticketsystem.
+              Du arbeitest direkt mit mir.
             </Reveal>
             <Reveal as="p" className="measure mt-6 text-lg text-text-2" delay={0.1}>
               {aboutPhillip.intro}
-            </Reveal>
-            <Reveal as="p" className="measure mt-4 text-text-2" delay={0.15}>
-              {aboutPhillip.paragraphs[2]}
             </Reveal>
             <Reveal delay={0.2} className="mt-8">
               <Link href="/ueber-mich" className="link-arrow min-h-11 text-text-2 hover:text-text">

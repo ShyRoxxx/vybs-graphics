@@ -1,3 +1,5 @@
+export type WorkKind = "Kundenprojekt" | "Konzept";
+
 export type WorkCategory = {
   slug: "branding" | "carousel" | "social";
   title: string;
@@ -6,6 +8,8 @@ export type WorkCategory = {
   image: string;
   alt: string;
   client: string;
+  kind: WorkKind;
+  format: string;
   description: string;
   details: string[];
 };
@@ -17,11 +21,13 @@ export const workCategories: WorkCategory[] = [
     titleAccent: "Branding",
     tint: "#8B5CF6",
     image: "/images/work-branding.webp",
-    alt: "Drei Instagram-Kacheln für eine Content-Beratung: helle Karten mit violettem Akzent, Überschrift „Dein Content sieht gut aus. Aber verkauft er auch?“",
+    alt: "Instagram-Carousel für eine Content-Beratung, drei Slides: helle Kacheln mit violettem Akzent, Einstiegsfrage „Dein Content sieht gut aus. Aber verkauft er auch?“, Liste mit drei Punkten und Abschluss mit Handlungsaufforderung",
     client: "Content-Beratung",
+    kind: "Kundenprojekt",
+    format: "Instagram-Carousel, 3 Slides",
     description:
-      "Eine Beratung wollte auf Instagram nicht wie ein weiteres Coaching-Profil aussehen. Entstanden ist eine Serie aus hellen Kacheln mit einem violetten Akzent, einer klaren Frage als Einstieg und einer nummerierten Liste, die man auch auf dem Handy in drei Sekunden erfasst.",
-    details: ["Instagram-Serie, 3 Kacheln", "Eigene Farbwelt und Typografie", "Abschlusskachel mit Handlungsaufforderung"],
+      "Eine Beratung wollte auf Instagram nicht wie ein weiteres Coaching-Profil aussehen. Entstanden ist ein Carousel aus hellen Kacheln mit violettem Akzent: eine klare Frage als Einstieg, eine nummerierte Liste in der Mitte und zum Schluss die Einladung zum Gespräch.",
+    details: ["Alle drei Slides als zusammenhängende Serie", "Eigene Farbwelt und Typografie", "Abschluss-Slide mit Handlungsaufforderung"],
   },
   {
     slug: "carousel",
@@ -29,11 +35,13 @@ export const workCategories: WorkCategory[] = [
     titleAccent: "Slide",
     tint: "#5BC276",
     image: "/images/work-carousel.webp",
-    alt: "Drei Carousel-Kacheln für eine Gebäudereinigung: Fensterfotos mit grün-blauen Akzenten, Überschrift „Ihre Fenster verdienen etwas Besseres“",
+    alt: "Instagram-Carousel für eine Gebäudereinigung, drei Slides: Fensterfotos mit grün-blauen Akzenten, Überschriften „Ihre Fenster verdienen etwas Besseres“, „Ihre Immobilie verdient bewundernde Blicke“ und „Klare Fenster. Besseres Gefühl.“",
     client: "Gebäudereinigung",
+    kind: "Kundenprojekt",
+    format: "Instagram-Carousel, 3 Slides",
     description:
-      "Für eine Gebäudereinigung aus der Region Hildesheim ging es um Fensterreinigung. Statt Putzeimer und Lächeln auf Bestellung: saubere Glasfronten, Tageslicht, das Firmengrün als Akzent und auf jeder Kachel ein Argument, das man beim Wischen tatsächlich nennt.",
-    details: ["Carousel mit 3 Slides", "Firmenlogo und Farbwelt übernommen", "Buttons und Hinweise für Termine"],
+      "Für eine Gebäudereinigung aus der Region Hildesheim ging es um Fensterreinigung. Statt Putzeimer und Lächeln auf Bestellung: saubere Glasfronten, Tageslicht, das Firmengrün als Akzent und auf jedem Slide ein Argument, das man beim Kunden tatsächlich nennt.",
+    details: ["Drei Slides mit durchgehendem Aufbau", "Firmenlogo und Farbwelt übernommen", "Hinweise zu Terminen und Einzugsgebiet"],
   },
   {
     slug: "social",
@@ -41,176 +49,217 @@ export const workCategories: WorkCategory[] = [
     titleAccent: "Creatives",
     tint: "#C9A96A",
     image: "/images/work-social.webp",
-    alt: "Drei Social-Media-Kacheln für eine Unternehmensberatung: Foto einer Frau am Laptop, goldene Akzente, Überschrift „Warum 90 % scheitern“",
+    alt: "Instagram-Carousel für eine Unternehmensberatung, drei Slides: Foto einer Frau am Laptop, goldene Akzente, Überschriften „Warum 90 % scheitern“, „Dein Erfolg ist planbar“ und „Klarer Plan. Klare Entscheidung. Klares Ergebnis.“",
     client: "Unternehmensberatung",
+    kind: "Kundenprojekt",
+    format: "Instagram-Carousel, 3 Slides",
     description:
       "Eine Beratung für Gründer brauchte Beiträge, die seriös wirken, ohne nach Bank auszusehen. Gold auf Weiß, ein echtes Foto statt Symbolbild und ein Aufbau, der erst das Problem benennt und dann den Plan zeigt.",
-    details: ["Beitragsserie mit 3 Motiven", "Foto-Integration mit Lichtkante", "Einheitliche Icon-Sprache"],
+    details: ["Drei Slides, die aufeinander aufbauen", "Foto-Integration mit Lichtkante", "Einheitliche Icon-Sprache"],
   },
 ];
 
-export type Service = {
-  slug: string;
-  title: string;
-  short: string;
-  description: string;
-  useCase: string;
-  format: string;
-  image: string;
-  tint: string;
-};
+/* ------------------------------------------------------------------ Preise je Leistung */
 
-export const services: Service[] = [
-  {
-    slug: "instagram-posts",
-    title: "Instagram-Posts",
-    short: "Einzelne Kacheln, die zu Ihrem Profil passen.",
-    description:
-      "Ein einzelner Beitrag, der im Feed auffällt und trotzdem wie aus einem Guss mit dem Rest Ihres Profils wirkt. Ich übernehme Ihr Logo, Ihre Farben und ein Foto von Ihnen und gestalte daraus eine Kachel, die man ohne Nachdenken liest.",
-    useCase: "Für Angebote, Neuigkeiten, Teamvorstellungen oder einfach regelmäßigen Content.",
-    format: "1080 × 1350 px oder quadratisch, als PNG und als Vorlage",
-    image: "/images/work-branding.webp",
-    tint: "#8B5CF6",
-  },
-  {
-    slug: "carousels",
-    title: "Carousels",
-    short: "Mehrere Slides, die eine Geschichte erzählen.",
-    description:
-      "Ein Carousel hält Leute länger auf Ihrem Beitrag, weil sie weiterwischen. Ich baue die Dramaturgie: eine Frage oder Aussage auf Slide eins, Argumente in der Mitte, auf dem letzten Slide die Handlungsaufforderung.",
-    useCase: "Für Erklärungen, Vorher-nachher, Leistungsübersichten und Tipps aus Ihrem Fach.",
-    format: "3 bis 10 Slides, 1080 × 1350 px",
-    image: "/images/work-carousel.webp",
-    tint: "#5BC276",
-  },
-  {
-    slug: "werbeanzeigen",
-    title: "Werbeanzeigen",
-    short: "Motive für Meta- und Google-Anzeigen.",
-    description:
-      "Anzeigen brauchen ein Motiv, das in einer Sekunde sagt, worum es geht, und einen Button, der klar ist. Ich gestalte die Creatives in allen Formaten, die Instagram, Facebook und das Google-Displaynetzwerk verlangen.",
-    useCase: "Für Aktionen, Neueröffnungen, Saisonangebote und Mitarbeitersuche.",
-    format: "Feed, Story und Querformat, bei Bedarf in mehreren Varianten zum Testen",
-    image: "/images/work-social.webp",
-    tint: "#C9A96A",
-  },
-  {
-    slug: "flyer-print",
-    title: "Flyer & Print",
-    short: "Flyer, Plakate, Speisekarten, Aufsteller.",
-    description:
-      "Gedrucktes wird in der Hand gehalten, deshalb muss es anders funktionieren als ein Beitrag im Feed: größere Schrift, klare Reihenfolge, ein Weg zu Ihnen. Sie bekommen druckfertige Daten mit Beschnitt und können bei Ihrer Druckerei bestellen.",
-    useCase: "Für Postwurfsendungen, Auslagen im Laden, Messen und Veranstaltungen.",
-    format: "DIN A6 bis A2, druckfertiges PDF mit 3 mm Beschnitt",
-    image: "/images/work-carousel.webp",
-    tint: "#5BC276",
-  },
-  {
-    slug: "logo-branding",
-    title: "Logo & Branding",
-    short: "Eine Bildmarke und die Regeln drumherum.",
-    description:
-      "Ein Logo allein ist kein Auftritt. Zum Logo gehört eine kleine Farbpalette, ein bis zwei Schriften und ein paar Regeln, damit Beiträge, Flyer und Visitenkarten später zusammenpassen. Genau das stelle ich zusammen.",
-    useCase: "Für Gründungen, Umbenennungen und Betriebe, deren Logo noch aus der Gründungszeit stammt.",
-    format: "Logo in allen Dateiformaten, Farb- und Schriftdefinition, Kurz-Styleguide",
-    image: "/images/work-branding.webp",
-    tint: "#8B5CF6",
-  },
-  {
-    slug: "visitenkarten",
-    title: "Visitenkarten & Co.",
-    short: "Visitenkarten, Signaturen, Profilbilder, Highlight-Cover.",
-    description:
-      "Die vielen kleinen Dinge, die ein Unternehmen jeden Tag zeigt: Visitenkarte, E-Mail-Signatur, Instagram-Highlight-Cover, Profilbild, Google-Profil-Bild. Jedes für sich eine Kleinigkeit, zusammen der Unterschied zwischen Hobby und Betrieb.",
-    useCase: "Für alle, die schon ein Logo haben und es überall gleich gut zeigen wollen.",
-    format: "Je nach Bedarf, meist im Paket",
-    image: "/images/work-social.webp",
-    tint: "#C9A96A",
-  },
-];
-
-export type PriceTier = {
-  id: "basic" | "standard" | "custom";
+export type PriceItem = {
+  id: string;
   name: string;
-  price: number;
-  perWhat: string;
-  summary: string;
+  group: "social" | "print" | "branding";
+  description: string;
+  price: number | null;
+  priceNote: string;
+  unit: string;
   includes: string[];
-  bestFor: string;
 };
 
-export const priceTiers: PriceTier[] = [
+export const includedByDefault = ["Fertiges Design in deiner Farbwelt", "Alle vereinbarten Dateiformate", "2 Korrekturrunden"];
+
+export const priceItems: PriceItem[] = [
   {
-    id: "basic",
-    name: "Basic",
-    price: 15,
-    perWhat: "pro Design",
-    summary: "Ein Motiv auf Basis einer bestehenden Vorlage. Ihr Text, Ihr Logo, Ihre Farben.",
-    includes: ["1 Instagram-Post oder Story", "Aufbau auf einer bewährten Vorlage", "1 Korrekturrunde", "Lieferung als PNG"],
-    bestFor: "Regelmäßige Beiträge, die schnell gehen sollen",
-  },
-  {
-    id: "standard",
-    name: "Standard",
+    id: "instagram-post",
+    name: "Instagram-Post",
+    group: "social",
+    description: "Individuell gestaltete Grafik für dein Unternehmen, abgestimmt auf deine Marke, deine Farben und deine Botschaft.",
     price: 20,
-    perWhat: "pro Design",
-    summary: "Ein eigens gestaltetes Motiv mit Fotoeinbindung und Ihrer Farbwelt.",
-    includes: ["1 Post, Story oder Anzeigenmotiv", "Eigener Aufbau für Ihr Thema", "Fotoeinbindung und Freistellung", "2 Korrekturrunden", "Lieferung als PNG und PDF"],
-    bestFor: "Angebote, Aktionen, Teamvorstellungen",
+    priceNote: "Festpreis",
+    unit: "pro Design",
+    includes: ["1080 × 1350 px oder quadratisch", "PNG und JPG", ...includedByDefault.slice(2)],
   },
   {
-    id: "custom",
-    name: "Custom",
-    price: 30,
-    perWhat: "pro Design",
-    summary: "Vollständig individuell, auch als Carousel oder Flyer, mit Konzept vorab.",
-    includes: ["Carousel bis 5 Slides, Flyer oder Anzeigen-Set", "Kurzes Konzept vor der Gestaltung", "Fotos, Icons und Illustration nach Bedarf", "Korrekturen bis zur Freigabe", "Alle Dateiformate inklusive Quelldatei"],
-    bestFor: "Alles, was mehr erklären muss als ein einzelner Beitrag",
+    id: "instagram-carousel",
+    name: "Instagram-Carousel",
+    group: "social",
+    description: "Mehrere Slides, die eine Geschichte erzählen: Einstieg, Argumente, Abschluss. Für Erklärungen, Angebote und Tipps aus deinem Fach.",
+    price: 60,
+    priceNote: "Festpreis bis 5 Slides, jeder weitere Slide 10 €",
+    unit: "pro Carousel",
+    includes: ["Bis zu 5 Slides, 1080 × 1350 px", "Jeder Slide einzeln als PNG", "2 Korrekturrunden"],
+  },
+  {
+    id: "instagram-story",
+    name: "Instagram-Story",
+    group: "social",
+    description: "Hochformat für Stories, Reel-Cover und Highlights. Schnell erfasst, auch wenn jemand nur eine Sekunde hinschaut.",
+    price: 15,
+    priceNote: "Festpreis",
+    unit: "pro Design",
+    includes: ["1080 × 1920 px", "PNG, auf Wunsch als Vorlage", "2 Korrekturrunden"],
+  },
+  {
+    id: "werbegrafik",
+    name: "Werbegrafik & Anzeige",
+    group: "social",
+    description: "Motive für Meta- und Google-Anzeigen, Banner und digitale Aushänge. Eine Aussage, ein Bild, ein Button.",
+    price: 25,
+    priceNote: "Festpreis pro Motiv, weitere Formatvarianten je 5 €",
+    unit: "pro Motiv",
+    includes: ["Ein Motiv im Hauptformat", "PNG und JPG, Format nach Plattform", "2 Korrekturrunden"],
+  },
+  {
+    id: "flyer",
+    name: "Flyer",
+    group: "print",
+    description: "Professionell gestalteter Flyer für deine Leistungen, Angebote oder Veranstaltungen. Druckfertig, damit deine Druckerei direkt loslegen kann.",
+    price: 60,
+    priceNote: "Festpreis, Vorder- und Rückseite",
+    unit: "pro Flyer",
+    includes: ["DIN A6 oder A5, beidseitig", "Druck-PDF mit Beschnitt und Vorschau-JPG", "2 Korrekturrunden"],
+  },
+  {
+    id: "visitenkarte",
+    name: "Visitenkarte",
+    group: "print",
+    description: "Ein moderner, professioneller Visitenkartenauftritt, der zu deinem Unternehmen passt und beim Übergeben hängen bleibt.",
+    price: 40,
+    priceNote: "Festpreis, Vorder- und Rückseite",
+    unit: "pro Design",
+    includes: ["85 × 55 mm, beidseitig", "Druck-PDF mit Beschnitt", "2 Korrekturrunden"],
+  },
+  {
+    id: "plakat",
+    name: "Plakat",
+    group: "print",
+    description: "Für Schaufenster, Veranstaltungen und Aushänge. Groß genug, um von der Straße aus zu wirken, klar genug, um es im Vorbeigehen zu lesen.",
+    price: 60,
+    priceNote: "Festpreis",
+    unit: "pro Plakat",
+    includes: ["DIN A3 bis A1", "Druck-PDF mit Beschnitt", "2 Korrekturrunden"],
+  },
+  {
+    id: "logo",
+    name: "Logo & einfacher Markenauftritt",
+    group: "branding",
+    description: "Eine Bildmarke, dazu Farben und Schriften, damit Beiträge, Flyer und Visitenkarten später zusammenpassen.",
+    price: 150,
+    priceNote: "ab, je nach Umfang mit festem Angebot vorab",
+    unit: "pro Logo",
+    includes: ["Logo in allen Dateiformaten, auch als Vektor", "Farb- und Schriftdefinition auf einer Seite", "2 Korrekturrunden"],
+  },
+  {
+    id: "individuell",
+    name: "Individuelle Grafikdesign-Aufträge",
+    group: "branding",
+    description: "Speisekarten, Fahrzeugbeschriftung, Präsentationen, Icons, alles, was nicht in eine Zeile passt. Du beschreibst es, ich nenne vorher einen festen Preis.",
+    price: null,
+    priceNote: "Festes Angebot nach kurzer Absprache",
+    unit: "",
+    includes: ["Kurze Abstimmung, dann ein fester Preis", "Dateiformate nach Verwendungszweck", "Korrekturrunden wie vereinbart"],
   },
 ];
 
 export const priceNote =
-  "Die Preise gelten für einzelne Designs. Logo-Entwicklung, komplette Brandings und laufende Betreuung werden nach Aufwand kalkuliert. Sie bekommen vorher einen festen Preis, keine Überraschungen hinterher.";
+  "Alle Preise sind Festpreise pro Design und gelten für Unternehmen und Selbstständige. Du siehst vorher, was du bekommst, und zahlst erst, wenn du dich nach dem kostenlosen Beispiel für den Kauf entscheidest.";
+
+/* ------------------------------------------------------------------ Leistungsbereiche */
+
+export type ServiceGroup = {
+  id: "social" | "print" | "branding";
+  title: string;
+  short: string;
+  description: string;
+  items: string[];
+  tint: string;
+};
+
+export const serviceGroups: ServiceGroup[] = [
+  {
+    id: "social",
+    title: "Social Media Design",
+    short: "Instagram-Posts, Carousels, Stories, Werbegrafiken.",
+    description:
+      "Beiträge, die zu deinem Profil passen und im Feed auffallen. Ich übernehme Logo, Farben und Fotos von dir und gestalte daraus Kacheln, die man ohne Nachdenken liest. Einzeln oder als Serie für die nächsten Wochen.",
+    items: ["Instagram-Posts", "Instagram-Carousels", "Story-Designs", "Werbegrafiken für Social Media", "Anzeigen und digitale Werbemittel"],
+    tint: "#5BC276",
+  },
+  {
+    id: "print",
+    title: "Printdesign",
+    short: "Flyer, Visitenkarten, Plakate und mehr.",
+    description:
+      "Gedrucktes wird in der Hand gehalten und muss anders funktionieren als ein Beitrag im Feed: größere Schrift, klare Reihenfolge, ein Weg zu dir. Du bekommst druckfertige Daten mit Beschnitt für deine Druckerei.",
+    items: ["Flyer", "Visitenkarten", "Plakate", "Speisekarten, Aufsteller, Gutscheine", "Weitere gedruckte Werbemittel"],
+    tint: "#C9A96A",
+  },
+  {
+    id: "branding",
+    title: "Branding & weitere Leistungen",
+    short: "Logos, einfache Markenauftritte, individuelle Aufträge.",
+    description:
+      "Ein Logo allein ist kein Auftritt. Dazu gehören eine kleine Farbpalette, ein bis zwei Schriften und ein paar Regeln, damit alles zusammenpasst. Und wenn du etwas brauchst, das in keine Kategorie passt, besprechen wir es kurz und ich nenne dir einen festen Preis.",
+    items: ["Logos und einfache visuelle Markenauftritte", "Gestaltung von Werbemitteln", "E-Mail-Signaturen, Profilbilder, Highlight-Cover", "Individuelle Grafikdesign-Aufträge nach Absprache"],
+    tint: "#8B5CF6",
+  },
+];
+
+/* ------------------------------------------------------------------ Ablauf */
 
 export type ProcessStep = {
   title: string;
   text: string;
   duration: string;
-  preview: "brief" | "draft" | "review" | "deliver" | "order";
+  preview: "brief" | "draft" | "review" | "decide" | "deliver" | "order";
 };
 
 export const processSteps: ProcessStep[] = [
   {
-    title: "Sie sagen mir, was Sie brauchen.",
-    text: "Über das Formular, in zwei Minuten: Firmenname, Website oder Instagram, welche Art Design, was Ihnen vorschwebt. Mehr brauche ich für den Anfang nicht.",
+    title: "Du suchst dir eine Leistung aus oder beschreibst, was du brauchst.",
+    text: "Instagram-Post, Flyer, Visitenkarte, Logo oder etwas anderes. Du musst nichts entscheiden, was du noch nicht weißt, eine kurze Beschreibung reicht.",
     duration: "2 Minuten",
     preview: "brief",
   },
   {
-    title: "Ich schaue mir Ihren Betrieb an.",
-    text: "Ihre Website, Ihr Profil, Ihre Fotos, Ihre Mitbewerber. Daraus entsteht ein Bild davon, wie Sie auftreten und wo noch Luft ist.",
-    duration: "Am selben Tag",
+    title: "Du schickst die Anfrage für dein kostenloses Beispieldesign.",
+    text: "Name, E-Mail, gewünschte Leistung, ein paar Sätze. Optional ein Link zu deiner Website oder deinem Instagram-Profil. Damit gehst du keinen Auftrag ein.",
+    duration: "Unverbindlich",
     preview: "draft",
   },
   {
-    title: "Sie bekommen ein echtes Beispieldesign.",
-    text: "Kein Mockup, keine Skizze: ein fertiges Motiv in Ihrem Namen, mit Ihrem Logo und Ihren Farben. Kostenlos und ohne Verpflichtung.",
+    title: "Ich gestalte ein individuelles Beispiel für deinen Betrieb.",
+    text: "Mit deinem Namen, deinem Logo und deinen Farben. Bei einem Instagram-Post ein fertiges Motiv, bei einem Flyer eine Gestaltungsvorschau. Kein Standard-Template mit getauschtem Logo.",
     duration: "In der Regel innerhalb weniger Tage",
     preview: "review",
   },
   {
-    title: "Sie entscheiden in Ruhe.",
-    text: "Gefällt es Ihnen, beauftragen Sie das Design oder gleich eine Serie. Gefällt es nicht, war es ein Versuch, der Sie nichts gekostet hat.",
-    duration: "So lange Sie wollen",
+    title: "Du schaust es dir an und entscheidest in Ruhe.",
+    text: "Gefällt es dir, geht es weiter. Gefällt es dir nicht oder du willst doch nicht, ist das völlig in Ordnung. Es entstehen keine Kosten und ich frage nicht nach.",
+    duration: "So lange du willst",
+    preview: "decide",
+  },
+  {
+    title: "Wenn du es haben willst, kaufst du es zum vorher bekannten Festpreis.",
+    text: "Der Preis steht schon vor der Anfrage auf dieser Seite. Keine Nachkalkulation, keine Überraschung auf der Rechnung.",
+    duration: "Festpreis",
     preview: "deliver",
   },
   {
-    title: "Ab dann läuft es.",
-    text: "Sie schicken mir Themen, ich liefere Designs zum festen Preis. Viele Betriebe schicken mir einmal im Monat eine Liste und bekommen die Beiträge für die nächsten Wochen.",
-    duration: "Laufend",
+    title: "Ich nehme vereinbarte Anpassungen vor und liefere die finalen Dateien.",
+    text: "Zwei Korrekturrunden sind enthalten. Danach bekommst du alle Dateien im passenden Format, für Instagram als PNG, für den Druck als PDF mit Beschnitt.",
+    duration: "Fertig",
     preview: "order",
   },
 ];
+
+/* ------------------------------------------------------------------ Konfigurator */
 
 export type Industry = {
   id: string;
@@ -224,133 +273,110 @@ export type Industry = {
 };
 
 export const industries: Industry[] = [
-  {
-    id: "reinigung",
-    label: "Reinigung & Facility",
-    headline: "Saubere Fenster. Besseres Gefühl.",
-    sub: "Streifenfreie Ergebnisse vom Profi.",
-    bullets: ["Kurzfristige Termine verfügbar", "Zuverlässig & gründlich"],
-    cta: "Termin anfragen",
-    tint: "#2E9D5B",
-    tintSoft: "#E6F6EC",
-  },
-  {
-    id: "handwerk",
-    label: "Handwerk",
-    headline: "Wir kommen, wenn andere absagen.",
-    sub: "Meisterbetrieb mit festen Preisen.",
-    bullets: ["Angebot in 24 Stunden", "Termintreue, die man merkt"],
-    cta: "Angebot anfordern",
-    tint: "#D97A1F",
-    tintSoft: "#FBEEDF",
-  },
-  {
-    id: "gastro",
-    label: "Gastronomie & Café",
-    headline: "Heute frisch: Zimtschnecken ab 8 Uhr.",
-    sub: "Solange der Vorrat reicht.",
-    bullets: ["Täglich gebacken", "Auch zum Mitnehmen"],
-    cta: "Tisch reservieren",
-    tint: "#B23A48",
-    tintSoft: "#F9E7E9",
-  },
-  {
-    id: "beauty",
-    label: "Beauty & Studio",
-    headline: "Zeit für dich. Termin in 2 Klicks.",
-    sub: "Neue Herbstfarben jetzt im Studio.",
-    bullets: ["Online buchbar", "Parkplätze direkt vor der Tür"],
-    cta: "Jetzt buchen",
-    tint: "#9B5DE5",
-    tintSoft: "#F1E8FB",
-  },
-  {
-    id: "beratung",
-    label: "Beratung & Coaching",
-    headline: "Klarer Plan. Klares Ergebnis.",
-    sub: "Erstgespräch kostenlos.",
-    bullets: ["Ziele definieren", "Strategie entwickeln"],
-    cta: "Erstgespräch sichern",
-    tint: "#B8923F",
-    tintSoft: "#F7F0DE",
-  },
-  {
-    id: "immobilien",
-    label: "Immobilien",
-    headline: "Neu im Angebot: Helle 3-Zimmer-Wohnung.",
-    sub: "Besichtigung nach Vereinbarung.",
-    bullets: ["Provisionsfrei für Käufer", "Energieausweis liegt vor"],
-    cta: "Exposé anfordern",
-    tint: "#2B6CB0",
-    tintSoft: "#E3EDF9",
-  },
+  { id: "reinigung", label: "Reinigung & Facility", headline: "Saubere Fenster. Besseres Gefühl.", sub: "Streifenfreie Ergebnisse vom Profi.", bullets: ["Kurzfristige Termine verfügbar", "Zuverlässig & gründlich"], cta: "Termin anfragen", tint: "#2E9D5B", tintSoft: "#E6F6EC" },
+  { id: "handwerk", label: "Handwerk", headline: "Wir kommen, wenn andere absagen.", sub: "Meisterbetrieb mit festen Preisen.", bullets: ["Angebot in 24 Stunden", "Termintreue, die man merkt"], cta: "Angebot anfordern", tint: "#D97A1F", tintSoft: "#FBEEDF" },
+  { id: "gastro", label: "Gastronomie & Café", headline: "Heute frisch: Zimtschnecken ab 8 Uhr.", sub: "Solange der Vorrat reicht.", bullets: ["Täglich gebacken", "Auch zum Mitnehmen"], cta: "Tisch reservieren", tint: "#B23A48", tintSoft: "#F9E7E9" },
+  { id: "beauty", label: "Beauty & Studio", headline: "Zeit für dich. Termin in 2 Klicks.", sub: "Neue Herbstfarben jetzt im Studio.", bullets: ["Online buchbar", "Parkplätze direkt vor der Tür"], cta: "Jetzt buchen", tint: "#9B5DE5", tintSoft: "#F1E8FB" },
+  { id: "beratung", label: "Beratung & Coaching", headline: "Klarer Plan. Klares Ergebnis.", sub: "Erstgespräch kostenlos.", bullets: ["Ziele definieren", "Strategie entwickeln"], cta: "Erstgespräch sichern", tint: "#B8923F", tintSoft: "#F7F0DE" },
+  { id: "immobilien", label: "Immobilien", headline: "Neu im Angebot: Helle 3-Zimmer-Wohnung.", sub: "Besichtigung nach Vereinbarung.", bullets: ["Provisionsfrei für Käufer", "Energieausweis liegt vor"], cta: "Exposé anfordern", tint: "#2B6CB0", tintSoft: "#E3EDF9" },
 ];
 
 export type DesignFormat = {
   id: string;
   label: string;
-  ratio: "square" | "portrait" | "story" | "wide";
+  ratio: "square" | "portrait" | "story" | "card" | "a4";
   note: string;
+  priceId: string;
 };
 
 export const designFormats: DesignFormat[] = [
-  { id: "post", label: "Instagram-Post", ratio: "portrait", note: "1080 × 1350" },
-  { id: "carousel", label: "Carousel", ratio: "portrait", note: "3 bis 10 Slides" },
-  { id: "story", label: "Story / Reel-Cover", ratio: "story", note: "1080 × 1920" },
-  { id: "anzeige", label: "Werbeanzeige", ratio: "square", note: "Meta & Google" },
-  { id: "flyer", label: "Flyer", ratio: "portrait", note: "DIN A6 / A5" },
-  { id: "logo", label: "Logo", ratio: "square", note: "Bildmarke & Wortmarke" },
+  { id: "post", label: "Instagram-Post", ratio: "portrait", note: "20 €", priceId: "instagram-post" },
+  { id: "carousel", label: "Instagram-Carousel", ratio: "portrait", note: "ab 60 €", priceId: "instagram-carousel" },
+  { id: "story", label: "Story", ratio: "story", note: "15 €", priceId: "instagram-story" },
+  { id: "anzeige", label: "Werbegrafik", ratio: "square", note: "25 €", priceId: "werbegrafik" },
+  { id: "flyer", label: "Flyer", ratio: "a4", note: "60 €", priceId: "flyer" },
+  { id: "visitenkarte", label: "Visitenkarte", ratio: "card", note: "40 €", priceId: "visitenkarte" },
+  { id: "plakat", label: "Plakat", ratio: "a4", note: "60 €", priceId: "plakat" },
+  { id: "logo", label: "Logo", ratio: "square", note: "ab 150 €", priceId: "logo" },
 ];
+
+/* ------------------------------------------------------------------ FAQ */
 
 export const faqs = [
   {
-    q: "Was kostet das Beispieldesign wirklich?",
-    a: "Nichts. Sie bekommen ein fertiges Motiv für Ihren Betrieb, ohne Rechnung und ohne Verpflichtung. Ich mache das, weil ein echtes Beispiel mehr überzeugt als jedes Portfolio. Wenn es Ihnen gefällt, können Sie es beauftragen, müssen es aber nicht.",
+    q: "Was ist das kostenlose Beispieldesign?",
+    a: "Ein individuelles Design für deinen Betrieb, bevor du etwas bezahlst. Du sagst mir, welche Leistung du brauchst, ich gestalte ein Beispiel mit deinem Namen, deinem Logo und deinen Farben. Bei einem Instagram-Post ist das ein fertiges Motiv, bei einem Flyer eine Gestaltungsvorschau.",
   },
   {
-    q: "Wie lange dauert es, bis ich das Beispiel bekomme?",
-    a: "In der Regel ein paar Tage. Ich melde mich vorher kurz, falls ich noch eine Frage habe, zum Beispiel zu Ihrem Logo oder zu einem Foto. Je mehr Sie mir im Formular schon mitgeben, desto schneller geht es.",
+    q: "Ist die Anfrage wirklich unverbindlich?",
+    a: "Ja. Mit der Anfrage erteilst du keinen Auftrag und gehst keinen Vertrag ein. Du bekommst das Beispiel, schaust es dir an und entscheidest dann.",
   },
   {
-    q: "Was brauche ich, damit es losgehen kann?",
-    a: "Im Idealfall Ihr Logo, ein bis zwei Fotos aus Ihrem Betrieb und eine Vorstellung, worum es im Beitrag gehen soll. Wenn Sie nichts davon haben, geht es trotzdem: Dann arbeite ich mit Ihrem Namen, einer passenden Farbwelt und Text, und wir ergänzen Fotos später.",
+    q: "Muss ich das Design kaufen, wenn ich es angefordert habe?",
+    a: "Nein. Wenn es dir nicht gefällt oder du dich anders entscheidest, entstehen keine Kosten. Das Beispiel ist mein Weg, dir meine Arbeit zu zeigen, nicht dein Risiko.",
   },
   {
-    q: "Welche Dateien bekomme ich?",
-    a: "Für Social Media fertige PNG-Dateien im richtigen Format, bei Carousels jeden Slide einzeln. Für Druck ein PDF mit Beschnitt, das jede Druckerei annimmt. Beim Custom-Paket zusätzlich die Quelldatei, falls Sie später selbst Kleinigkeiten ändern wollen.",
+    q: "Wie funktioniert der Kauf nach dem Beispieldesign?",
+    a: "Du schreibst mir, dass du es haben willst. Dann nehme ich die vereinbarten Anpassungen vor, du bekommst eine Rechnung über den vorher genannten Festpreis und nach Zahlung alle finalen Dateien.",
   },
   {
-    q: "Kann ich auch regelmäßig Designs bekommen?",
-    a: "Ja, und das ist für die meisten Betriebe die sinnvollste Form. Sie schicken mir einmal im Monat Ihre Themen, ich liefere die Beiträge für die nächsten Wochen zum festen Preis pro Design. Ohne Vertragslaufzeit.",
+    q: "Was kostet ein Design?",
+    a: "Das steht pro Leistung auf dieser Website: ein Instagram-Post 20 €, eine Story 15 €, ein Carousel bis fünf Slides 60 €, ein Flyer 60 €, eine Visitenkarte 40 €. Für Logos und individuelle Aufträge bekommst du vorab ein festes Angebot.",
   },
   {
-    q: "Arbeiten Sie auch mit Betrieben außerhalb Ihrer Region?",
-    a: "Ja. Die Zusammenarbeit läuft komplett digital über E-Mail und Instagram. Ich brauche nichts vor Ort, nur Ihre Dateien und ein kurzes Gespräch, wenn etwas unklar ist.",
+    q: "Sind die Preise Festpreise?",
+    a: "Ja. Der Preis, den du vor der Anfrage siehst, ist der Preis, den du am Ende zahlst. Nur wenn sich der Umfang ändert, zum Beispiel mehr Slides im Carousel, ändert sich der Preis, und das sage ich dir vorher.",
+  },
+  {
+    q: "Was ist im Preis enthalten?",
+    a: "Das fertige Design in deiner Farbwelt, alle vereinbarten Dateiformate und zwei Korrekturrunden. Bei Druckprodukten zusätzlich das druckfertige PDF mit Beschnitt.",
+  },
+  {
+    q: "Wie viele Korrekturen sind enthalten?",
+    a: "Zwei Korrekturrunden pro Design. Das reicht in den allermeisten Fällen. Wenn danach noch etwas Größeres geändert werden soll, besprechen wir das vorher, ohne versteckte Kosten.",
+  },
+  {
+    q: "In welchen Dateiformaten erhalte ich mein Design?",
+    a: "Für Social Media als PNG und JPG im passenden Format, bei Carousels jeden Slide einzeln. Für Druck ein PDF mit Beschnitt, das jede Druckerei annimmt. Logos zusätzlich als Vektordatei (SVG, PDF).",
+  },
+  {
+    q: "Wie lange dauert die Erstellung?",
+    a: "Das kostenlose Beispiel bekommst du in der Regel innerhalb weniger Tage. Nach dem Kauf dauern Anpassungen und finale Dateien meist ein bis drei Werktage, je nach Umfang und wie schnell du Rückmeldung gibst.",
+  },
+  {
+    q: "Kann ich mehrere Designs bestellen?",
+    a: "Ja, und für die meisten Betriebe ist das die sinnvollste Form. Viele schicken mir einmal im Monat ihre Themen und bekommen die Beiträge für die nächsten Wochen zum Festpreis pro Design, ohne Vertragslaufzeit.",
+  },
+  {
+    q: "Kann ich auch individuelle Anfragen stellen?",
+    a: "Ja. Speisekarte, Fahrzeugbeschriftung, Präsentation, Icons: Beschreib kurz, was du brauchst, und ich nenne dir vorab einen festen Preis. Die Zusammenarbeit läuft komplett digital über E-Mail und Instagram.",
   },
 ];
 
+/* ------------------------------------------------------------------ Über */
+
 export const aboutPhillip = {
   intro:
-    "Hinter Vybs Graphics steht Phillip. Ich gestalte Social-Media-Beiträge, Anzeigen, Flyer und Logos für Unternehmen, Selbstständige und lokale Geschäfte, die professioneller auftreten wollen, ohne eine Agentur zu bezahlen.",
+    "Hinter vybs.graphics steht Phillip. Ich gestalte Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel für Unternehmen, Selbstständige und lokale Betriebe, die professionell auftreten wollen, ohne eine Agentur zu bezahlen.",
   paragraphs: [
-    "Angefangen hat es mit Beiträgen für Betriebe aus dem eigenen Umfeld: eine Gebäudereinigung, die auf Instagram einfach nur Handyfotos von Fenstern gepostet hat, eine Beratung, deren Beiträge aussahen wie die von allen anderen. Beide hatten etwas zu sagen, es hat nur niemand hingeschaut.",
-    "Daraus ist eine Art zu arbeiten geworden, die sich bis heute nicht verändert hat: erst anschauen, was ein Betrieb tatsächlich macht, dann gestalten, was dazu passt. Kein Standard-Template mit getauschtem Logo, sondern eine Kachel, die man dem Betrieb zuordnen kann, auch wenn das Logo fehlt.",
-    "Weil ich weiß, dass sich ein Design schwer beschreiben lässt, bevor man es sieht, mache ich das erste Beispiel kostenlos. Das ist keine Verkaufsmasche, sondern die ehrlichste Art zu zeigen, was Sie bekommen würden.",
+    "Angefangen hat es mit Beiträgen für Betriebe aus dem eigenen Umfeld: eine Gebäudereinigung, die auf Instagram nur Handyfotos von Fenstern gepostet hat, eine Beratung, deren Beiträge aussahen wie die von allen anderen. Beide hatten etwas zu sagen, es hat nur niemand hingeschaut.",
+    "Daraus ist eine Art zu arbeiten geworden: erst anschauen, was ein Betrieb tatsächlich macht, dann gestalten, was dazu passt. Kein Standard-Template mit getauschtem Logo, sondern Designs, die man dem Betrieb zuordnen kann, auch wenn das Logo fehlt.",
+    "Weil sich ein Design schwer beschreiben lässt, bevor man es sieht, mache ich das erste Beispiel kostenlos. Du arbeitest dabei direkt mit mir, nicht mit einem Ticketsystem.",
   ],
   principles: [
     { title: "Lesbar auf dem Handy", text: "Jede Kachel wird auf einem Bildschirm in der Größe einer Handfläche gelesen. Große Schrift, ein Gedanke pro Slide, nichts, was man suchen muss." },
-    { title: "Ihr Betrieb, nicht meiner", text: "Ihre Farben, Ihr Logo, Ihre Fotos. Ein Design, das auch ohne Logo erkennbar Ihres ist. Ich habe keinen Stil, den ich jedem überstülpe." },
-    { title: "Feste Preise", text: "Sie wissen vorher, was ein Design kostet. Keine Stundensätze, keine Nachkalkulation, keine Überraschung auf der Rechnung." },
+    { title: "Dein Betrieb, nicht meiner", text: "Deine Farben, dein Logo, deine Fotos. Ein Design, das auch ohne Logo erkennbar deins ist. Ich habe keinen Stil, den ich jedem überstülpe." },
+    { title: "Feste Preise", text: "Du weißt vorher, was ein Design kostet. Keine Stundensätze, keine Nachkalkulation, keine Überraschung auf der Rechnung." },
     { title: "Schnell, ohne schlampig zu sein", text: "Ein Beitrag darf nicht zwei Wochen dauern. Dafür arbeite ich mit klaren Abläufen und sauberen Vorlagen, die ich für jeden Betrieb neu anlege." },
   ],
 };
 
 export const sampleIntro = {
-  headline: "Ihr erstes Design. Kostenlos, in Ihrem Namen.",
-  text: "Beschreiben Sie kurz Ihren Betrieb und was Sie brauchen. Ich gestalte daraus ein echtes Beispieldesign und schicke es Ihnen zu. Ohne Rechnung, ohne Verpflichtung, ohne Kleingedrucktes.",
+  headline: "Dein kostenloses Beispieldesign.",
+  text: "Sag mir kurz, was du brauchst. Ich gestalte ein individuelles Beispiel für deinen Betrieb und schicke es dir zu. Kostenlos, unverbindlich, ohne Kleingedrucktes.",
   reassurance: [
-    "Sie schließen keinen Kauf ab und gehen keinen Vertrag ein.",
-    "Ihre Angaben werden nur für dieses eine Beispiel verwendet.",
-    "Das Beispiel gehört nach der Beauftragung Ihnen, vorher bleibt es ein Vorschlag.",
+    "Du erteilst keinen Auftrag und gehst keinen Vertrag ein.",
+    "Es handelt sich um ein kostenloses Erstbeispiel pro Betrieb, keine unbegrenzte Gratisproduktion.",
+    "Gefällt es dir, kaufst du es zum vorher bekannten Festpreis. Wenn nicht, entstehen keine Kosten.",
   ],
 };
