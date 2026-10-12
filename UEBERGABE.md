@@ -96,11 +96,11 @@ Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Ne
 
 ## Deployment
 
-- Vercel-Connector hatte keinen Zugriff auf das Team (403). Import-Link:
-  https://vercel.com/new/import?s=https://github.com/ShyRoxxx/vybs-graphics
-  Framework wird automatisch erkannt, keine Einstellungen nötig. Nach dem Import ggf. „Vercel Authentication“ nur
-  auf Preview-Deployments beschränken, damit die Production-URL ohne Login erreichbar ist.
-- `lib/site.ts` → `url` auf die endgültige Production-URL setzen (für Open Graph und Sitemap).
+- Vercel-Projekt `vybs-graphics` (Team Bilbao) ist mit dem Repository verbunden, jeder Push auf `main` baut Production.
+  Live: https://vybs-graphics.vercel.app (Vercel Authentication nur noch für Preview-Deployments, Production ist offen).
+- Ein zweites Projekt `vybs-graphics-p3ku` im selben Team ist mit demselben Repository verbunden und baut doppelt.
+  Kann gelöscht werden.
+- `lib/site.ts` → `url` zeigt bereits auf die Production-URL; bei eigener Domain anpassen.
 
 ## Nicht im Umfang, als Vorschlag
 
