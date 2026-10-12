@@ -36,8 +36,6 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: site.name,
-    title: `${site.name} – Professionelles Grafikdesign für dein Unternehmen`,
-    description: "Feste Preise pro Design. Das erste Beispieldesign für deinen Betrieb ist kostenlos.",
   },
   icons: {
     icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],

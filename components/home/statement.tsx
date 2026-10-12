@@ -17,7 +17,7 @@ export function Statement() {
   const root = useRef<HTMLElement>(null);
 
   useGsapScene(root, (gsap, _ScrollTrigger, el) => {
-      const words = gsap.utils.toArray<HTMLElement>("[data-word]");
+      const words = gsap.utils.toArray<HTMLElement>("[data-word]", el);
       if (reduceMotion()) {
         gsap.set(words, { opacity: 1 });
         return;

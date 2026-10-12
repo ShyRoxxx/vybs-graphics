@@ -11,7 +11,7 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
    - `RESEND_API_KEY` – API-Key aus dem Resend-Konto von Bilbao Consulting.
    - `INQUIRY_TO` – Postfach, in dem Anfragen landen sollen (Standard ohne Variable: `phillip.creates@icloud.com`).
    - `INQUIRY_FROM` – verifizierte Absenderadresse, z. B. `Vybs Graphics <anfrage@vybs-graphics.de>`
-     (Standard ohne Variable: genau diese Adresse).
+     (Standard ohne Variable: genau diese Adresse, unabhängig von der Deployment-URL).
    - `NEXT_PUBLIC_SITE_URL` – optional, `https://www.vybs-graphics.de` ist bereits der Standard in `lib/site.ts`.
 
    In Resend ist bisher nur `bilbaoconsulting.com` verifiziert, `vybs-graphics.de` nicht. Zwei Wege:
@@ -19,7 +19,10 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
       bei INWX setzen, dann `INQUIRY_FROM` auf `anfrage@vybs-graphics.de`;
    b) übergangsweise `INQUIRY_FROM` auf eine Adresse unter `bilbaoconsulting.com` setzen.
    Ohne Key zeigt das Formular eine ehrliche Fehlermeldung mit Telefonnummer und E-Mail; es gibt keinen
-   stillen Fehlschlag und keinen mailto-Fallback mehr.
+   stillen Fehlschlag und keinen mailto-Fallback mehr. Fehlgeschlagene Sendeversuche (fehlender Key, abgelehnte
+   Absenderadresse, Resend-Fehler) stehen in den Vercel-Function-Logs mit dem Präfix `[inquiry]`, ohne
+   personenbezogene Daten. Nach dem Setzen der Variablen einmal echt testen (eine Anfrage über /kontakt
+   abschicken und prüfen, dass beide Mails ankommen).
 
 2. **Platzhalter in den Rechtstexten.** Impressum und Datenschutzerklärung stehen wörtlich aus dem CRM in
    `lib/legal.ts`. Vier Stellen sind noch Platzhalter und auf der Seite gelb hervorgehoben
@@ -32,6 +35,11 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
    - Datenschutz: `[Falls doch ein Datenschutzbeauftragter …]` – Phillip hat vermutlich keinen; Satz streichen,
      sobald bestätigt.
    Sobald die Angaben vorliegen: Text in `lib/legal.ts` ersetzen, die Hervorhebung verschwindet automatisch.
+
+   Zusätzlich zur Prüfung durch den Textverantwortlichen (nicht eigenmächtig geändert, weil die Texte wörtlich
+   übernommen wurden): Abschnitt 6 der Datenschutzerklärung erwähnt weder die automatische Bestätigungs-E-Mail
+   an den Absender noch die kurzzeitige Verarbeitung der IP-Adresse zur Missbrauchsabwehr (Rate-Limit).
+   Beides macht das Formular jetzt; je ein Satz würde das abdecken.
 
 3. **Preise bestätigen.** Die Einzelpreise in `lib/content.ts` (`priceItems`) sind Vorschläge aus der Demo-Phase
    (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide, Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €,
@@ -53,9 +61,16 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
   Sitemap und Open-Graph laufen über `https://www.vybs-graphics.de` (überschreibbar per `NEXT_PUBLIC_SITE_URL`).
 - Strukturierte Daten (JSON-LD `ProfessionalService`) mit Name, rechtlichem Namen, Adresse, Telefon, E-Mail,
   Logo und Instagram.
-- Formulare (/kostenloses-beispiel und /kontakt): serverseitige Validierung mit zod, unsichtbares Honeypot-Feld,
-  Rate-Limit (5 Anfragen pro 10 Minuten je IP), Anfrage an Phillip plus Bestätigung an den Absender,
-  Fehlerzustand mit Telefon und E-Mail. Clientseitige Prüfung bleibt (Fokus springt zum ersten Fehler).
+- Formulare (/kostenloses-beispiel und /kontakt): serverseitige Validierung mit zod (keine Zeilenumbrüche in
+  Betreff-Feldern, keine URLs im Namen), unsichtbares Honeypot-Feld, Rate-Limit (5 Anfragen pro 10 Minuten je IP,
+  je Server-Instanz, also nur eine Grundsicherung), Anfrage an Phillip plus Bestätigung an den Absender ohne
+  Weitergabe des Freitexts (kein Missbrauch als Mail-Relay), Fehlerzustand mit Telefon und E-Mail, Fehlermeldung bei
+  Verbindungsabbruch. Clientseitige Prüfung bleibt (Fokus springt zum ersten Fehler).
+- Robustheit: Lädt das Animationspaket nicht (Blocker, altes Deployment, schwaches Netz), werden alle Inhalte nach
+  spätestens sechs Sekunden statisch sichtbar. Mobilmenü schließt bei Navigation und beim Wechsel ins
+  Desktop-Layout, Lightbox schließt per Klick auf den Hintergrund.
+- Sicherheitsheader (nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy) in `next.config.ts`;
+  Open-Graph-Titel und -Beschreibung sind jetzt seitenspezifisch.
 - Bildquellen dokumentiert in `public/images/QUELLEN.md`.
 
 ## Nach dem Livegang
@@ -70,6 +85,11 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
   (`https://www.vybs-graphics.de/sitemap.xml`).
 - Datei-Upload im Formular (Logo/Fotos) ist bewusst nicht gebaut; Absender schicken Dateien per Antwort auf die
   Bestätigungsmail.
+- Wenn Spam zum Problem wird: Rate-Limit über einen gemeinsamen Speicher (z. B. Upstash) oder eine
+  Vercel-Firewall-Regel; aktuell gilt das Limit nur je Server-Instanz.
+- Bundle-Hinweis: Die Motion-Bibliothek wird trotz Lazy-Wrapper komplett geladen (ca. 250 KB JS gzip auf der
+  Startseite). Für die Lighthouse-Performance wäre ein Umbau der Header-Animationen auf CSS der nächste Schritt;
+  wegen des Design-Freeze nicht angefasst.
 - Kundenstimmen, Flyer/Visitenkarten/Logos als echte Arbeiten, sobald Material vorliegt.
 
 ## Qualitätsprüfung dieses Stands
@@ -79,10 +99,12 @@ Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
   keine Konsolenfehler.
 - Formulare getestet: leere Abgabe zeigt Feldfehler und setzt den Fokus, Honeypot-Treffer werden still
   verworfen, ohne `RESEND_API_KEY` erscheint der Fehlerzustand mit Telefonnummer.
-- Lighthouse (mobil, lokaler Build): Accessibility 100, Best Practices 100, SEO 100. Performance lokal
-  74–79 wegen simulierter Drosselung; die gemessenen Werte (First Contentful Paint ≈ 0,2–1,3 s, Largest
-  Contentful Paint = First Contentful Paint, CLS 0) liegen im grünen Bereich. Auf Vercel mit Edge-Cache
-  nochmals messen.
+- Lighthouse (mobil, lokaler Build): Accessibility 100, Best Practices 100, SEO 100 auf allen geprüften Seiten.
+  Performance lokal 77–85 (simulierte Drosselung, Hauptkostenpunkt ist die JavaScript-Menge der
+  Animationsbibliotheken); gemessen: Largest Contentful Paint ≈ 1,2–1,3 s, CLS 0. Auf Vercel mit Edge-Cache
+  nochmals messen; der Zielwert 90 ist ohne den oben genannten Umbau nicht sicher erreicht.
+- Zwei unabhängige Prüfungen (Barrierefreiheit/Robustheit und Code/Sicherheit) durchgeführt, alle als
+  „vor Livegang“ eingestuften Befunde umgesetzt; verbleibende Hinweise stehen in diesem Dokument.
 
 ## Technik kurz
 

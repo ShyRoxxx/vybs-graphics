@@ -6,13 +6,17 @@ import { site } from "@/lib/site";
 
 export type InquiryKind = "beispiel" | "kontakt";
 
+/** Single-line field: no line breaks (ends up in mail subjects/headers). */
+const line = (max: number) => z.string().trim().max(max).regex(/^[^\r\n]*$/);
+
 const payloadSchema = z.object({
   kind: z.enum(["beispiel", "kontakt"]),
-  name: z.string().trim().min(2).max(200),
+  // Names with URLs are spam, not people.
+  name: line(200).min(2).refine((v) => !/https?:\/\/|www\./i.test(v)),
   email: z.email().trim().max(200),
-  service: z.string().trim().max(120).optional(),
-  link: z.string().trim().max(300).optional(),
-  topic: z.string().trim().max(120).optional(),
+  service: line(120).optional(),
+  link: line(300).optional(),
+  topic: line(120).optional(),
   message: z.string().trim().min(10).max(4000),
   /** Honeypot: stays empty for people, bots fill it. Checked before parsing. */
   company: z.string().optional(),
@@ -34,6 +38,10 @@ const hits = new Map<string, number[]>();
 
 function limited(ip: string) {
   const now = Date.now();
+  // Keep the map bounded on long-lived instances.
+  if (hits.size > 5000) {
+    for (const [k, v] of hits) if (!v.some((t) => now - t < WINDOW_MS)) hits.delete(k);
+  }
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
   if (recent.length >= MAX_PER_WINDOW) {
     hits.set(ip, recent);
@@ -68,11 +76,8 @@ function buildVisitorMail(p: z.output<typeof payloadSchema>) {
       ? `danke für deine Anfrage. Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, ${site.replyTimeShort}. Die Anfrage ist kostenlos und unverbindlich.`
       : `danke für deine Nachricht. Ich melde mich, ${site.replyTimeShort}.`,
     "",
-    "Deine Angaben:",
+    // Deliberately no free text from the form here: the confirmation must not become a relay for third-party content.
     p.kind === "beispiel" ? `Gewünschte Leistung: ${p.service || "noch offen"}` : `Thema: ${p.topic ?? "Allgemeine Anfrage"}`,
-    p.link ? `Website / Profil: ${p.link}` : "",
-    "",
-    p.message,
     "",
     "Logo oder Fotos kannst du mir einfach per Antwort auf diese E-Mail schicken.",
     "",
@@ -82,7 +87,7 @@ function buildVisitorMail(p: z.output<typeof payloadSchema>) {
     site.phone,
     site.email,
     site.url,
-  ].filter((l) => l !== undefined);
+  ];
   return { subject, text: lines.join("\n") };
 }
 
@@ -93,6 +98,10 @@ async function send(apiKey: string, mail: { from: string; to: string[]; reply_to
     body: JSON.stringify(mail),
     signal: AbortSignal.timeout(10_000),
   });
+  if (!res.ok) {
+    // Visible in the Vercel function logs; never log key, addresses or message bodies.
+    console.error("[inquiry] Resend antwortete mit", res.status, (await res.text().catch(() => "")).slice(0, 300));
+  }
   return res.ok;
 }
 
@@ -115,11 +124,14 @@ export async function sendInquiry(raw: InquiryPayload): Promise<InquiryResult> {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return unavailable;
+  if (!apiKey) {
+    console.error("[inquiry] RESEND_API_KEY fehlt, Anfrage konnte nicht gesendet werden");
+    return unavailable;
+  }
 
   const to = process.env.INQUIRY_TO ?? site.email;
-  const hostname = new URL(site.url).hostname.replace(/^www\./, "");
-  const from = process.env.INQUIRY_FROM ?? `${site.name} <anfrage@${hostname}>`;
+  // Fixed default on the customer's domain, independent of the deployment URL (previews would otherwise send from vercel.app).
+  const from = process.env.INQUIRY_FROM ?? `${site.name} <anfrage@vybs-graphics.de>`;
 
   try {
     const owner = buildOwnerMail(p);
@@ -129,7 +141,8 @@ export async function sendInquiry(raw: InquiryPayload): Promise<InquiryResult> {
     // The confirmation is a courtesy; a failure here must not hide a successful inquiry.
     await send(apiKey, { from, to: [p.email], reply_to: to, ...visitor }).catch(() => false);
     return { status: "sent" };
-  } catch {
+  } catch (err) {
+    console.error("[inquiry] Versand fehlgeschlagen:", err instanceof Error ? err.message : "unbekannter Fehler");
     return unavailable;
   }
 }

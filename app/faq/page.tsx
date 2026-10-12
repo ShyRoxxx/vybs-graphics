@@ -24,7 +24,7 @@ const jsonLd = {
 export default function FaqPage() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <PageHero title="Häufige" accent="Fragen." text="Kostenloses Beispiel, Festpreise, Dateien, Dauer: die Fragen, die vor der ersten Anfrage kommen. Fehlt deine, schreib mir einfach." />
       <section className="pb-[var(--section)]">
         <div className="container-x max-w-4xl">
