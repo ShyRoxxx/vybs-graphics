@@ -91,6 +91,7 @@ export function SiteFooter() {
             </Link>
             <a href="https://bilbaoconsulting.com" target="_blank" rel="noopener" className="link-u inline-flex min-h-11 items-center">
               Website von Bilbao Consulting
+              <span className="sr-only"> (öffnet in neuem Tab)</span>
             </a>
           </div>
         </div>

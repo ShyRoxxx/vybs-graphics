@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useTransition, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, useTransition, type FormEvent } from "react";
 import Link from "next/link";
 import { m } from "motion/react";
 import { site } from "@/lib/site";
@@ -18,6 +18,11 @@ export function ContactForm() {
   const [values, setValues] = useState<Values>({ name: "", email: "", topic: "Individuelles Projekt", message: "", company: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<InquiryResult | null>(null);
+  const successRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (result?.status === "sent") successRef.current?.focus();
+  }, [result]);
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -27,7 +32,7 @@ export function ContactForm() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const er: Errors = {};
-    if (!values.name.trim()) er.name = "Bitte deinen Namen angeben, damit ich weiß, mit wem ich schreibe.";
+    if (values.name.trim().length < 2) er.name = "Bitte deinen Namen angeben, damit ich weiß, mit wem ich schreibe.";
     if (!values.email.trim() || !emailOk(values.email)) er.email = "Bitte eine gültige E-Mail-Adresse angeben, damit ich antworten kann.";
     if (values.message.trim().length < 10) er.message = "Ein paar Sätze zu deinem Anliegen helfen mir, direkt passend zu antworten.";
     setErrors(er);
@@ -37,8 +42,11 @@ export function ContactForm() {
       return;
     }
     startTransition(async () => {
-      const res = await sendInquiry({ kind: "kontakt", name: values.name, email: values.email, topic: values.topic, message: values.message, company: values.company });
-      setResult(res);
+      try {
+        setResult(await sendInquiry({ kind: "kontakt", name: values.name, email: values.email, topic: values.topic, message: values.message, company: values.company }));
+      } catch {
+        setResult({ status: "error", message: "Die Verbindung ist abgebrochen. Bitte versuch es gleich noch einmal." });
+      }
     });
   };
 
@@ -53,9 +61,11 @@ export function ContactForm() {
         >
           <CheckIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 className="mt-6 text-[1.75rem]">Deine Nachricht ist angekommen.</h2>
+        <h2 ref={successRef} tabIndex={-1} className="mt-6 text-[1.75rem] outline-none">
+          Deine Nachricht ist angekommen.
+        </h2>
         <p className="measure mt-4 text-text-2">
-          Ich melde mich, {site.replyTimeShort}. Eine Bestätigung ist unterwegs an deine E-Mail-Adresse. Falls du nichts hörst, schreib direkt an{" "}
+          Ich melde mich, {site.replyTimeShort}. Du bekommst außerdem eine Bestätigung per E-Mail, schau notfalls im Spam-Ordner nach. Falls du nichts hörst, schreib direkt an{" "}
           <a href={`mailto:${site.email}`} className="link-u text-text">
             {site.email}
           </a>
@@ -77,26 +87,27 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="card p-6 md:p-8">
+      <p className="sr-only">Alle Felder sind Pflichtfelder.</p>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label htmlFor={`${id}-name`} className="mb-2 block text-sm font-semibold">
             Dein Name
           </label>
-          <input id={`${id}-name`} type="text" aria-required className="field" value={values.name} onChange={set("name")} autoComplete="name" aria-invalid={!!errors.name || undefined} aria-describedby={errors.name ? `${id}-name-error` : undefined} />
+          <input id={`${id}-name`} name="name" type="text" maxLength={200} aria-required className="field" value={values.name} onChange={set("name")} autoComplete="name" aria-invalid={!!errors.name || undefined} aria-describedby={errors.name ? `${id}-name-error` : undefined} />
           {err("name")}
         </div>
         <div>
           <label htmlFor={`${id}-email`} className="mb-2 block text-sm font-semibold">
             E-Mail-Adresse
           </label>
-          <input id={`${id}-email`} type="email" aria-required className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" aria-invalid={!!errors.email || undefined} aria-describedby={errors.email ? `${id}-email-error` : undefined} />
+          <input id={`${id}-email`} name="email" type="email" maxLength={200} aria-required className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" aria-invalid={!!errors.email || undefined} aria-describedby={errors.email ? `${id}-email-error` : undefined} />
           {err("email")}
         </div>
         <div className="sm:col-span-2">
           <label htmlFor={`${id}-topic`} className="mb-2 block text-sm font-semibold">
             Worum geht es?
           </label>
-          <select id={`${id}-topic`} className="field" value={values.topic} onChange={set("topic")}>
+          <select id={`${id}-topic`} name="topic" className="field" value={values.topic} onChange={set("topic")}>
             <option>Individuelles Projekt</option>
             <option>Laufende Zusammenarbeit</option>
             <option>Logo oder Branding</option>
@@ -107,13 +118,13 @@ export function ContactForm() {
           <label htmlFor={`${id}-message`} className="mb-2 block text-sm font-semibold">
             Deine Nachricht
           </label>
-          <textarea id={`${id}-message`} aria-required className="field min-h-[9rem] resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message || undefined} aria-describedby={errors.message ? `${id}-message-error` : undefined} />
+          <textarea id={`${id}-message`} name="message" maxLength={4000} aria-required className="field min-h-[9rem] resize-y" value={values.message} onChange={set("message")} aria-invalid={!!errors.message || undefined} aria-describedby={errors.message ? `${id}-message-error` : undefined} />
           {err("message")}
         </div>
       </div>
       <div className="hp" aria-hidden="true">
-        <label htmlFor={`${id}-company`}>Firma</label>
-        <input id={`${id}-company`} type="text" name="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
+        <label htmlFor={`${id}-hp`}>Bitte dieses Feld leer lassen</label>
+        <input id={`${id}-hp`} type="text" name="feld_leer_lassen" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
       </div>
       {result?.status === "error" && (
         <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">

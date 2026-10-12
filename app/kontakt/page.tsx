@@ -30,9 +30,9 @@ export default function ContactPage() {
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <EnvelopeSimpleIcon size={22} aria-hidden />
               </span>
-              <span>
+              <span className="min-w-0">
                 <span className="block text-sm text-text-3">E-Mail</span>
-                <span className="block font-semibold text-text">{site.email}</span>
+                <span className="block font-semibold text-text [overflow-wrap:anywhere]">{site.email}</span>
               </span>
             </a>
             <a href={site.phoneHref} className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
@@ -48,9 +48,10 @@ export default function ContactPage() {
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <InstagramLogoIcon size={22} aria-hidden />
               </span>
-              <span>
+              <span className="min-w-0">
                 <span className="block text-sm text-text-3">Instagram</span>
-                <span className="block font-semibold text-text">{site.instagramHandle}</span>
+                <span className="block font-semibold text-text [overflow-wrap:anywhere]">{site.instagramHandle}</span>
+                <span className="sr-only">(öffnet in neuem Tab)</span>
               </span>
             </a>
             <Link href="/kostenloses-beispiel" className="card group flex items-center gap-5 bg-accent p-6 text-accent-ink transition-transform duration-300 hover:-translate-y-0.5">

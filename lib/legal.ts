@@ -135,7 +135,7 @@ export const privacy: LegalSection[] = [
   {
     heading: "13. Aktualität dieser Datenschutzerklärung",
     paragraphs: [
-      "Stand: 12.10.2026. Wir passen diese Datenschutzerklärung an, sobald sich die Website oder die zugrunde liegende Rechtslage ändert. Es gilt jeweils die auf dieser Website veröffentlichten Fassung.".replace("veröffentlichten", "veröffentlichte"),
+      `Stand: ${legalUpdated}. Wir passen diese Datenschutzerklärung an, sobald sich die Website oder die zugrunde liegende Rechtslage ändert. Es gilt jeweils die auf dieser Website veröffentlichte Fassung.`,
     ],
   },
 ];

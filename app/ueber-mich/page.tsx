@@ -33,6 +33,7 @@ export default function AboutPage() {
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">
               <InstagramLogoIcon size={20} aria-hidden />
               Aktuelle Arbeiten auf Instagram: {site.instagramHandle}
+              <span className="sr-only"> (öffnet in neuem Tab)</span>
             </a>
           </Reveal>
 

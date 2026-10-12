@@ -9,13 +9,13 @@ export type InquiryKind = "beispiel" | "kontakt";
 const payloadSchema = z.object({
   kind: z.enum(["beispiel", "kontakt"]),
   name: z.string().trim().min(2).max(200),
-  email: z.string().trim().email().max(200),
+  email: z.email().trim().max(200),
   service: z.string().trim().max(120).optional(),
   link: z.string().trim().max(300).optional(),
   topic: z.string().trim().max(120).optional(),
   message: z.string().trim().min(10).max(4000),
-  /** Honeypot: stays empty for people, bots fill it. */
-  company: z.string().max(0).optional(),
+  /** Honeypot: stays empty for people, bots fill it. Checked before parsing. */
+  company: z.string().optional(),
 });
 
 export type InquiryPayload = z.input<typeof payloadSchema>;
@@ -91,6 +91,7 @@ async function send(apiKey: string, mail: { from: string; to: string[]; reply_to
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify(mail),
+    signal: AbortSignal.timeout(10_000),
   });
   return res.ok;
 }

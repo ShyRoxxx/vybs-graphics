@@ -72,7 +72,7 @@ export function SmoothScroll() {
       if (cancelled) return;
       requestAnimationFrame(() => ScrollTrigger.refresh());
       document.fonts?.ready.then(() => !cancelled && ScrollTrigger.refresh());
-    });
+    }).catch(() => {});
     return () => {
       cancelled = true;
     };

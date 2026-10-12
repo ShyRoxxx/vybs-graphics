@@ -53,6 +53,7 @@ export default function SamplePage() {
                 Lieber direkt schreiben? <a href={`mailto:${site.email}`} className="link-u">{site.email}</a> oder{" "}
                 <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u">
                   {site.instagramHandle}
+                  <span className="sr-only"> (öffnet in neuem Tab)</span>
                 </a>
               </p>
             </Reveal>

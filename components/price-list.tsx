@@ -35,7 +35,7 @@ export function PriceList({ compact = false }: { compact?: boolean }) {
               {items.map((item) => (
                 <li key={item.id} id={`preis-${item.id}`} className="scroll-mt-28 py-7 md:py-8">
                   <div className={`grid gap-5 md:items-start md:gap-10 ${compact ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[1.4fr_1fr_auto]"}`}>
-                    <div>
+                    <div className="min-w-0">
                       <h4 className="font-sans text-[1.2rem] font-semibold tracking-normal text-text">{item.name}</h4>
                       <p className="measure mt-2 text-text-2">{item.description}</p>
                       <p className="mt-2 text-sm text-text-3">
@@ -55,11 +55,11 @@ export function PriceList({ compact = false }: { compact?: boolean }) {
                         ))}
                       </ul>
                     )}
-                    <div className="flex items-center justify-between gap-6 md:flex-col md:items-end md:justify-start">
+                    <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 md:flex-col md:items-end md:justify-start">
                       <Price item={item} />
                       <Link
                         href={`/kostenloses-beispiel?leistung=${encodeURIComponent(item.name)}`}
-                        className="link-arrow min-h-11 whitespace-nowrap text-sm text-text-2 hover:text-text"
+                        className="link-arrow min-h-11 text-sm text-text-2 hover:text-text md:whitespace-nowrap"
                       >
                         Kostenloses Beispiel anfordern
                         <Arrow />
