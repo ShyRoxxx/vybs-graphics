@@ -1,28 +1,27 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useTransition, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { m } from "motion/react";
 import { site } from "@/lib/site";
 import { DUR, EASE_OUT } from "@/lib/motion";
-import { sendInquiry, type InquiryResult } from "@/app/actions/inquiry";
-import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
+import { buildMailto } from "@/lib/inquiry";
+import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
 
-type Values = { name: string; email: string; topic: string; message: string; company: string };
+type Values = { name: string; email: string; topic: string; message: string };
 type Errors = Partial<Record<keyof Values, string>>;
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 
 export function ContactForm() {
   const id = useId();
-  const [pending, startTransition] = useTransition();
-  const [values, setValues] = useState<Values>({ name: "", email: "", topic: "Individuelles Projekt", message: "", company: "" });
+  const [values, setValues] = useState<Values>({ name: "", email: "", topic: "Individuelles Projekt", message: "" });
   const [errors, setErrors] = useState<Errors>({});
-  const [result, setResult] = useState<InquiryResult | null>(null);
-  const successRef = useRef<HTMLHeadingElement>(null);
+  const [mailto, setMailto] = useState<string | null>(null);
+  const doneRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (result?.status === "sent") successRef.current?.focus();
-  }, [result]);
+    if (mailto) doneRef.current?.focus();
+  }, [mailto]);
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -41,16 +40,12 @@ export function ContactForm() {
       document.getElementById(`${id}-${first}`)?.focus();
       return;
     }
-    startTransition(async () => {
-      try {
-        setResult(await sendInquiry({ kind: "kontakt", name: values.name, email: values.email, topic: values.topic, message: values.message, company: values.company }));
-      } catch {
-        setResult({ status: "error", message: "Die Verbindung ist abgebrochen. Bitte versuch es gleich noch einmal." });
-      }
-    });
+    const href = buildMailto({ kind: "kontakt", name: values.name.trim(), email: values.email.trim(), topic: values.topic, message: values.message.trim() });
+    setMailto(href);
+    window.location.href = href;
   };
 
-  if (result?.status === "sent") {
+  if (mailto) {
     return (
       <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8" role="status">
         <m.span
@@ -59,20 +54,29 @@ export function ContactForm() {
           transition={{ type: "spring", duration: 0.5, bounce: 0.2, delay: 0.08 }}
           className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink"
         >
-          <CheckIcon size={22} weight="bold" aria-hidden />
+          <EnvelopeSimpleIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 ref={successRef} tabIndex={-1} className="mt-6 text-[1.75rem] outline-none">
-          Deine Nachricht ist angekommen.
+        <h2 ref={doneRef} tabIndex={-1} className="mt-6 text-[1.75rem] outline-none">
+          Deine Nachricht liegt jetzt in deinem E-Mail-Programm.
         </h2>
+        <p className="measure mt-4 text-text-2">Einmal auf Senden klicken, dann ist sie bei mir. Ich melde mich, {site.replyTimeShort}.</p>
         <p className="measure mt-4 text-text-2">
-          Ich melde mich, {site.replyTimeShort}. Du bekommst außerdem eine Bestätigung per E-Mail, schau notfalls im Spam-Ordner nach. Falls du nichts hörst, schreib direkt an{" "}
+          Hat sich nichts geöffnet? Dann{" "}
+          <a href={mailto} className="link-u text-text">
+            E-Mail-Programm erneut öffnen
+          </a>{" "}
+          oder schreib direkt an{" "}
           <a href={`mailto:${site.email}`} className="link-u text-text">
             {site.email}
           </a>
+          . Telefonisch erreichst du mich unter{" "}
+          <a href={site.phoneHref} className="link-u text-text">
+            {site.phone}
+          </a>
           .
         </p>
-        <button type="button" onClick={() => setResult(null)} className="btn btn-ghost mt-8">
-          Neue Nachricht
+        <button type="button" onClick={() => setMailto(null)} className="btn btn-ghost mt-8">
+          Zurück zum Formular
         </button>
       </m.div>
     );
@@ -122,29 +126,12 @@ export function ContactForm() {
           {err("message")}
         </div>
       </div>
-      <div className="hp" aria-hidden="true">
-        <label htmlFor={`${id}-hp`}>Bitte dieses Feld leer lassen</label>
-        <input id={`${id}-hp`} type="text" name="feld_leer_lassen" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
-      </div>
-      {result?.status === "error" && (
-        <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
-          <p>{result.message}</p>
-          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-            <a href={site.phoneHref} className="underline">
-              {site.phone}
-            </a>
-            <a href={`mailto:${site.email}`} className="underline">
-              {site.email}
-            </a>
-          </p>
-        </div>
-      )}
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button type="submit" className="btn btn-primary btn-lg" disabled={pending} aria-busy={pending}>
-          {pending ? "Wird gesendet …" : "Nachricht senden"}
+        <button type="submit" className="btn btn-primary btn-lg">
+          Nachricht senden
         </button>
         <p className="text-sm text-text-3">
-          Deine Angaben verwende ich nur zur Beantwortung.{" "}
+          Die Nachricht wird in deinem E-Mail-Programm vorbereitet.{" "}
           <Link href="/datenschutz" className="link-u">
             Datenschutz
           </Link>

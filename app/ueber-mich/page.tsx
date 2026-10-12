@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
 export const metadata: Metadata = {
-  title: "Über Phillip",
+  title: "Über mich",
   description: "Wer hinter vybs.graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
   alternates: { canonical: "/ueber-mich" },
 };

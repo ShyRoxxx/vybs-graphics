@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useTransition, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { m } from "motion/react";
 import { priceItems } from "@/lib/content";
 import { site } from "@/lib/site";
 import { DUR, EASE_OUT } from "@/lib/motion";
-import { sendInquiry, type InquiryResult } from "@/app/actions/inquiry";
-import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
+import { buildMailto } from "@/lib/inquiry";
+import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
-type Values = { name: string; email: string; service: string; message: string; link: string; company: string };
+type Values = { name: string; email: string; service: string; message: string; link: string };
 type Errors = Partial<Record<keyof Values, string>>;
 
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -20,7 +20,6 @@ const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 export function SampleForm() {
   const params = useSearchParams();
   const id = useId();
-  const [pending, startTransition] = useTransition();
   const [values, setValues] = useState<Values>(() => {
     const leistung = params.get("leistung") ?? params.get("format") ?? "";
     const firma = params.get("firma") ?? "";
@@ -31,16 +30,15 @@ export function SampleForm() {
       service: priceItems.some((p) => p.name === leistung) ? leistung : leistung ? "Etwas anderes" : "",
       message: branche ? `Branche: ${branche}\n` : "",
       link: "",
-      company: "",
     };
   });
   const [errors, setErrors] = useState<Errors>({});
-  const [result, setResult] = useState<InquiryResult | null>(null);
-  const successRef = useRef<HTMLHeadingElement>(null);
+  const [mailto, setMailto] = useState<string | null>(null);
+  const doneRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (result?.status === "sent") successRef.current?.focus();
-  }, [result]);
+    if (mailto) doneRef.current?.focus();
+  }, [mailto]);
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -61,13 +59,9 @@ export function SampleForm() {
       document.getElementById(`${id}-${first}`)?.focus();
       return;
     }
-    startTransition(async () => {
-      try {
-        setResult(await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message, company: values.company }));
-      } catch {
-        setResult({ status: "error", message: "Die Verbindung ist abgebrochen. Bitte versuch es gleich noch einmal." });
-      }
-    });
+    const href = buildMailto({ kind: "beispiel", name: values.name.trim(), email: values.email.trim(), service: values.service, link: values.link.trim(), message: values.message.trim() });
+    setMailto(href);
+    window.location.href = href;
   };
 
   const field = (name: keyof Values, label: string, hint: string | undefined, control: React.ReactNode) => (
@@ -93,7 +87,7 @@ export function SampleForm() {
     "aria-describedby": errors[name] ? `${id}-${name}-error` : undefined,
   });
 
-  if (result?.status === "sent") {
+  if (mailto) {
     return (
       <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8 md:p-10" role="status">
         <m.span
@@ -102,20 +96,40 @@ export function SampleForm() {
           transition={{ type: "spring", duration: 0.5, bounce: 0.2, delay: 0.08 }}
           className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink"
         >
-          <CheckIcon size={22} weight="bold" aria-hidden />
+          <EnvelopeSimpleIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 ref={successRef} tabIndex={-1} className="mt-6 text-[2rem] outline-none">
-          Deine Anfrage ist angekommen.
+        <h2 ref={doneRef} tabIndex={-1} className="mt-6 text-[2rem] outline-none">
+          Deine Anfrage liegt jetzt in deinem E-Mail-Programm.
         </h2>
         <p className="measure mt-4 text-text-2">
-          Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, {site.replyTimeShort}. Du bekommst außerdem eine Bestätigung per E-Mail, schau notfalls im Spam-Ordner nach. Logo oder Fotos kannst du mir einfach per Antwort darauf schicken.
+          Einmal auf Senden klicken, dann ist sie bei mir. Logo oder Fotos kannst du direkt anhängen. Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, {site.replyTimeShort}.
+        </p>
+        <p className="measure mt-4 text-text-2">
+          Hat sich nichts geöffnet? Dann{" "}
+          <a href={mailto} className="link-u text-text">
+            E-Mail-Programm erneut öffnen
+          </a>{" "}
+          oder schreib direkt an{" "}
+          <a href={`mailto:${site.email}`} className="link-u text-text">
+            {site.email}
+          </a>
+          , per Instagram an{" "}
+          <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
+            {site.instagramHandle}
+            <span className="sr-only"> (öffnet in neuem Tab)</span>
+          </a>{" "}
+          oder ruf an unter{" "}
+          <a href={site.phoneHref} className="link-u text-text">
+            {site.phone}
+          </a>
+          .
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/portfolio" className="btn btn-ghost">
             Arbeiten ansehen
           </Link>
-          <button type="button" onClick={() => setResult(null)} className="btn btn-ghost">
-            Noch eine Anfrage
+          <button type="button" onClick={() => setMailto(null)} className="btn btn-ghost">
+            Zurück zum Formular
           </button>
         </div>
       </m.div>
@@ -171,33 +185,10 @@ export function SampleForm() {
         </div>
       </div>
 
-      <div className="hp" aria-hidden="true">
-        <label htmlFor={`${id}-hp`}>Bitte dieses Feld leer lassen</label>
-        <input id={`${id}-hp`} type="text" name="feld_leer_lassen" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
-      </div>
-
-      {result?.status === "error" && (
-        <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
-          <p>{result.message}</p>
-          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-            <a href={site.phoneHref} className="underline">
-              {site.phone}
-            </a>
-            <a href={`mailto:${site.email}`} className="underline">
-              {site.email}
-            </a>
-            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="underline">
-              {site.instagramHandle}
-              <span className="sr-only"> (öffnet in neuem Tab)</span>
-            </a>
-          </p>
-        </div>
-      )}
-
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button type="submit" className="btn btn-primary btn-lg" disabled={pending} aria-busy={pending}>
-          {pending ? "Wird gesendet …" : "Kostenloses Beispieldesign anfordern"}
-          {!pending && <ArrowUpRightIcon size={18} weight="bold" aria-hidden />}
+        <button type="submit" className="btn btn-primary btn-lg">
+          Kostenloses Beispieldesign anfordern
+          <ArrowUpRightIcon size={18} weight="bold" aria-hidden />
         </button>
         <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm text-text-2 hover:text-text">
           <InstagramLogoIcon size={18} aria-hidden />
@@ -206,7 +197,7 @@ export function SampleForm() {
         </a>
       </div>
       <p className="mt-5 text-xs leading-relaxed text-text-3">
-        Kein Kauf, kein Vertrag. Deine Angaben verwende ich nur für dieses Beispiel und die Antwort darauf. Mehr dazu in der{" "}
+        Kein Kauf, kein Vertrag. Die Anfrage wird in deinem E-Mail-Programm vorbereitet und von dort geschickt. Deine Angaben verwende ich nur für dieses Beispiel und die Antwort darauf. Mehr dazu in der{" "}
         <Link href="/datenschutz" className="link-u">
           Datenschutzerklärung
         </Link>

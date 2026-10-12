@@ -137,15 +137,6 @@ p {
 
 /* ------------------------------------------------------------------ components */
 @layer components {
-/* Honeypot field: off-screen for people, visible to naive bots. */
-.hp {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
 .container-x {
   width: 100%;
   max-width: 88rem;

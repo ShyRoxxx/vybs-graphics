@@ -13,21 +13,16 @@ export const imprint: LegalSection[] = [
     paragraphs: [
       "Phillip Franke Grafikdesign\nAuftritt als Vybs Graphics",
       "Hoher Kamp 40, 30855 Langenhagen",
-      "[Handelsregistereintrag, sofern vorhanden, einfügen]",
     ],
   },
   { heading: "Vertreten durch", paragraphs: ["Phillip Franke"] },
   { heading: "Kontakt", paragraphs: ["Telefon: +49 176 60193983", "E-Mail: phillip.creates@icloud.com"] },
-  {
-    heading: "Umsatzsteuer-ID",
-    paragraphs: ["[Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz einfügen, sofern vorhanden]"],
-  },
   { heading: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV", paragraphs: ["Phillip Franke"] },
   {
     heading: "Streitbeilegung",
     paragraphs: [
       "Die Europäische Kommission hat ihre Plattform zur Online-Streitbeilegung (OS-Plattform) im Juli 2025 eingestellt; ein entsprechender Link ist seither nicht mehr erforderlich.",
-      "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. [Anpassen, falls eine Teilnahmepflicht oder -bereitschaft besteht.]",
+      "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
     ],
   },
   {
@@ -56,7 +51,7 @@ export const privacy: LegalSection[] = [
     paragraphs: [
       "Verantwortlicher für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:",
       "Phillip Franke Grafikdesign (Vybs Graphics), Hoher Kamp 40, 30855 Langenhagen. E-Mail: phillip.creates@icloud.com, Telefon: +49 176 60193983.",
-      "Ein Datenschutzbeauftragter ist nicht bestellt, da die gesetzlichen Voraussetzungen dafür (§ 38 BDSG) nicht vorliegen. [Falls doch ein Datenschutzbeauftragter bestellt ist: Name und Kontaktdaten hier angeben.]",
+      "Ein Datenschutzbeauftragter ist nicht bestellt, da die gesetzlichen Voraussetzungen dafür (§ 38 BDSG) nicht vorliegen.",
     ],
   },
   {
@@ -90,7 +85,7 @@ export const privacy: LegalSection[] = [
     heading: "6. Kontaktaufnahme",
     paragraphs: [
       "Wenn Sie uns über das Kontaktformular eine Anfrage senden, verarbeiten wir die Angaben aus dem Formular (z. B. Name, E-Mail-Adresse, Telefonnummer und Ihre Nachricht), um Ihre Anfrage zu bearbeiten und für Anschlussfragen. Pflichtangaben sind als solche gekennzeichnet; ohne sie können wir Ihre Anfrage nicht bearbeiten.",
-      "Die Formulareingaben werden uns per E-Mail zugestellt. Für den Versand setzen wir den E-Mail-Dienst Resend (Plus Five Five, Inc.), San Francisco (Kalifornien), USA als Auftragsverarbeiter ein (Art. 28 DSGVO). Die Übermittlung in die USA erfolgt auf Grundlage des Angemessenheitsbeschlusses der EU-Kommission zum EU-US Data Privacy Framework (Art. 45 DSGVO), soweit der Anbieter danach zertifiziert ist, und ergänzend auf Grundlage der Standardvertragsklauseln der EU-Kommission (Art. 46 Abs. 2 lit. c DSGVO).",
+      "Das Kontaktformular übermittelt Ihre Eingaben nicht an einen Server. Beim Absenden wird stattdessen eine E-Mail mit Ihren Angaben in Ihrem eigenen E-Mail-Programm vorbereitet, die Sie selbst an uns senden. Ihre Daten erreichen uns damit ausschließlich per E-Mail; ein weiterer Dienstleister ist nicht eingebunden.",
       "Wenn Sie uns per E-Mail oder Telefon kontaktieren, verarbeiten wir Ihre Angaben einschließlich der daraus hervorgehenden personenbezogenen Daten zum Zweck der Bearbeitung Ihres Anliegens.",
       "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit einem Vertrag zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist; in allen übrigen Fällen unser berechtigtes Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO). Ihre Daten löschen wir, sobald Ihr Anliegen abschließend bearbeitet ist, es sei denn, gesetzliche Aufbewahrungsfristen (z. B. für Geschäftsbriefe nach Handels- und Steuerrecht bis zu sechs bzw. zehn Jahre) stehen dem entgegen. Wir geben diese Daten nicht ohne Ihre Einwilligung weiter.",
     ],
