@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { FinalCta } from "@/components/final-cta";
 import { workCategories } from "@/lib/content";
+import { WorkImage, WorkOverview } from "@/components/work-gallery";
 import { primaryCta } from "@/lib/site";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
@@ -22,6 +22,15 @@ export default function PortfolioPage() {
         text="Drei Serien, drei Betriebe, drei Farbwelten. Keine Vorlage mit getauschtem Logo, sondern Beiträge, die zum jeweiligen Unternehmen gehören. Das Portfolio wächst mit jedem Auftrag und ist so angelegt, dass neue Arbeiten einfach dazukommen."
       />
 
+      <section className="pb-[clamp(4rem,8vw,7rem)]">
+        <div className="container-x">
+          <Reveal from="scale" distance={0}>
+            <WorkOverview />
+          </Reveal>
+          <p className="mt-4 text-center text-sm text-text-3">Klicken Sie auf ein Bild, um es groß zu sehen. Pfeiltasten blättern.</p>
+        </div>
+      </section>
+
       <section className="overflow-hidden pb-[var(--section)]">
         <div className="container-x space-y-[clamp(5rem,10vw,9rem)]">
           {workCategories.map((w, i) => {
@@ -31,9 +40,7 @@ export default function PortfolioPage() {
                 <div aria-hidden className="orb absolute left-1/2 top-1/2 -z-10 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-[0.18]" style={{ background: w.tint }} />
                 <div className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
                   <Reveal from={flip ? "right" : "left"} className="relative">
-                    <div className="relative overflow-hidden rounded-[var(--radius-card)] shadow-[inset_0_0_0_1px_var(--line),0_40px_80px_-40px_rgba(0,0,0,.9)]">
-                      <Image src={w.image} alt={w.alt} width={486} height={470} sizes="(min-width:1024px) 45vw, 92vw" className="h-auto w-full" />
-                    </div>
+                    <WorkImage index={i} />
                   </Reveal>
                   <div>
                     <Reveal as="h2" className="text-[clamp(2.25rem,5vw,4.25rem)]">
