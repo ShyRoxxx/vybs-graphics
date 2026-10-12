@@ -24,7 +24,7 @@ export const site = {
 export const nav = [
   { href: "/portfolio", label: "Arbeiten" },
   { href: "/leistungen", label: "Leistungen & Preise" },
-  { href: "/ueber-mich", label: "Über Phillip" },
+  { href: "/ueber-mich", label: "Über mich" },
   { href: "/faq", label: "Fragen" },
   { href: "/kontakt", label: "Kontakt" },
 ] as const;

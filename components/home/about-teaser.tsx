@@ -24,7 +24,7 @@ export function AboutTeaser() {
             </Reveal>
             <Reveal delay={0.2} className="mt-8">
               <Link href="/ueber-mich" className="link-arrow min-h-11 text-text-2 hover:text-text">
-                Mehr über Phillip und die Arbeitsweise
+                Mehr über mich und die Arbeitsweise
                 <Arrow />
               </Link>
             </Reveal>

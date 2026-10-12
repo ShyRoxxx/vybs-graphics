@@ -1,20 +1,13 @@
 # Übergabe – Website Vybs Graphics (Livegang-Stand)
 
-Stand: 12. Oktober 2026. Dieser Stand ist technisch versandfertig. Er geht erst live, wenn die unten
-aufgeführten Blocker erledigt sind. Design ist eingefroren (Design-Freeze), alle Änderungen gegenüber der
-Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
+Stand: 12. Oktober 2026. Livegang-Stand, alle Freigaben liegen vor. Design ist eingefroren (Design-Freeze),
+alle Änderungen gegenüber der Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
 
-## Livegang-Blocker (vor dem Merge erledigen)
+## Freigaben
 
-1. **Preise bestätigen.** Die Einzelpreise in `lib/content.ts` (`priceItems`) sind Vorschläge aus der Demo-Phase
-   (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide, Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €,
-   Plakat 60 €, Logo ab 150 €, 2 Korrekturrunden). Phillip muss sie freigeben oder korrigieren, bevor sie
-   öffentlich stehen.
-
-2. **Portfolio-Freigaben.** Alle fünf Projekte (Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
-   Betriebswirte, Sandeck Media) sind als „Kundenprojekt“ markiert (Feld `kind` in `lib/content.ts`). Phillip
-   bestätigt, welche davon Konzeptarbeiten sind, und dass die Kundenlogos gezeigt werden dürfen. Details in
-   `public/images/QUELLEN.md`.
+- Preise (`lib/content.ts`, `priceItems`) und Portfolio (fünf Projekte, Kennzeichnung „Kundenprojekt“, gezeigte
+  Kundenlogos) sind am 12.10.2026 über Bilbao Consulting als passend bestätigt worden.
+- Navigation und Seitentitel heißen „Über mich“ statt „Über Phillip“.
 
 ## Rechtstexte (fertig)
 
