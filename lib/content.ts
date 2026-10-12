@@ -1,63 +1,121 @@
 export type WorkKind = "Kundenprojekt" | "Konzept";
 
-export type WorkCategory = {
-  slug: "branding" | "carousel" | "social";
-  title: string;
-  titleAccent: string;
-  tint: string;
-  image: string;
-  alt: string;
+export type WorkSlide = { src: string; alt: string };
+
+export type Work = {
+  slug: string;
   client: string;
+  title: string;
   kind: WorkKind;
   format: string;
+  category: "social" | "print" | "branding";
+  tint: string;
+  featured: boolean;
   description: string;
   details: string[];
+  ratio: "4 / 5" | "1 / 1";
+  slides: WorkSlide[];
 };
 
-export const workCategories: WorkCategory[] = [
+export const works: Work[] = [
   {
-    slug: "branding",
-    title: "Creative",
-    titleAccent: "Branding",
-    tint: "#8B5CF6",
-    image: "/images/work-branding.webp",
-    alt: "Instagram-Carousel für eine Content-Beratung, drei Slides: helle Kacheln mit violettem Akzent, Einstiegsfrage „Dein Content sieht gut aus. Aber verkauft er auch?“, Liste mit drei Punkten und Abschluss mit Handlungsaufforderung",
-    client: "Content-Beratung",
+    slug: "cready-online",
+    client: "Cready Online",
+    title: "Content, der verkauft",
     kind: "Kundenprojekt",
     format: "Instagram-Carousel, 3 Slides",
+    category: "social",
+    tint: "#7C3AED",
+    featured: true,
+    ratio: "4 / 5",
     description:
-      "Eine Beratung wollte auf Instagram nicht wie ein weiteres Coaching-Profil aussehen. Entstanden ist ein Carousel aus hellen Kacheln mit violettem Akzent: eine klare Frage als Einstieg, eine nummerierte Liste in der Mitte und zum Schluss die Einladung zum Gespräch.",
-    details: ["Alle drei Slides als zusammenhängende Serie", "Eigene Farbwelt und Typografie", "Abschluss-Slide mit Handlungsaufforderung"],
+      "Eine Content-Beratung wollte auf Instagram nicht wie ein weiteres Coaching-Profil aussehen. Das Carousel stellt auf Slide eins eine Frage, nennt auf Slide zwei drei Gründe und zeigt auf Slide drei das Angebot. Helle Fläche, violetter Akzent, türkise Handschrift als Gegenpol.",
+    details: ["Eigene Farbwelt mit Violett und Türkis", "Nummerierte Liste als Mittelteil", "Abschluss-Slide mit Handlungsaufforderung"],
+    slides: [
+      { src: "/images/works/cready-1.webp", alt: "Slide 1 von 3 für Cready Online: große schwarze und violette Schrift „Dein Content sieht gut aus. Aber verkauft er auch?“, darunter „Likes zahlen keine Rechnungen“ mit türkisem Pfeil." },
+      { src: "/images/works/cready-2.webp", alt: "Slide 2 von 3 für Cready Online: Überschrift „Warum es nicht funktioniert“ und drei nummerierte Punkte: keine klare Strategie, kein Wiedererkennungswert, zu wenig Conversion-Fokus." },
+      { src: "/images/works/cready-3.webp", alt: "Slide 3 von 3 für Cready Online: „Content, der Aufmerksamkeit und Kunden bringt.“ mit vier Icons für Branding, Social Media, KI und Performance und dem Button „Lass uns dein Branding upgraden“." },
+    ],
   },
   {
-    slug: "carousel",
-    title: "Carousel",
-    titleAccent: "Slide",
-    tint: "#5BC276",
-    image: "/images/work-carousel.webp",
-    alt: "Instagram-Carousel für eine Gebäudereinigung, drei Slides: Fensterfotos mit grün-blauen Akzenten, Überschriften „Ihre Fenster verdienen etwas Besseres“, „Ihre Immobilie verdient bewundernde Blicke“ und „Klare Fenster. Besseres Gefühl.“",
-    client: "Gebäudereinigung",
+    slug: "eifelhaus-auszeit",
+    client: "Eifelhaus Auszeit",
+    title: "Raus aus dem Stress",
     kind: "Kundenprojekt",
-    format: "Instagram-Carousel, 3 Slides",
+    format: "Instagram-Serie, 3 Beiträge",
+    category: "social",
+    tint: "#6B7A4B",
+    featured: true,
+    ratio: "4 / 5",
     description:
-      "Für eine Gebäudereinigung aus der Region Hildesheim ging es um Fensterreinigung. Statt Putzeimer und Lächeln auf Bestellung: saubere Glasfronten, Tageslicht, das Firmengrün als Akzent und auf jedem Slide ein Argument, das man beim Kunden tatsächlich nennt.",
-    details: ["Drei Slides mit durchgehendem Aufbau", "Firmenlogo und Farbwelt übernommen", "Hinweise zu Terminen und Einzugsgebiet"],
+      "Ein Ferienhaus in der Eifel lebt von Ruhe, nicht von Rabattcodes. Die Serie arbeitet mit großen Fotos, einer ruhigen Serifenschrift und wenig Text: Kaminofen, Holzfassade, Wiese. Die Icon-Liste auf dem zweiten Beitrag erklärt, was Gäste erwartet, ohne zu drängen.",
+    details: ["Fotos als Hauptdarsteller, Text zurückhaltend", "Serifenschrift passend zur Marke", "Icon-Liste mit fünf Argumenten"],
+    slides: [
+      { src: "/images/works/eifelhaus-1.webp", alt: "Beitrag für Eifelhaus Auszeit: Kaminofen vor großer Fensterfront mit Blick ins Grüne, Schriftzug „Gönn dir eine Auszeit. Jetzt Verfügbarkeit prüfen.“" },
+      { src: "/images/works/eifelhaus-2.webp", alt: "Beitrag für Eifelhaus Auszeit: Überschrift „Was dich erwartet“ und fünf Punkte mit Icons: Sauna und Kaminofen, Natur direkt vor der Tür, absolute Ruhe, seenah, nachhaltiges Wohnen." },
+      { src: "/images/works/eifelhaus-3.webp", alt: "Beitrag für Eifelhaus Auszeit: Holzhaus mit Blechdach auf einer Wiese vor Wald, Schriftzug „Raus aus dem Stress. Rein in die Ruhe. Dein Rückzugsort in der Eifel“." },
+    ],
   },
   {
-    slug: "social",
-    title: "Social",
-    titleAccent: "Creatives",
+    slug: "nettwerk-it",
+    client: "Nettwerk IT",
+    title: "Was passiert, wenn nichts passiert?",
+    kind: "Kundenprojekt",
+    format: "Instagram-Carousel, 4 Slides",
+    category: "social",
+    tint: "#2F7BF6",
+    featured: true,
+    ratio: "4 / 5",
+    description:
+      "Ein IT-Dienstleister brauchte Beiträge, die Geschäftsführer ansprechen, nicht Techniker. Das Carousel geht vom Problem (IT-Ausfälle kosten Geld) über die Folgen und die Leistungen zur kostenlosen Analyse. Dunkle Serverraum-Stimmung, Blau als Markenfarbe, Rot nur für das, was wehtut.",
+    details: ["Vier Slides mit klarer Dramaturgie", "Dunkle Farbwelt mit zwei Signalfarben", "Abschluss-Slide mit kostenloser Analyse"],
+    slides: [
+      { src: "/images/works/nettwerk-1.webp", alt: "Slide 1 von 4 für Nettwerk IT: beschädigter Serverschrank mit glühenden Rissen und Euro-Münzen, Überschrift „IT-Probleme? Dann verlierst du täglich Geld.“" },
+      { src: "/images/works/nettwerk-2.webp", alt: "Slide 2 von 4 für Nettwerk IT: „Was passiert, wenn nichts passiert?“ mit drei Punkten: langsame Systeme kosten Zeit, Ausfälle kosten Umsätze, unsichere IT kostet Nerven." },
+      { src: "/images/works/nettwerk-3.webp", alt: "Slide 3 von 4 für Nettwerk IT: „Unsere Leistungen für Sie“ mit vier Punkten: Cloud-Lösungen, IT-Sicherheit, Netzwerk, IT-Support." },
+      { src: "/images/works/nettwerk-4.webp", alt: "Slide 4 von 4 für Nettwerk IT: leuchtendes Häkchen-Symbol im Serverraum, „Lass uns über deine IT reden“ und Button „Kostenlose Analyse sichern“." },
+    ],
+  },
+  {
+    slug: "grundstein-betriebswirte",
+    client: "Grundstein Betriebswirte",
+    title: "Dein Erfolg ist planbar",
+    kind: "Kundenprojekt",
+    format: "Instagram-Serie, 3 Beiträge",
+    category: "social",
     tint: "#C9A96A",
-    image: "/images/work-social.webp",
-    alt: "Instagram-Carousel für eine Unternehmensberatung, drei Slides: Foto einer Frau am Laptop, goldene Akzente, Überschriften „Warum 90 % scheitern“, „Dein Erfolg ist planbar“ und „Klarer Plan. Klare Entscheidung. Klares Ergebnis.“",
-    client: "Unternehmensberatung",
-    kind: "Kundenprojekt",
-    format: "Instagram-Carousel, 3 Slides",
+    featured: false,
+    ratio: "4 / 5",
     description:
-      "Eine Beratung für Gründer brauchte Beiträge, die seriös wirken, ohne nach Bank auszusehen. Gold auf Weiß, ein echtes Foto statt Symbolbild und ein Aufbau, der erst das Problem benennt und dann den Plan zeigt.",
-    details: ["Drei Slides, die aufeinander aufbauen", "Foto-Integration mit Lichtkante", "Einheitliche Icon-Sprache"],
+      "Eine Beratung für Gründer und kleine Unternehmen wollte seriös wirken, ohne nach Bank auszusehen. Dunkelblau und Gold, echte Fotos statt Symbolbilder, und auf jedem Beitrag ein klarer Dreischritt: Problem benennen, Plan zeigen, Gespräch anbieten.",
+    details: ["Drei Beiträge mit einheitlichem Aufbau", "Fotos mit weichem Verlauf eingebunden", "Kostenloses Erstgespräch als Handlungsaufforderung"],
+    slides: [
+      { src: "/images/works/grundstein-1.webp", alt: "Beitrag für Grundstein Betriebswirte: „Dein Erfolg ist planbar.“ mit drei Punkten zu Strategie und Planung, Unternehmensentwicklung und persönlicher Begleitung, goldener Button „Kostenloses Erstgespräch“, im Hintergrund gestapelte Steine am Wasser." },
+      { src: "/images/works/grundstein-2.webp", alt: "Beitrag für Grundstein Betriebswirte: „Klarer Plan. Klare Entscheidung. Klares Ergebnis.“ mit drei Schritten: Ziele definieren, Strategie entwickeln, umsetzen und wachsen, daneben eine lächelnde Frau mit Brille am Laptop." },
+      { src: "/images/works/grundstein-3.webp", alt: "Beitrag für Grundstein Betriebswirte: „Warum 90 % scheitern … und die anderen erfolgreich werden“ mit drei Gründen: kein klarer Plan, falsche Entscheidungen, fehlende Struktur; daneben eine Frau, die sich an den Kopf fasst." },
+    ],
+  },
+  {
+    slug: "sandeck-media",
+    client: "Sandeck Media",
+    title: "Webdesign, das beeindruckt",
+    kind: "Kundenprojekt",
+    format: "Instagram-Posts, quadratisch",
+    category: "social",
+    tint: "#F15A22",
+    featured: false,
+    ratio: "1 / 1",
+    description:
+      "Für eine Webagentur zwei Leistungsbeiträge in einem System: einmal hell, einmal dunkel, immer mit Orange, dem Logo oben links und einem Illustrationsmotiv rechts. Drei Argumente mit Icons und ein Button, der sagt, was als Nächstes passiert.",
+    details: ["Helle und dunkle Variante im selben System", "Große Illustrationen statt Stockfotos", "Icon-Liste mit drei Argumenten"],
+    slides: [
+      { src: "/images/works/sandeck-webdesign.webp", alt: "Beitrag für Sandeck Media auf schwarzem Grund: „Webdesign, das beeindruckt“, drei Punkte zu Responsive Design, modern und kreativ, SEO-optimiert, Button „Lass uns dein Projekt starten“, rechts ein stilisierter Browser." },
+      { src: "/images/works/sandeck-onlineshops.webp", alt: "Beitrag für Sandeck Media auf weißem Grund: „Onlineshops, die verkaufen“, drei Punkte zu Verkaufsstärke, individuellen Lösungen und sicherer Abwicklung, Button „Starte dein E-Commerce-Projekt“, rechts ein großer Einkaufswagen in Orange." },
+    ],
   },
 ];
+
+export const featuredWorks = works.filter((w) => w.featured);
 
 /* ------------------------------------------------------------------ Preise je Leistung */
 
