@@ -66,15 +66,17 @@ export function Lightbox({ items, children }: Props) {
       <dialog
         ref={dialogRef}
         onClose={onClose}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) dialogRef.current?.close();
-        }}
         aria-label={item ? `${item.alt} (Bild ${index! + 1} von ${items.length})` : "Bildansicht"}
         data-lenis-prevent
         className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-0 backdrop:bg-ink/90 backdrop:backdrop-blur-md"
       >
         {item && (
-          <div className="flex h-full flex-col items-center justify-center gap-4 p-4 md:p-10">
+          <div
+            onClick={(e) => {
+              if (e.target === e.currentTarget) dialogRef.current?.close();
+            }}
+            className="flex h-full flex-col items-center justify-center gap-4 p-4 md:p-10"
+          >
             <m.figure
               key={item.src}
               initial={{ opacity: 0, scale: 0.96, y: 12 }}
@@ -100,7 +102,7 @@ export function Lightbox({ items, children }: Props) {
                   <CaretLeftIcon size={20} weight="bold" aria-hidden />
                 </button>
               )}
-              <span className="tnum text-sm text-text-2">
+              <span className="tnum text-sm text-text-2" aria-live="polite" aria-atomic="true">
                 {index! + 1} / {items.length}
               </span>
               {items.length > 1 && (

@@ -31,13 +31,11 @@ export const metadata: Metadata = {
   },
   description:
     "Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel. Feste Preise pro Design, kostenloses Beispieldesign vorab.",
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "de_DE",
     siteName: site.name,
-    title: `${site.name} – Professionelles Grafikdesign für dein Unternehmen`,
-    description: "Feste Preise pro Design. Das erste Beispieldesign für deinen Betrieb ist kostenlos.",
   },
   icons: {
     icon: [{ url: "/icon.png", type: "image/png", sizes: "32x32" }],

@@ -11,6 +11,7 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo"
 export const metadata: Metadata = {
   title: "Über Phillip",
   description: "Wer hinter vybs.graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
+  alternates: { canonical: "/ueber-mich" },
 };
 
 export default function AboutPage() {
@@ -32,6 +33,7 @@ export default function AboutPage() {
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">
               <InstagramLogoIcon size={20} aria-hidden />
               Aktuelle Arbeiten auf Instagram: {site.instagramHandle}
+              <span className="sr-only"> (öffnet in neuem Tab)</span>
             </a>
           </Reveal>
 

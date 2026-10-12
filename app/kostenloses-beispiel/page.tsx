@@ -9,14 +9,15 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 export const metadata: Metadata = {
   title: "Kostenloses Beispieldesign anfordern",
   description: "Beschreib kurz deinen Betrieb und bekomm ein echtes Beispieldesign in deinem Namen. Kostenlos und unverbindlich.",
+  alternates: { canonical: "/kostenloses-beispiel" },
 };
 
 export default function SamplePage() {
   return (
     <>
       <section className="relative overflow-x-clip pt-[9rem] pb-[var(--section)]">
-        <div aria-hidden className="orb drift-a left-[-15%] top-[-10%] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-60" />
-        <div aria-hidden className="orb drift-b right-[-10%] top-[30%] h-[30rem] w-[30rem] bg-accent opacity-[0.1]" />
+        <div aria-hidden className="orb drift-a left-[-15%] top-[-8rem] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-60" />
+        <div aria-hidden className="orb drift-b right-[-10%] top-[26rem] h-[30rem] w-[30rem] bg-accent opacity-[0.1]" />
         <div className="container-x relative grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal as="h1" className="max-w-[14ch] text-[clamp(2.75rem,6.5vw,5.5rem)]">
@@ -52,13 +53,14 @@ export default function SamplePage() {
                 Lieber direkt schreiben? <a href={`mailto:${site.email}`} className="link-u">{site.email}</a> oder{" "}
                 <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u">
                   {site.instagramHandle}
+                  <span className="sr-only"> (öffnet in neuem Tab)</span>
                 </a>
               </p>
             </Reveal>
           </div>
 
           <Reveal from="up" delay={0.15}>
-            <Suspense fallback={<div className="card min-h-[32rem]" aria-busy="true" />}>
+            <Suspense fallback={<div className="card min-h-[46rem] md:min-h-[38rem]" aria-busy="true" />}>
               <SampleForm />
             </Suspense>
           </Reveal>

@@ -1,16 +1,24 @@
+const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+
 export const site = {
   name: "Vybs Graphics",
-  owner: "Phillip",
+  legalName: "Phillip Franke Grafikdesign",
+  owner: "Phillip Franke",
+  ownerFirstName: "Phillip",
   tagline: "Grafikdesign für Unternehmen, Selbstständige und lokale Betriebe",
-  // Platzhalter bis zur Bestätigung durch den Inhaber (siehe Übergabeliste).
-  email: "hallo@vybs.graphics",
+  email: "phillip.creates@icloud.com",
+  phone: "+49 176 60193983",
+  phoneHref: "tel:+4917660193983",
+  address: { street: "Hoher Kamp 40", postalCode: "30855", city: "Langenhagen", country: "DE" },
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Hoher+Kamp+40%2C+30855+Langenhagen",
   instagram: "https://www.instagram.com/vybs.graphics/",
   instagramHandle: "@vybs.graphics",
-  url: "https://vybs-graphics.vercel.app",
-  serviceArea: "Deutschlandweit, komplett digital",
+  /** Set NEXT_PUBLIC_SITE_URL in Vercel; the fallback is the domain connected to the project. */
+  url: configuredUrl || "https://www.vybs-graphics.de",
+  serviceArea: "Langenhagen, Region Hannover und deutschlandweit digital",
   replyTime: "Rückmeldung in der Regel innerhalb von zwei Werktagen",
   replyTimeShort: "in der Regel innerhalb von zwei Werktagen",
-  year: 2026,
+  year: new Date().getFullYear(),
 } as const;
 
 export const nav = [

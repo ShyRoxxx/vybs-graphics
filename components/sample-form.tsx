@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useTransition, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, useTransition, type FormEvent } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { m } from "motion/react";
@@ -12,7 +12,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
-type Values = { name: string; email: string; service: string; message: string; link: string };
+type Values = { name: string; email: string; service: string; message: string; link: string; company: string };
 type Errors = Partial<Record<keyof Values, string>>;
 
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -31,10 +31,16 @@ export function SampleForm() {
       service: priceItems.some((p) => p.name === leistung) ? leistung : leistung ? "Etwas anderes" : "",
       message: branche ? `Branche: ${branche}\n` : "",
       link: "",
+      company: "",
     };
   });
   const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<InquiryResult | null>(null);
+  const successRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (result?.status === "sent") successRef.current?.focus();
+  }, [result]);
 
   const set = (k: keyof Values) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -44,7 +50,7 @@ export function SampleForm() {
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     const er: Errors = {};
-    if (!values.name.trim()) er.name = "Bitte deinen Namen oder dein Unternehmen angeben, damit das Beispiel in deinem Namen entsteht.";
+    if (values.name.trim().length < 2) er.name = "Bitte deinen Namen oder dein Unternehmen angeben, damit das Beispiel in deinem Namen entsteht.";
     if (!values.email.trim()) er.email = "Bitte eine E-Mail-Adresse angeben, an die ich das Beispiel schicken kann.";
     else if (!emailOk(values.email)) er.email = "Diese E-Mail-Adresse sieht unvollständig aus, bitte prüf sie kurz.";
     if (!values.service) er.service = "Bitte wähl aus, welche Art Design du sehen möchtest.";
@@ -56,9 +62,11 @@ export function SampleForm() {
       return;
     }
     startTransition(async () => {
-      const res = await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message });
-      if (res.status === "mailto") window.location.href = res.href;
-      setResult(res);
+      try {
+        setResult(await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message, company: values.company }));
+      } catch {
+        setResult({ status: "error", message: "Die Verbindung ist abgebrochen. Bitte versuch es gleich noch einmal." });
+      }
     });
   };
 
@@ -79,13 +87,13 @@ export function SampleForm() {
 
   const aria = (name: keyof Values, required = true) => ({
     id: `${id}-${name}`,
+    name,
     "aria-required": required || undefined,
     "aria-invalid": errors[name] ? true : undefined,
     "aria-describedby": errors[name] ? `${id}-${name}-error` : undefined,
   });
 
-  if (result && result.status !== "error") {
-    const direct = result.status === "sent";
+  if (result?.status === "sent") {
     return (
       <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8 md:p-10" role="status">
         <m.span
@@ -96,25 +104,12 @@ export function SampleForm() {
         >
           <CheckIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 className="mt-6 text-[2rem]">{direct ? "Deine Anfrage ist angekommen." : "Dein E-Mail-Programm sollte sich jetzt geöffnet haben."}</h2>
+        <h2 ref={successRef} tabIndex={-1} className="mt-6 text-[2rem] outline-none">
+          Deine Anfrage ist angekommen.
+        </h2>
         <p className="measure mt-4 text-text-2">
-          {direct
-            ? `Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, ${site.replyTimeShort}. Logo oder Fotos kannst du mir einfach per Antwort auf meine E-Mail schicken.`
-            : `Die Anfrage ist darin vorbereitet. Schick sie einfach ab, Logo oder Fotos kannst du direkt anhängen. Ich melde mich mit dem Beispieldesign, ${site.replyTimeShort}.`}
+          Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, {site.replyTimeShort}. Du bekommst außerdem eine Bestätigung per E-Mail, schau notfalls im Spam-Ordner nach. Logo oder Fotos kannst du mir einfach per Antwort darauf schicken.
         </p>
-        {!direct && (
-          <p className="measure mt-4 text-text-2">
-            Hat sich nichts geöffnet? Dann schreib mir direkt an{" "}
-            <a href={`mailto:${site.email}`} className="link-u text-text">
-              {site.email}
-            </a>{" "}
-            oder per Instagram an{" "}
-            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
-              {site.instagramHandle}
-            </a>
-            .
-          </p>
-        )}
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/portfolio" className="btn btn-ghost">
             Arbeiten ansehen
@@ -129,13 +124,14 @@ export function SampleForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate className="card p-6 md:p-10">
+      <p className="sr-only">Alle Felder außer „Website oder Instagram-Profil“ sind Pflichtfelder.</p>
       <div className="grid gap-6 md:grid-cols-2">
-        {field("name", "Name oder Unternehmen", undefined, <input {...aria("name")} className="field" value={values.name} onChange={set("name")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />)}
+        {field("name", "Name oder Unternehmen", undefined, <input {...aria("name")} className="field" maxLength={200} value={values.name} onChange={set("name")} autoComplete="organization" placeholder="z. B. Glanzwerk Reinigung" />)}
         {field(
           "email",
           "E-Mail-Adresse",
           undefined,
-          <input {...aria("email")} type="email" className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" placeholder="name@firma.de" />,
+          <input {...aria("email")} type="email" maxLength={200} className="field" value={values.email} onChange={set("email")} autoComplete="email" inputMode="email" spellCheck={false} autoCapitalize="none" placeholder="name@firma.de" />,
         )}
         {field(
           "service",
@@ -156,7 +152,7 @@ export function SampleForm() {
           "link",
           "Website oder Instagram-Profil",
           "optional",
-          <input {...aria("link", false)} type="text" className="field" value={values.link} onChange={set("link")} inputMode="url" autoComplete="url" spellCheck={false} autoCapitalize="none" placeholder="www.firma.de oder @instagramname" />,
+          <input {...aria("link", false)} type="text" maxLength={300} className="field" value={values.link} onChange={set("link")} inputMode="url" autoComplete="url" spellCheck={false} autoCapitalize="none" placeholder="www.firma.de oder @instagramname" />,
         )}
         <div className="md:col-span-2">
           {field(
@@ -166,6 +162,7 @@ export function SampleForm() {
             <textarea
               {...aria("message")}
               className="field min-h-[8rem] resize-y"
+              maxLength={4000}
               value={values.message}
               onChange={set("message")}
               placeholder="Worum geht es? Ein Angebot, eine Leistung, eine Neuigkeit? Hast du Farben oder Beiträge, die dir gefallen?"
@@ -174,14 +171,27 @@ export function SampleForm() {
         </div>
       </div>
 
+      <div className="hp" aria-hidden="true">
+        <label htmlFor={`${id}-hp`}>Bitte dieses Feld leer lassen</label>
+        <input id={`${id}-hp`} type="text" name="feld_leer_lassen" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
+      </div>
+
       {result?.status === "error" && (
-        <p role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
-          {result.message} Schreib mir alternativ direkt an{" "}
-          <a href={`mailto:${site.email}`} className="underline">
-            {site.email}
-          </a>{" "}
-          oder per Instagram.
-        </p>
+        <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
+          <p>{result.message}</p>
+          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+            <a href={site.phoneHref} className="underline">
+              {site.phone}
+            </a>
+            <a href={`mailto:${site.email}`} className="underline">
+              {site.email}
+            </a>
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="underline">
+              {site.instagramHandle}
+              <span className="sr-only"> (öffnet in neuem Tab)</span>
+            </a>
+          </p>
+        </div>
       )}
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

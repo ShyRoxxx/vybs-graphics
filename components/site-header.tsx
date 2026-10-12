@@ -24,6 +24,23 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the menu on navigation (also back/forward) and when the viewport grows into the
+  // desktop layout, otherwise main/footer would stay inert behind an invisible menu.
+  const [menuPath, setMenuPath] = useState(pathname);
+  if (menuPath !== pathname) {
+    setMenuPath(pathname);
+    setOpen(false);
+  }
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (mq.matches) setOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     const html = document.documentElement;
@@ -90,7 +107,7 @@ export function SiteHeader() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
-              aria-controls="mobile-menu"
+              aria-controls={open ? "mobile-menu" : undefined}
               className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-ink-2/60 shadow-[inset_0_0_0_1px_var(--line-strong)] lg:hidden"
             >
               <span className="sr-only">{open ? "Menü schließen" : "Menü öffnen"}</span>
@@ -121,6 +138,7 @@ export function SiteHeader() {
           <m.div
             id="mobile-menu"
             role="dialog"
+            aria-modal="true"
             aria-label="Menü"
             data-lenis-prevent
             initial={{ opacity: 0 }}

@@ -18,7 +18,7 @@ export function Hero() {
   useGsapScene(root, (gsap, _ScrollTrigger, el) => {
       if (reduceMotion()) return;
       const scrub = scrubFor();
-      const cards = gsap.utils.toArray<HTMLElement>("[data-card]");
+      const cards = gsap.utils.toArray<HTMLElement>("[data-card]", el);
 
       // signature moment: the stack of real work fans out while the hero scrolls away
       const mm = gsap.matchMedia();

@@ -3,6 +3,8 @@ import { Logo } from "@/components/ui/logo";
 import { nav, primaryCta, site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
+import { PhoneIcon } from "@phosphor-icons/react/dist/ssr/Phone";
+import { MapPinIcon } from "@phosphor-icons/react/dist/ssr/MapPin";
 
 export function SiteFooter() {
   return (
@@ -48,9 +50,26 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
+              <a href={site.phoneHref} className="link-u inline-flex min-h-11 items-center gap-2">
+                <PhoneIcon size={18} aria-hidden />
+                {site.phone}
+              </a>
+            </li>
+            <li>
               <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u inline-flex min-h-11 items-center gap-2">
                 <InstagramLogoIcon size={18} aria-hidden />
                 {site.instagramHandle}
+                <span className="sr-only">(öffnet in neuem Tab)</span>
+              </a>
+            </li>
+            <li>
+              <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="link-u inline-flex min-h-11 items-start gap-2 py-2">
+                <MapPinIcon size={18} aria-hidden className="mt-0.5 shrink-0" />
+                <span>
+                  {site.legalName}
+                  <br />
+                  {site.address.street}, {site.address.postalCode} {site.address.city}
+                </span>
                 <span className="sr-only">(öffnet in neuem Tab)</span>
               </a>
             </li>
@@ -72,6 +91,7 @@ export function SiteFooter() {
             </Link>
             <a href="https://bilbaoconsulting.com" target="_blank" rel="noopener" className="link-u inline-flex min-h-11 items-center">
               Website von Bilbao Consulting
+              <span className="sr-only"> (öffnet in neuem Tab)</span>
             </a>
           </div>
         </div>

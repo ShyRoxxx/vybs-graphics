@@ -9,13 +9,27 @@ type Bundle = { gsap: Gsap; ScrollTrigger: ScrollTriggerType };
 let bundle: Promise<Bundle> | null = null;
 
 /** Loads GSAP once, after hydration, so the animation runtime never blocks the first paint. */
+/** Chunk failed or hangs (stale deploy, blocker, flaky network): show everything statically. */
+function showStatic() {
+  document.documentElement.classList.add("reduce-motion");
+}
+
 export function loadGsap(): Promise<Bundle> {
   if (!bundle) {
-    bundle = Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([g, s]) => {
-      g.gsap.registerPlugin(s.ScrollTrigger);
-      s.ScrollTrigger.config({ ignoreMobileResize: true });
-      return { gsap: g.gsap, ScrollTrigger: s.ScrollTrigger };
-    });
+    const guard = window.setTimeout(showStatic, 6000);
+    bundle = Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
+      .then(([g, s]) => {
+        window.clearTimeout(guard);
+        g.gsap.registerPlugin(s.ScrollTrigger);
+        s.ScrollTrigger.config({ ignoreMobileResize: true });
+        return { gsap: g.gsap, ScrollTrigger: s.ScrollTrigger };
+      })
+      .catch((err: unknown) => {
+        window.clearTimeout(guard);
+        bundle = null;
+        showStatic();
+        throw err;
+      });
   }
   return bundle;
 }
@@ -34,7 +48,7 @@ export function useGsapScene<T extends HTMLElement>(ref: RefObject<T | null>, sc
       ctx = gsap.context(() => {
         cleanup = scene(gsap, ScrollTrigger, el);
       }, el);
-    });
+    }).catch(() => {});
     return () => {
       cancelled = true;
       if (typeof cleanup === "function") cleanup();
