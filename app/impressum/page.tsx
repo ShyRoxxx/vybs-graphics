@@ -5,7 +5,7 @@ import { imprint } from "@/lib/legal";
 
 export const metadata: Metadata = {
   title: "Impressum",
-  description: "Anbieterkennzeichnung von Vybs Graphics (Phillip Franke Grafikdesign), Langenhagen.",
+  description: "Anbieterkennzeichnung von Phillip Franke Grafikdesign (Vybs Graphics), Langenhagen.",
   alternates: { canonical: "/impressum" },
 };
 
