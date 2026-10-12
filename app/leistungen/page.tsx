@@ -11,6 +11,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 export const metadata: Metadata = {
   title: "Leistungen & Preise",
   description: "Social Media Design, Printdesign, Branding. Feste Preise pro Design, kostenloses Beispiel vorab.",
+  alternates: { canonical: "/leistungen" },
 };
 
 export default function ServicesPage() {

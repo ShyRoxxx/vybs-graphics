@@ -13,14 +13,27 @@ import { site } from "@/lib/site";
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
+  "@id": `${site.url}/#business`,
   name: site.name,
+  legalName: site.legalName,
   description: "Grafikdesign für Unternehmen, Selbstständige und lokale Betriebe: Instagram-Designs, Flyer, Visitenkarten, Logos. Feste Preise, kostenloses Beispiel vorab.",
   url: site.url,
+  image: `${site.url}/images/logo.png`,
+  logo: `${site.url}/images/logo.png`,
   email: site.email,
+  telephone: site.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    postalCode: site.address.postalCode,
+    addressLocality: site.address.city,
+    addressCountry: site.address.country,
+  },
   sameAs: [site.instagram],
-  areaServed: "DE",
-  founder: { "@type": "Person", name: "Phillip" },
-  priceRange: "15 € – 150 €",
+  areaServed: ["Langenhagen", "Region Hannover", "Deutschland"],
+  founder: { "@type": "Person", name: site.owner },
+  priceRange: "€",
+  inLanguage: "de",
 };
 
 export default function HomePage() {

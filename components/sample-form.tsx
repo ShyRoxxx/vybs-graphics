@@ -12,7 +12,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 
-type Values = { name: string; email: string; service: string; message: string; link: string };
+type Values = { name: string; email: string; service: string; message: string; link: string; company: string };
 type Errors = Partial<Record<keyof Values, string>>;
 
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -31,6 +31,7 @@ export function SampleForm() {
       service: priceItems.some((p) => p.name === leistung) ? leistung : leistung ? "Etwas anderes" : "",
       message: branche ? `Branche: ${branche}\n` : "",
       link: "",
+      company: "",
     };
   });
   const [errors, setErrors] = useState<Errors>({});
@@ -56,8 +57,7 @@ export function SampleForm() {
       return;
     }
     startTransition(async () => {
-      const res = await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message });
-      if (res.status === "mailto") window.location.href = res.href;
+      const res = await sendInquiry({ kind: "beispiel", name: values.name, email: values.email, service: values.service, link: values.link, message: values.message, company: values.company });
       setResult(res);
     });
   };
@@ -84,8 +84,7 @@ export function SampleForm() {
     "aria-describedby": errors[name] ? `${id}-${name}-error` : undefined,
   });
 
-  if (result && result.status !== "error") {
-    const direct = result.status === "sent";
+  if (result?.status === "sent") {
     return (
       <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8 md:p-10" role="status">
         <m.span
@@ -96,25 +95,10 @@ export function SampleForm() {
         >
           <CheckIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 className="mt-6 text-[2rem]">{direct ? "Deine Anfrage ist angekommen." : "Dein E-Mail-Programm sollte sich jetzt geöffnet haben."}</h2>
+        <h2 className="mt-6 text-[2rem]">Deine Anfrage ist angekommen.</h2>
         <p className="measure mt-4 text-text-2">
-          {direct
-            ? `Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, ${site.replyTimeShort}. Logo oder Fotos kannst du mir einfach per Antwort auf meine E-Mail schicken.`
-            : `Die Anfrage ist darin vorbereitet. Schick sie einfach ab, Logo oder Fotos kannst du direkt anhängen. Ich melde mich mit dem Beispieldesign, ${site.replyTimeShort}.`}
+          Danke! Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, {site.replyTimeShort}. Eine Bestätigung ist unterwegs an deine E-Mail-Adresse. Logo oder Fotos kannst du mir einfach per Antwort darauf schicken.
         </p>
-        {!direct && (
-          <p className="measure mt-4 text-text-2">
-            Hat sich nichts geöffnet? Dann schreib mir direkt an{" "}
-            <a href={`mailto:${site.email}`} className="link-u text-text">
-              {site.email}
-            </a>{" "}
-            oder per Instagram an{" "}
-            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-u text-text">
-              {site.instagramHandle}
-            </a>
-            .
-          </p>
-        )}
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/portfolio" className="btn btn-ghost">
             Arbeiten ansehen
@@ -174,14 +158,26 @@ export function SampleForm() {
         </div>
       </div>
 
+      <div className="hp" aria-hidden="true">
+        <label htmlFor={`${id}-company`}>Firma</label>
+        <input id={`${id}-company`} type="text" name="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
+      </div>
+
       {result?.status === "error" && (
-        <p role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
-          {result.message} Schreib mir alternativ direkt an{" "}
-          <a href={`mailto:${site.email}`} className="underline">
-            {site.email}
-          </a>{" "}
-          oder per Instagram.
-        </p>
+        <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
+          <p>{result.message}</p>
+          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+            <a href={site.phoneHref} className="underline">
+              {site.phone}
+            </a>
+            <a href={`mailto:${site.email}`} className="underline">
+              {site.email}
+            </a>
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="underline">
+              {site.instagramHandle}
+            </a>
+          </p>
+        </div>
       )}
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

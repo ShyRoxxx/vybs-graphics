@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   description:
     "Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel. Feste Preise pro Design, kostenloses Beispieldesign vorab.",
-  robots: { index: false, follow: false },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "de_DE",

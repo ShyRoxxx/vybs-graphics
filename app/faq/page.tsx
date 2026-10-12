@@ -8,6 +8,7 @@ import { faqs } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Häufige Fragen",
   description: "Antworten zu Kosten, Ablauf, Dateien, Dauer und Zusammenarbeit mit Vybs Graphics.",
+  alternates: { canonical: "/faq" },
 };
 
 const jsonLd = {

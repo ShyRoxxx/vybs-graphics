@@ -1,109 +1,95 @@
-# Übergabe – Demo-Website Vybs Graphics
+# Übergabe – Website Vybs Graphics (Livegang-Stand)
 
-Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Neukundengewinnung, nicht für den Livegang gedacht (noindex).
+Stand: 12. Oktober 2026. Dieser Stand ist technisch versandfertig. Er geht erst live, wenn die unten
+aufgeführten Blocker erledigt sind. Design ist eingefroren (Design-Freeze), alle Änderungen gegenüber der
+Demo betreffen Inhalte, Rechtstexte, Funktionen und Technik.
 
-## Umgesetzt aus Phillips Feedback
+## Livegang-Blocker (vor dem Merge erledigen)
 
-- Positionierung: „Professionelles Grafikdesign für dein Unternehmen.“ Social Media, Print und Branding stehen
-  gleichberechtigt nebeneinander (Startseite, /leistungen).
-- Einzelpreise je Leistung statt Basic/Standard/Custom, jeweils mit Beschreibung, Hinweis zum Umfang, „Enthalten“
-  und direktem Link zum kostenlosen Beispiel. Carousel-Preis gilt ausdrücklich pro Carousel bis 5 Slides.
-- Ablauf in sechs Schritten (Leistung wählen → Anfrage → Beispiel → Entscheidung → Kauf zum Festpreis → Anpassungen
-  und Dateien), mit Sticky-Vorschau.
-- Startseiten-Reihenfolge: Hero mit Beispiel-CTA und zweitem Button zu den Arbeiten → Leitsatz → Arbeiten →
-  Leistungen → Preise → Ablauf → Konfigurator → Über Phillip (kurz) → FAQ → Abschluss.
-- Portfolio: fünf Projekte mit allen Slides in voller Auflösung (1080 px), auf dem Handy als wischbare Reihe, am
-  Rechner nebeneinander, jede Slide öffnet die Lightbox. Kennzeichnung „Kundenprojekt“ bzw. „Konzept“ pro Projekt.
-  Startseite zeigt drei Projekte als Slide-Stapel, der Hero die drei Cover.
-- Formular: Name/Unternehmen, E-Mail, Leistung, Beschreibung, optionaler Link. Datenschutzhinweis am Formular.
-  Direkte Übermittlung über eine Server-Action, sobald `RESEND_API_KEY` gesetzt ist; ohne Key öffnet sich das
-  E-Mail-Programm mit vorbereiteter Nachricht, und die Bestätigung sagt das ehrlich.
-- FAQ mit den zwölf gewünschten Fragen.
-- Ansprache auf „du“ umgestellt, weil Phillips Beispieltexte durchgehend „dein Unternehmen“ verwenden.
-  Impressum/Datenschutz bleiben in Sie-Form. Rückstellung auf Sie ist möglich, betrifft `lib/content.ts` und einige Komponenten.
+1. **Formularversand ist noch nicht scharf.** Die Server-Action `app/actions/inquiry.ts` sendet über Resend,
+   sobald die Umgebungsvariablen im Vercel-Projekt `vybs-graphics` gesetzt sind (Production und Preview):
+   - `RESEND_API_KEY` – API-Key aus dem Resend-Konto von Bilbao Consulting.
+   - `INQUIRY_TO` – Postfach, in dem Anfragen landen sollen (Standard ohne Variable: `phillip.creates@icloud.com`).
+   - `INQUIRY_FROM` – verifizierte Absenderadresse, z. B. `Vybs Graphics <anfrage@vybs-graphics.de>`
+     (Standard ohne Variable: genau diese Adresse).
+   - `NEXT_PUBLIC_SITE_URL` – optional, `https://www.vybs-graphics.de` ist bereits der Standard in `lib/site.ts`.
 
-## Noch offen aus Phillips Feedback
+   In Resend ist bisher nur `bilbaoconsulting.com` verifiziert, `vybs-graphics.de` nicht. Zwei Wege:
+   a) `vybs-graphics.de` in Resend anlegen und die angezeigten DNS-Einträge (DKIM, SPF/Return-Path, optional DMARC)
+      bei INWX setzen, dann `INQUIRY_FROM` auf `anfrage@vybs-graphics.de`;
+   b) übergangsweise `INQUIRY_FROM` auf eine Adresse unter `bilbaoconsulting.com` setzen.
+   Ohne Key zeigt das Formular eine ehrliche Fehlermeldung mit Telefonnummer und E-Mail; es gibt keinen
+   stillen Fehlschlag und keinen mailto-Fallback mehr.
 
-- Originaldateien sind eingebaut (15 Slides, fünf Projekte: Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
-  Betriebswirte, Sandeck Media). Alle sind als „Kundenprojekt“ markiert, weil echte Firmenlogos darauf sind; Phillip
-  muss bestätigen, welche davon Konzeptarbeiten sind (Feld `kind` in `lib/content.ts`). Die frühere
-  Gebäudereinigungs-Collage ist entfernt, bis die Originalslides vorliegen.
-- Flyer, Visitenkarten und Logos sind noch nicht im Portfolio, weil keine Druckdaten vorliegen. Die Leistungsseite zeigt
-  dafür gekennzeichnete Beispielmotive.
-- Endgültige Preise und Leistungsumfang: die eingetragenen Werte (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide,
-  Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €, Plakat 60 €, Logo ab 150 €, 2 Korrekturrunden)
-  sind Vorschläge auf Basis seiner früheren 15/20/30-€-Angabe und müssen von Phillip bestätigt werden.
-- Eigene Domain vybs.graphics (derzeit nicht registriert) nach Vertragsschluss einrichten; `lib/site.ts` → `url`.
-- Kundenstimmen, sobald echte vorliegen.
+2. **Platzhalter in den Rechtstexten.** Impressum und Datenschutzerklärung stehen wörtlich aus dem CRM in
+   `lib/legal.ts`. Vier Stellen sind noch Platzhalter und auf der Seite gelb hervorgehoben
+   (`components/legal-text.tsx` markiert alles in eckigen Klammern):
+   - Impressum: `[Handelsregistereintrag, sofern vorhanden, einfügen]` – bei einem Einzelunternehmen ohne
+     Eintrag kann der Absatz entfallen; das ist von Phillip zu bestätigen.
+   - Impressum: `[Umsatzsteuer-Identifikationsnummer … sofern vorhanden]` – im CRM ist kein USt-IdNr hinterlegt.
+     Entweder Nummer eintragen oder Satz zur Kleinunternehmerregelung (§ 19 UStG) ersetzen.
+   - Impressum: `[Anpassen, falls eine Teilnahmepflicht oder -bereitschaft besteht.]` – Streitbeilegung.
+   - Datenschutz: `[Falls doch ein Datenschutzbeauftragter …]` – Phillip hat vermutlich keinen; Satz streichen,
+     sobald bestätigt.
+   Sobald die Angaben vorliegen: Text in `lib/legal.ts` ersetzen, die Hervorhebung verschwindet automatisch.
 
+3. **Preise bestätigen.** Die Einzelpreise in `lib/content.ts` (`priceItems`) sind Vorschläge aus der Demo-Phase
+   (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide, Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €,
+   Plakat 60 €, Logo ab 150 €, 2 Korrekturrunden). Phillip muss sie freigeben oder korrigieren, bevor sie
+   öffentlich stehen.
 
-## Was die Demo zeigt
+4. **Portfolio-Freigaben.** Alle fünf Projekte (Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
+   Betriebswirte, Sandeck Media) sind als „Kundenprojekt“ markiert (Feld `kind` in `lib/content.ts`). Phillip
+   bestätigt, welche davon Konzeptarbeiten sind, und dass die Kundenlogos gezeigt werden dürfen. Details in
+   `public/images/QUELLEN.md`.
 
-- Startseite mit Hero (Kartenstapel aus Phillips echten Arbeiten, fächert sich beim Scrollen auf),
-  Leitsatz, drei Arbeitsfamilien, Leistungen mit Hover-Bild, Preiswähler (15 / 20 / 30 €),
-  Ablauf mit Sticky-Handyvorschau, Beispiel-Konfigurator (Firmenname, Branche, Format → Live-Vorschau),
-  Über Phillip, FAQ, Abschluss-Aufruf.
-- Portfolio mit Lightbox (Klick auf ein Bild, Pfeiltasten blättern, Escape schließt) und der kompletten
-  Portfolio-Grafik als großem Überblick.
-- Unterseiten: /portfolio, /leistungen, /ueber-mich, /kostenloses-beispiel, /kontakt, /faq,
-  /impressum, /datenschutz, eigene 404-Seite.
-- Visuelle Richtung: siehe DIRECTION.md („Studio bei Nacht“).
+## Was sich gegenüber der Demo geändert hat
 
-## Vor dem Versand an den Lead prüfen
+- Echte Firmendaten überall: Phillip Franke Grafikdesign (Auftritt als Vybs Graphics), Hoher Kamp 40,
+  30855 Langenhagen, +49 176 60193983, phillip.creates@icloud.com. Telefon (`tel:`-Link), Adresse und
+  Google-Maps-Link stehen im Footer und auf /kontakt; `lib/site.ts` ist die einzige Quelle.
+- Impressum und Datenschutzerklärung aus dem CRM eingebunden (Stand 12.10.2026), Sie-Form wie geliefert.
+- `noindex` entfernt, `robots.txt` erlaubt Crawling und nennt die Sitemap, jede Seite hat eine kanonische URL,
+  Sitemap und Open-Graph laufen über `https://www.vybs-graphics.de` (überschreibbar per `NEXT_PUBLIC_SITE_URL`).
+- Strukturierte Daten (JSON-LD `ProfessionalService`) mit Name, rechtlichem Namen, Adresse, Telefon, E-Mail,
+  Logo und Instagram.
+- Formulare (/kostenloses-beispiel und /kontakt): serverseitige Validierung mit zod, unsichtbares Honeypot-Feld,
+  Rate-Limit (5 Anfragen pro 10 Minuten je IP), Anfrage an Phillip plus Bestätigung an den Absender,
+  Fehlerzustand mit Telefon und E-Mail. Clientseitige Prüfung bleibt (Fokus springt zum ersten Fehler).
+- Bildquellen dokumentiert in `public/images/QUELLEN.md`.
 
-- E-Mail-Adresse `hallo@vybs.graphics` ist ein Platzhalter (Domain ist nicht registriert). In `lib/site.ts` ändern.
-- Telefonnummer und Adresse sind nicht bekannt und fehlen deshalb bewusst (kein `tel:`-Link, keine Karte).
-- Instagram `@vybs.graphics` stammt aus dem CRM; das Profil war aus der Session heraus nicht abrufbar (Instagram blockt).
-- Texte zu Projekten (Content-Beratung, Gebäudereinigung Hildesheim, Unternehmensberatung) sind aus den
-  sichtbaren Kacheln der Portfolio-Grafik abgeleitet und müssen von Phillip bestätigt werden.
-- Preisinhalte je Stufe (Korrekturrunden, Formate, Quelldatei beim Custom-Paket) sind plausible Vorschläge.
-- „Rückmeldung in der Regel innerhalb von zwei Werktagen“ ist eine Annahme.
-- Leistungsbeschreibungen und FAQ-Antworten sind branchenüblich formuliert, aber nicht mit Phillip abgestimmt.
-- Über-Seite: keine erfundenen Zahlen, Gründungsjahre oder Kundenzitate; die Biografie ist bewusst allgemein.
+## Nach dem Livegang
 
-## Vor einem echten Livegang umstellen
+- **Doppeltes Vercel-Projekt löschen:** `vybs-graphics-p3ku` ist ein Rest aus der Demo-Phase und wird nicht
+  benötigt. Löschen im Vercel-Dashboard (Projekt → Settings → Delete); aus dem Connector heraus war das nicht möglich.
+- Vercel-Projekt `vybs-graphics`: Preview-Deployments sind durch Vercel-Login geschützt (Team-Mitglieder sehen sie),
+  Production ist öffentlich. Domains `vybs-graphics.de` (leitet auf www um) und `www.vybs-graphics.de` sind verbunden.
+- DNS bei INWX: `@ A 216.198.79.1` und `www CNAME 90d2ca11c168490d.vercel-dns-017.com` bleiben; zusätzliche
+  Resend-Einträge siehe Blocker 1.
+- Google-Unternehmensprofil mit `https://www.vybs-graphics.de` verknüpfen und Suchkonsole einreichen
+  (`https://www.vybs-graphics.de/sitemap.xml`).
+- Datei-Upload im Formular (Logo/Fotos) ist bewusst nicht gebaut; Absender schicken Dateien per Antwort auf die
+  Bestätigungsmail.
+- Kundenstimmen, Flyer/Visitenkarten/Logos als echte Arbeiten, sobald Material vorliegt.
 
-1. `robots: { index: false }` in `app/layout.tsx` entfernen und `app/robots.ts` auf `allow` umstellen.
-2. Formular-Backend: Server-Action `app/actions/inquiry.ts` ist fertig. Umgebungsvariablen in Vercel setzen:
-   `RESEND_API_KEY` (Versand über Resend), `INQUIRY_TO` (Phillips Postfach), optional `INQUIRY_FROM`
-   (verifizierte Absenderadresse der Domain). Ohne Key läuft der mailto-Fallback. Datei-Upload danach ergänzen.
-3. Rechtstexte: Impressum und Datenschutz sind sichtbar als Platzhalter markiert; finale Texte kommen von Bilbao Consulting.
-4. Bildrechte: Alle Bilder stammen aus den vom Lead übergebenen Dateien.
-   - `public/images/logo.png`: freigestellt aus dem gelieferten Logo (1.webp).
-   - `public/images/works/*.webp`: die 15 von Phillip gelieferten Originalslides, auf 1080 px und WebP optimiert.
-     Darauf sind Logos und Fotos von Kundenbetrieben (Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
-     Betriebswirte, Sandeck Media); vor dem Livegang mit Phillip klären, dass er diese Arbeiten zeigen darf.
-   - Keine Stockfotos, keine KI-Bilder. Die Vorschau-Kacheln im Konfigurator sind CSS-gebaute Mock-ups mit Beispieltexten.
-5. Motivliste für echte Fotos (optional): Phillip am Arbeitsplatz (Hochformat), Bildschirm mit laufendem Design,
-   Skizzenbuch/Notizen, drei bis fünf fertige Kacheln in Originalauflösung pro Arbeitsfamilie.
-6. Font-Hinweis: Bricolage Grotesque und Manrope werden über `next/font` selbst gehostet; keine externen Requests.
+## Qualitätsprüfung dieses Stands
 
-## Technik
+- `tsc`, ESLint und Production-Build ohne Fehler.
+- Screenshots aller Seiten bei 390 px und 1440 px vor und nach der Umstellung: kein horizontaler Überlauf,
+  keine Konsolenfehler.
+- Formulare getestet: leere Abgabe zeigt Feldfehler und setzt den Fokus, Honeypot-Treffer werden still
+  verworfen, ohne `RESEND_API_KEY` erscheint der Fehlerzustand mit Telefonnummer.
+- Lighthouse (mobil, lokaler Build): Accessibility 100, Best Practices 100, SEO 100. Performance lokal
+  74–79 wegen simulierter Drosselung; die gemessenen Werte (First Contentful Paint ≈ 0,2–1,3 s, Largest
+  Contentful Paint = First Contentful Paint, CLS 0) liegen im grünen Bereich. Auf Vercel mit Edge-Cache
+  nochmals messen.
 
-- Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4, GSAP + ScrollTrigger, Lenis, Motion (Lazy).
-- Inhalte: `lib/content.ts` (Arbeiten, Leistungen, Preise, Ablauf, Branchen, Formate, FAQ, Über),
-  `lib/site.ts` (Name, E-Mail, Instagram, Navigation, Haupt-CTA).
-- Build: `npm run build`, `npx tsc --noEmit`, `npx eslint .` laufen fehlerfrei.
-- Lighthouse (lokal, simuliertes Mobil-Throttling): Barrierefreiheit 100, Best Practices 100, CLS 0.
-  Performance schwankte in der Container-Umgebung zwischen 68 und 83 (TBT 200–550 ms je nach Last der Maschine);
-  gemessener LCP entspricht dem First Paint (~0,4 s unthrottled). Bitte nach dem Deploy mit PageSpeed Insights
-  gegen die Production-URL prüfen; dort entfällt der lokale Server-Overhead.
-- Animorio wurde als Vorlagenquelle genutzt (Spalten gegenläufig, Satz setzt sich zusammen, Fragen-Akkordeon,
-  Titel in den Fokus) und an das Design angepasst. Magic UI kam nicht zum Einsatz (keine passende Komponente nötig).
-- Erster Commit auf `main` enthält versehentlich die lokalen Skill-Ordner (`.claude/`, `.agents/`); ein Force-Push zum
-  Bereinigen war in der Session nicht erlaubt. Sie wurden im zweiten Commit entfernt. Falls gewünscht:
-  `git rebase -i --root` lokal und `main` neu pushen.
+## Technik kurz
 
-## Deployment
-
-- Vercel-Projekt `vybs-graphics` (Team Bilbao) ist mit dem Repository verbunden, jeder Push auf `main` baut Production.
-  Live: https://vybs-graphics.vercel.app (Vercel Authentication nur noch für Preview-Deployments, Production ist offen).
-- Ein zweites Projekt `vybs-graphics-p3ku` im selben Team ist mit demselben Repository verbunden und baut doppelt.
-  Kann gelöscht werden.
-- `lib/site.ts` → `url` zeigt bereits auf die Production-URL; bei eigener Domain anpassen.
-
-## Nicht im Umfang, als Vorschlag
-
-- Einfache Portfolio-Pflege: neue Arbeiten sind heute ein Eintrag in `lib/content.ts` plus Bild in `public/images/`.
-  Ein kleines CMS (z. B. Markdown-Ordner) wäre der nächste Schritt, wenn Phillip selbst pflegen will.
-- Google-Unternehmensprofil und Instagram-Verknüpfung (siehe Lead-Analyse) parallel aufsetzen.
+- Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind v4, `next/font` (Bricolage Grotesque,
+  Manrope, selbst gehostet), GSAP ScrollTrigger und Lenis nur bei Bedarf geladen, Motion für Mikroanimationen,
+  `prefers-reduced-motion` wird respektiert.
+- Inhalte: `lib/content.ts` (Leistungen, Preise, Ablauf, FAQ, Portfolio), `lib/site.ts` (Firmendaten),
+  `lib/legal.ts` (Rechtstexte), `DIRECTION.md` (Gestaltungsrichtung „Studio bei Nacht“).
+- Hinweis zur Git-Historie: Der erste Commit auf `main` enthält noch Hilfsordner der Entwicklungsumgebung,
+  die später entfernt wurden. Im aktuellen Stand sind sie nicht mehr enthalten.

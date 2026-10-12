@@ -1,24 +1,50 @@
 "use server";
 
+import { headers } from "next/headers";
+import { z } from "zod";
 import { site } from "@/lib/site";
 
 export type InquiryKind = "beispiel" | "kontakt";
 
-export type InquiryPayload = {
-  kind: InquiryKind;
-  name: string;
-  email: string;
-  service?: string;
-  link?: string;
-  message: string;
-  topic?: string;
+const payloadSchema = z.object({
+  kind: z.enum(["beispiel", "kontakt"]),
+  name: z.string().trim().min(2).max(200),
+  email: z.string().trim().email().max(200),
+  service: z.string().trim().max(120).optional(),
+  link: z.string().trim().max(300).optional(),
+  topic: z.string().trim().max(120).optional(),
+  message: z.string().trim().min(10).max(4000),
+  /** Honeypot: stays empty for people, bots fill it. */
+  company: z.string().max(0).optional(),
+});
+
+export type InquiryPayload = z.input<typeof payloadSchema>;
+
+export type InquiryResult = { status: "sent" } | { status: "error"; message: string };
+
+const unavailable: InquiryResult = {
+  status: "error",
+  message: `Die Anfrage konnte gerade nicht übermittelt werden. Ruf mich an unter ${site.phone} oder schreib direkt an ${site.email}.`,
 };
 
-export type InquiryResult = { status: "sent" } | { status: "mailto"; href: string } | { status: "error"; message: string };
+/* ---- simple rate limit per IP (per server instance) ---- */
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_PER_WINDOW = 5;
+const hits = new Map<string, number[]>();
 
-const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+function limited(ip: string) {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  if (recent.length >= MAX_PER_WINDOW) {
+    hits.set(ip, recent);
+    return true;
+  }
+  recent.push(now);
+  hits.set(ip, recent);
+  return false;
+}
 
-function buildMail(p: InquiryPayload) {
+function buildOwnerMail(p: z.output<typeof payloadSchema>) {
   const subject = p.kind === "beispiel" ? `Kostenloses Beispieldesign: ${p.name}` : `${p.topic ?? "Anfrage"}: ${p.name}`;
   const lines = [
     `Name / Unternehmen: ${p.name}`,
@@ -26,46 +52,83 @@ function buildMail(p: InquiryPayload) {
     p.kind === "beispiel" ? `Gewünschte Leistung: ${p.service || "noch offen"}` : `Thema: ${p.topic ?? "Allgemeine Anfrage"}`,
     `Website / Profil: ${p.link || "–"}`,
     "",
-    p.message.trim(),
+    p.message,
     "",
-    p.kind === "beispiel" ? "Logo oder Fotos schicke ich nach deiner Rückmeldung als Anhang." : "",
+    `Gesendet über ${site.url}`,
   ];
-  return { subject, body: lines.join("\n").trim() };
+  return { subject, text: lines.join("\n") };
 }
 
-/**
- * Sends the inquiry through Resend when RESEND_API_KEY is configured.
- * Without a key the client receives a prepared mailto link, so the demo never shows a fake success.
- */
-export async function sendInquiry(payload: InquiryPayload): Promise<InquiryResult> {
-  const name = payload.name.trim().slice(0, 200);
-  const email = payload.email.trim().slice(0, 200);
-  const message = payload.message.trim().slice(0, 4000);
-  if (!name || !emailOk(email) || message.length < 10) {
+function buildVisitorMail(p: z.output<typeof payloadSchema>) {
+  const subject = p.kind === "beispiel" ? "Deine Anfrage für ein kostenloses Beispieldesign" : "Deine Nachricht an Vybs Graphics";
+  const lines = [
+    `Hallo ${p.name},`,
+    "",
+    p.kind === "beispiel"
+      ? `danke für deine Anfrage. Ich schaue mir deinen Betrieb an und melde mich mit dem Beispieldesign, ${site.replyTimeShort}. Die Anfrage ist kostenlos und unverbindlich.`
+      : `danke für deine Nachricht. Ich melde mich, ${site.replyTimeShort}.`,
+    "",
+    "Deine Angaben:",
+    p.kind === "beispiel" ? `Gewünschte Leistung: ${p.service || "noch offen"}` : `Thema: ${p.topic ?? "Allgemeine Anfrage"}`,
+    p.link ? `Website / Profil: ${p.link}` : "",
+    "",
+    p.message,
+    "",
+    "Logo oder Fotos kannst du mir einfach per Antwort auf diese E-Mail schicken.",
+    "",
+    "Viele Grüße",
+    `${site.owner}`,
+    site.name,
+    site.phone,
+    site.email,
+    site.url,
+  ].filter((l) => l !== undefined);
+  return { subject, text: lines.join("\n") };
+}
+
+async function send(apiKey: string, mail: { from: string; to: string[]; reply_to?: string; subject: string; text: string }) {
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify(mail),
+  });
+  return res.ok;
+}
+
+/** Validates server-side, blocks bots and floods, then sends the inquiry to the owner and a confirmation to the visitor. */
+export async function sendInquiry(raw: InquiryPayload): Promise<InquiryResult> {
+  // Honeypot filled: answer like a success before doing anything else, so the bot learns nothing.
+  if (typeof raw === "object" && raw !== null && typeof raw.company === "string" && raw.company.length > 0) {
+    return { status: "sent" };
+  }
+  const parsed = payloadSchema.safeParse(raw);
+  if (!parsed.success) {
     return { status: "error", message: "Bitte Name, eine gültige E-Mail-Adresse und ein paar Sätze angeben." };
   }
-  const clean: InquiryPayload = { ...payload, name, email, message, service: payload.service?.slice(0, 120), link: payload.link?.slice(0, 300), topic: payload.topic?.slice(0, 120) };
-  const { subject, body } = buildMail(clean);
+  const p = parsed.data;
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.INQUIRY_TO ?? site.email;
-  const from = process.env.INQUIRY_FROM ?? `Vybs Graphics Website <website@${new URL(site.url).hostname}>`;
-
-  if (!apiKey) {
-    return { status: "mailto", href: `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` };
+  const h = await headers();
+  const ip = (h.get("x-forwarded-for") ?? "").split(",")[0].trim() || h.get("x-real-ip") || "unknown";
+  if (limited(ip)) {
+    return { status: "error", message: `Zu viele Anfragen in kurzer Zeit. Bitte versuch es in ein paar Minuten noch einmal oder ruf an unter ${site.phone}.` };
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return unavailable;
+
+  const to = process.env.INQUIRY_TO ?? site.email;
+  const hostname = new URL(site.url).hostname.replace(/^www\./, "");
+  const from = process.env.INQUIRY_FROM ?? `${site.name} <anfrage@${hostname}>`;
+
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to: [to], reply_to: email, subject, text: body }),
-    });
-    if (!res.ok) {
-      return { status: "error", message: "Die Anfrage konnte gerade nicht übermittelt werden." };
-    }
+    const owner = buildOwnerMail(p);
+    const ok = await send(apiKey, { from, to: [to], reply_to: p.email, ...owner });
+    if (!ok) return unavailable;
+    const visitor = buildVisitorMail(p);
+    // The confirmation is a courtesy; a failure here must not hide a successful inquiry.
+    await send(apiKey, { from, to: [p.email], reply_to: to, ...visitor }).catch(() => false);
     return { status: "sent" };
   } catch {
-    return { status: "error", message: "Die Anfrage konnte gerade nicht übermittelt werden." };
+    return unavailable;
   }
 }

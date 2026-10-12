@@ -7,10 +7,13 @@ import { site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
 import { SparkleIcon } from "@phosphor-icons/react/dist/ssr/Sparkle";
+import { PhoneIcon } from "@phosphor-icons/react/dist/ssr/Phone";
+import { MapPinIcon } from "@phosphor-icons/react/dist/ssr/MapPin";
 
 export const metadata: Metadata = {
   title: "Kontakt",
   description: "Allgemeine Anfragen, individuelle Projekte und laufende Zusammenarbeit: So erreichst du Vybs Graphics.",
+  alternates: { canonical: "/kontakt" },
 };
 
 export default function ContactPage() {
@@ -32,6 +35,15 @@ export default function ContactPage() {
                 <span className="block font-semibold text-text">{site.email}</span>
               </span>
             </a>
+            <a href={site.phoneHref} className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+                <PhoneIcon size={22} aria-hidden />
+              </span>
+              <span>
+                <span className="block text-sm text-text-3">Telefon</span>
+                <span className="block font-semibold text-text">{site.phone}</span>
+              </span>
+            </a>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <InstagramLogoIcon size={22} aria-hidden />
@@ -50,7 +62,20 @@ export default function ContactPage() {
                 <span className="block font-semibold">Kostenloses Beispieldesign anfordern</span>
               </span>
             </Link>
-            <div className="px-2 pt-4 text-sm text-text-3">
+            <address className="flex items-start gap-3 px-2 pt-4 text-sm not-italic text-text-3">
+              <MapPinIcon size={18} aria-hidden className="mt-0.5 shrink-0" />
+              <span>
+                {site.legalName}
+                <br />
+                {site.address.street}, {site.address.postalCode} {site.address.city}
+                <br />
+                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" className="link-u">
+                  In Google Maps öffnen
+                  <span className="sr-only"> (öffnet in neuem Tab)</span>
+                </a>
+              </span>
+            </address>
+            <div className="px-2 text-sm text-text-3">
               <p>{site.serviceArea}.</p>
               <p className="mt-1">{site.replyTime}.</p>
             </div>

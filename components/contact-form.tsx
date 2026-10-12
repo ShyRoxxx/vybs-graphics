@@ -8,14 +8,14 @@ import { DUR, EASE_OUT } from "@/lib/motion";
 import { sendInquiry, type InquiryResult } from "@/app/actions/inquiry";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
-type Values = { name: string; email: string; topic: string; message: string };
+type Values = { name: string; email: string; topic: string; message: string; company: string };
 type Errors = Partial<Record<keyof Values, string>>;
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 
 export function ContactForm() {
   const id = useId();
   const [pending, startTransition] = useTransition();
-  const [values, setValues] = useState<Values>({ name: "", email: "", topic: "Individuelles Projekt", message: "" });
+  const [values, setValues] = useState<Values>({ name: "", email: "", topic: "Individuelles Projekt", message: "", company: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [result, setResult] = useState<InquiryResult | null>(null);
 
@@ -37,14 +37,12 @@ export function ContactForm() {
       return;
     }
     startTransition(async () => {
-      const res = await sendInquiry({ kind: "kontakt", name: values.name, email: values.email, topic: values.topic, message: values.message });
-      if (res.status === "mailto") window.location.href = res.href;
+      const res = await sendInquiry({ kind: "kontakt", name: values.name, email: values.email, topic: values.topic, message: values.message, company: values.company });
       setResult(res);
     });
   };
 
-  if (result && result.status !== "error") {
-    const direct = result.status === "sent";
+  if (result?.status === "sent") {
     return (
       <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8" role="status">
         <m.span
@@ -55,9 +53,9 @@ export function ContactForm() {
         >
           <CheckIcon size={22} weight="bold" aria-hidden />
         </m.span>
-        <h2 className="mt-6 text-[1.75rem]">{direct ? "Deine Nachricht ist angekommen." : "Deine Nachricht liegt jetzt in deinem E-Mail-Programm."}</h2>
+        <h2 className="mt-6 text-[1.75rem]">Deine Nachricht ist angekommen.</h2>
         <p className="measure mt-4 text-text-2">
-          {direct ? `Ich melde mich, ${site.replyTimeShort}.` : "Einmal auf Senden klicken, dann ist sie bei mir."} Falls etwas nicht klappt, schreib direkt an{" "}
+          Ich melde mich, {site.replyTimeShort}. Eine Bestätigung ist unterwegs an deine E-Mail-Adresse. Falls du nichts hörst, schreib direkt an{" "}
           <a href={`mailto:${site.email}`} className="link-u text-text">
             {site.email}
           </a>
@@ -113,14 +111,22 @@ export function ContactForm() {
           {err("message")}
         </div>
       </div>
+      <div className="hp" aria-hidden="true">
+        <label htmlFor={`${id}-company`}>Firma</label>
+        <input id={`${id}-company`} type="text" name="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={set("company")} />
+      </div>
       {result?.status === "error" && (
-        <p role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
-          {result.message} Schreib mir alternativ direkt an{" "}
-          <a href={`mailto:${site.email}`} className="underline">
-            {site.email}
-          </a>
-          .
-        </p>
+        <div role="alert" className="mt-6 rounded-[var(--radius-field)] bg-danger/10 px-4 py-3 text-sm text-danger">
+          <p>{result.message}</p>
+          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+            <a href={site.phoneHref} className="underline">
+              {site.phone}
+            </a>
+            <a href={`mailto:${site.email}`} className="underline">
+              {site.email}
+            </a>
+          </p>
+        </div>
       )}
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <button type="submit" className="btn btn-primary btn-lg" disabled={pending} aria-busy={pending}>
