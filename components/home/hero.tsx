@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useGsapScene } from "@/lib/gsap";
-import { workCategories } from "@/lib/content";
+import { featuredWorks } from "@/lib/content";
 import { primaryCta } from "@/lib/site";
 import { reduceMotion, scrubFor } from "@/lib/motion";
 
@@ -107,15 +107,15 @@ export function Hero() {
         <div
           ref={stack}
           role="group"
-          aria-label="Drei Beispiele aus dem Portfolio: Creative Branding, Carousel Slide und Social Creatives"
-          className="relative mx-auto h-[min(60vw,22rem)] w-full max-w-[26rem] lg:h-[32rem] lg:max-w-none"
+          aria-label="Drei Beispiele aus dem Portfolio: Cready Online, Eifelhaus Auszeit und Nettwerk IT"
+          className="relative mx-auto h-[min(68vw,24rem)] w-full max-w-[26rem] lg:h-[34rem] lg:max-w-none"
         >
-          {workCategories.map((w, i) => {
+          {featuredWorks.map((w, i) => {
             const pos = ["left-[2%] top-[14%] lg:left-[6%] lg:top-[20%]", "left-1/2 top-[4%] -translate-x-1/2 lg:top-[6%]", "right-[2%] top-[18%] lg:right-[6%] lg:top-[24%]"][i];
             return (
               <div
                 key={w.slug}
-                className={`hero-card absolute ${pos} w-[52%] lg:w-[54%]`}
+                className={`hero-card absolute ${pos} w-[44%] lg:w-[46%]`}
                 style={{ zIndex: i === 1 ? 3 : 2, "--d": `${0.35 + i * 0.12}s` } as React.CSSProperties}
               >
                 <div
@@ -126,7 +126,7 @@ export function Hero() {
                     boxShadow: `0 40px 80px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07), 0 0 120px -40px ${w.tint}`,
                   }}
                 >
-                  <Image src={w.image} alt={w.alt} width={486} height={470} priority={i === 1} sizes="(min-width: 1024px) 30vw, 60vw" className="h-auto w-full" />
+                  <Image src={w.slides[0].src} alt={w.slides[0].alt} width={1080} height={1350} priority={i === 1} sizes="(min-width: 1024px) 24vw, 50vw" className="h-auto w-full" />
                 </div>
               </div>
             );

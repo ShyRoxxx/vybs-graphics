@@ -12,8 +12,9 @@ Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Ne
   und Dateien), mit Sticky-Vorschau.
 - Startseiten-Reihenfolge: Hero mit Beispiel-CTA und zweitem Button zu den Arbeiten → Leitsatz → Arbeiten →
   Leistungen → Preise → Ablauf → Konfigurator → Über Phillip (kurz) → FAQ → Abschluss.
-- Portfolio: jede Arbeit als zusammenhängendes 3-Slide-Carousel mit Kennzeichnung „Kundenprojekt“ bzw. „Konzept“
-  (Feld `kind` in `lib/content.ts`), Lightbox, Gesamtübersicht. Flyer/Visitenkarten/Logos folgen mit der ZIP.
+- Portfolio: fünf Projekte mit allen Slides in voller Auflösung (1080 px), auf dem Handy als wischbare Reihe, am
+  Rechner nebeneinander, jede Slide öffnet die Lightbox. Kennzeichnung „Kundenprojekt“ bzw. „Konzept“ pro Projekt.
+  Startseite zeigt drei Projekte als Slide-Stapel, der Hero die drei Cover.
 - Formular: Name/Unternehmen, E-Mail, Leistung, Beschreibung, optionaler Link. Datenschutzhinweis am Formular.
   Direkte Übermittlung über eine Server-Action, sobald `RESEND_API_KEY` gesetzt ist; ohne Key öffnet sich das
   E-Mail-Programm mit vorbereiteter Nachricht, und die Bestätigung sagt das ehrlich.
@@ -23,8 +24,12 @@ Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Ne
 
 ## Noch offen aus Phillips Feedback
 
-- ZIP mit Fotos/Originaldateien: sobald sie da ist, Carousels als vollständige Slide-Reihen, Flyer und Visitenkarten
-  in Mockups, Kennzeichnung Kundenprojekt/Konzept pro Arbeit prüfen.
+- Originaldateien sind eingebaut (15 Slides, fünf Projekte: Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
+  Betriebswirte, Sandeck Media). Alle sind als „Kundenprojekt“ markiert, weil echte Firmenlogos darauf sind; Phillip
+  muss bestätigen, welche davon Konzeptarbeiten sind (Feld `kind` in `lib/content.ts`). Die frühere
+  Gebäudereinigungs-Collage ist entfernt, bis die Originalslides vorliegen.
+- Flyer, Visitenkarten und Logos sind noch nicht im Portfolio, weil keine Druckdaten vorliegen. Die Leistungsseite zeigt
+  dafür gekennzeichnete Beispielmotive.
 - Endgültige Preise und Leistungsumfang: die eingetragenen Werte (Post 20 €, Carousel 60 € bis 5 Slides + 10 €/Slide,
   Story 15 €, Werbegrafik 25 €, Flyer 60 €, Visitenkarte 40 €, Plakat 60 €, Logo ab 150 €, 2 Korrekturrunden)
   sind Vorschläge auf Basis seiner früheren 15/20/30-€-Angabe und müssen von Phillip bestätigt werden.
@@ -65,9 +70,9 @@ Stand: 12. Oktober 2026 (nach Phillips Feedback überarbeitet). Demo für die Ne
 3. Rechtstexte: Impressum und Datenschutz sind sichtbar als Platzhalter markiert; finale Texte kommen von Bilbao Consulting.
 4. Bildrechte: Alle Bilder stammen aus den vom Lead übergebenen Dateien.
    - `public/images/logo.png`: freigestellt aus dem gelieferten Logo (1.webp).
-   - `public/images/showcase.webp` (Gesamtgrafik) sowie `work-branding.webp`, `work-carousel.webp`,
-     `work-social.webp`: Ausschnitte aus der gelieferten Portfolio-Grafik (2.webp). Auflösung nur 486 px breit; für den Livegang die Originaldateien
-     der Designs bei Phillip anfordern (Instagram-Kacheln in 1080 px).
+   - `public/images/works/*.webp`: die 15 von Phillip gelieferten Originalslides, auf 1080 px und WebP optimiert.
+     Darauf sind Logos und Fotos von Kundenbetrieben (Cready Online, Eifelhaus Auszeit, Nettwerk IT, Grundstein
+     Betriebswirte, Sandeck Media); vor dem Livegang mit Phillip klären, dass er diese Arbeiten zeigen darf.
    - Keine Stockfotos, keine KI-Bilder. Die Vorschau-Kacheln im Konfigurator sind CSS-gebaute Mock-ups mit Beispieltexten.
 5. Motivliste für echte Fotos (optional): Phillip am Arbeitsplatz (Hochformat), Bildschirm mit laufendem Design,
    Skizzenbuch/Notizen, drei bis fünf fertige Kacheln in Originalauflösung pro Arbeitsfamilie.
