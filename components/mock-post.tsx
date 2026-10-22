@@ -117,7 +117,7 @@ function Sub({ industry, dark, size }: { industry: Industry; dark: boolean; size
 function Brand({ name, dark, size = "4cqw" }: { name: string; dark: boolean; size?: string }) {
   return (
     <span className="inline-flex items-center" style={{ gap: "2cqw" }}>
-      <span className="inline-flex items-center justify-center text-white" style={{ width: "7cqw", height: "7cqw", borderRadius: "22%", background: "var(--t)", fontSize: "3cqw", fontWeight: 800, letterSpacing: "-0.02em" }}>
+      <span className="inline-flex items-center justify-center" style={{ width: "7cqw", height: "7cqw", borderRadius: "22%", background: "var(--t)", color: dark ? "#0A0E14" : "#fff", fontSize: "3cqw", fontWeight: 800, letterSpacing: "-0.02em" }}>
         {initialsOf(name)}
       </span>
       <span style={{ ...condensed, fontSize: size, letterSpacing: "0.04em", color: dark ? "#fff" : "#141A26" }}>{name}</span>
@@ -254,7 +254,7 @@ export function MockPost({
     return (
       <Frame className={className} style={style} label={`Vorschau einer Logo-Idee für ${name}`} dark={dark} ratio={ratio} vars={vars}>
         <div className="relative flex h-full flex-col items-center justify-center text-center" style={{ gap: "4cqw", padding: "8cqw" }}>
-          <div className="flex items-center justify-center text-white" style={{ width: "30cqw", height: "30cqw", borderRadius: "26%", background: "var(--t)", fontSize: "12cqw", fontWeight: 800, letterSpacing: "-0.04em", boxShadow: "0 6cqw 12cqw -6cqw rgba(0,0,0,.5)" }}>
+          <div className="flex items-center justify-center" style={{ width: "30cqw", height: "30cqw", borderRadius: "26%", background: "var(--t)", color: dark ? "#0A0E14" : "#fff", fontSize: "12cqw", fontWeight: 800, letterSpacing: "-0.04em", boxShadow: "0 6cqw 12cqw -6cqw rgba(0,0,0,.5)" }}>
             {initialsOf(name)}
           </div>
           <div>
