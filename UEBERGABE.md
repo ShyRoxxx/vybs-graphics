@@ -29,6 +29,11 @@ Umgesetzt:
 - Über mich (Startseite und Unterseite): drei echte Arbeiten statt Logo-Platzhalter; ein Foto von Phillip kann
   die Collage in `components/work-collage.tsx` später ersetzen.
 - Beispielseite: Vorschau aus dem Konfigurator neben dem Formular, auf dem Handy Überschrift, dann Formular.
+- Konfigurator-Vorschau nach Phillips Slides aus dem Portfolio gebaut (`components/mock-post.tsx`): Wortmarke
+  oben links, Website-Pill oder Slide-Zähler oben rechts, schwere Versal-Headline (Anton) mit zweiter Zeile in
+  der Markenfarbe, Marker-Unterstreichung, Subline mit farbigem Satzteil, drei Icon-Karten, großer CTA. Je
+  Branche helles Raster- oder dunkles Glow-Layout; Carousel mit drei Slides, Story, Anzeige, Flyer, Visitenkarte
+  und Logo in derselben Sprache. Inhalte je Branche in `lib/content.ts` (`industries`).
 - Lichtkante: Karten reagieren dezent auf den Mauszeiger (`components/light-layer.tsx`, nur bei Maus).
 - Kleinere Korrekturen: Mobilmenü-Fußzeile, Trennlinien und Pfeile auf /leistungen, Ausrichtung auf FAQ und
   Rechtstexten, 404 mit Arbeit statt leerem Raum, einheitliche Chip-Zustände im Konfigurator, Kontrast auf der

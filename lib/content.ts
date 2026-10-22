@@ -319,24 +319,138 @@ export const processSteps: ProcessStep[] = [
 
 /* ------------------------------------------------------------------ Konfigurator */
 
+export type IndustryFeature = {
+  icon: "sparkle" | "clock" | "shield" | "wrench" | "calendar" | "coffee" | "bag" | "scissors" | "target" | "chart" | "users" | "house" | "key" | "file";
+  title: string;
+  text: string;
+};
+
 export type Industry = {
   id: string;
   label: string;
+  /** Two sentences: the second one is set in the brand colour, like Phillip's slides. */
   headline: string;
   sub: string;
+  /** Phrase inside `sub` that gets the brand colour. */
+  subAccent?: string;
   bullets: string[];
+  features: IndustryFeature[];
   cta: string;
+  ctaSub: string;
+  theme: "light" | "dark";
   tint: string;
   tintSoft: string;
 };
 
 export const industries: Industry[] = [
-  { id: "reinigung", label: "Reinigung & Facility", headline: "Saubere Fenster. Besseres Gefühl.", sub: "Streifenfreie Ergebnisse vom Profi.", bullets: ["Kurzfristige Termine verfügbar", "Zuverlässig & gründlich"], cta: "Termin anfragen", tint: "#2E9D5B", tintSoft: "#E6F6EC" },
-  { id: "handwerk", label: "Handwerk", headline: "Wir kommen, wenn andere absagen.", sub: "Meisterbetrieb mit festen Preisen.", bullets: ["Angebot in 24 Stunden", "Termintreue, die man merkt"], cta: "Angebot anfordern", tint: "#D97A1F", tintSoft: "#FBEEDF" },
-  { id: "gastro", label: "Gastronomie & Café", headline: "Heute frisch: Zimtschnecken ab 8 Uhr.", sub: "Solange der Vorrat reicht.", bullets: ["Täglich gebacken", "Auch zum Mitnehmen"], cta: "Tisch reservieren", tint: "#B23A48", tintSoft: "#F9E7E9" },
-  { id: "beauty", label: "Beauty & Studio", headline: "Zeit für dich. Termin in 2 Klicks.", sub: "Neue Herbstfarben jetzt im Studio.", bullets: ["Online buchbar", "Parkplätze direkt vor der Tür"], cta: "Jetzt buchen", tint: "#9B5DE5", tintSoft: "#F1E8FB" },
-  { id: "beratung", label: "Beratung & Coaching", headline: "Klarer Plan. Klares Ergebnis.", sub: "Erstgespräch kostenlos.", bullets: ["Ziele definieren", "Strategie entwickeln"], cta: "Erstgespräch sichern", tint: "#B8923F", tintSoft: "#F7F0DE" },
-  { id: "immobilien", label: "Immobilien", headline: "Neu im Angebot: Helle 3-Zimmer-Wohnung.", sub: "Besichtigung nach Vereinbarung.", bullets: ["Provisionsfrei für Käufer", "Energieausweis liegt vor"], cta: "Exposé anfordern", tint: "#2B6CB0", tintSoft: "#E3EDF9" },
+  {
+    id: "reinigung",
+    label: "Reinigung & Facility",
+    headline: "Saubere Fenster. Besseres Gefühl.",
+    sub: "Streifenfreie Ergebnisse vom Profi, auch kurzfristig.",
+    subAccent: "vom Profi",
+    bullets: ["Kurzfristige Termine verfügbar", "Zuverlässig & gründlich"],
+    features: [
+      { icon: "sparkle", title: "Streifenfrei", text: "Fenster, Glas und Fassaden" },
+      { icon: "clock", title: "Termine in 48 h", text: "auch kurzfristig möglich" },
+      { icon: "shield", title: "Versichert & gründlich", text: "mit fester Ansprechperson" },
+    ],
+    cta: "Termin anfragen",
+    ctaSub: "Kostenlos & unverbindlich",
+    theme: "light",
+    tint: "#2E9D5B",
+    tintSoft: "#E6F6EC",
+  },
+  {
+    id: "handwerk",
+    label: "Handwerk",
+    headline: "Wir kommen. Wenn andere absagen.",
+    sub: "Meisterbetrieb mit festen Preisen und echter Termintreue.",
+    subAccent: "festen Preisen",
+    bullets: ["Angebot in 24 Stunden", "Termintreue, die man merkt"],
+    features: [
+      { icon: "wrench", title: "Meisterbetrieb", text: "Sanitär, Heizung, Elektro" },
+      { icon: "clock", title: "Angebot in 24 h", text: "ohne Nachkalkulation" },
+      { icon: "shield", title: "Festpreis", text: "steht vor dem ersten Handgriff" },
+    ],
+    cta: "Angebot anfordern",
+    ctaSub: "Antwort innerhalb von 24 Stunden",
+    theme: "dark",
+    tint: "#F28C28",
+    tintSoft: "#FBEEDF",
+  },
+  {
+    id: "gastro",
+    label: "Gastronomie & Café",
+    headline: "Heute frisch. Zimtschnecken ab 8 Uhr.",
+    sub: "Täglich gebacken, solange der Vorrat reicht.",
+    subAccent: "Täglich gebacken",
+    bullets: ["Täglich gebacken", "Auch zum Mitnehmen"],
+    features: [
+      { icon: "coffee", title: "Täglich frisch", text: "ab 8 Uhr aus dem Ofen" },
+      { icon: "bag", title: "Zum Mitnehmen", text: "oder gemütlich im Café" },
+      { icon: "calendar", title: "Tisch reservieren", text: "auch für kleine Gruppen" },
+    ],
+    cta: "Tisch reservieren",
+    ctaSub: "Oder einfach vorbeikommen",
+    theme: "light",
+    tint: "#B23A48",
+    tintSoft: "#F9E7E9",
+  },
+  {
+    id: "beauty",
+    label: "Beauty & Studio",
+    headline: "Zeit für dich. Termin in 2 Klicks.",
+    sub: "Neue Herbstfarben jetzt im Studio, online buchbar.",
+    subAccent: "online buchbar",
+    bullets: ["Online buchbar", "Parkplätze direkt vor der Tür"],
+    features: [
+      { icon: "scissors", title: "Schnitt & Farbe", text: "neue Herbstfarben" },
+      { icon: "calendar", title: "Online buchbar", text: "in zwei Klicks" },
+      { icon: "sparkle", title: "Zeit für dich", text: "ruhige Atmosphäre" },
+    ],
+    cta: "Jetzt buchen",
+    ctaSub: "Parkplätze direkt vor der Tür",
+    theme: "dark",
+    tint: "#B388FF",
+    tintSoft: "#F1E8FB",
+  },
+  {
+    id: "beratung",
+    label: "Beratung & Coaching",
+    headline: "Dein Erfolg. Ist planbar.",
+    sub: "Wir helfen dir, dein Unternehmen auf das nächste Level zu bringen.",
+    subAccent: "nächste Level",
+    bullets: ["Ziele definieren", "Strategie entwickeln"],
+    features: [
+      { icon: "target", title: "Strategie & Planung", text: "für nachhaltiges Wachstum" },
+      { icon: "chart", title: "Zahlen im Blick", text: "mit System statt Bauchgefühl" },
+      { icon: "users", title: "Persönliche Begleitung", text: "auf Augenhöhe" },
+    ],
+    cta: "Kostenloses Erstgespräch",
+    ctaSub: "Jetzt Termin sichern!",
+    theme: "light",
+    tint: "#B8923F",
+    tintSoft: "#F7F0DE",
+  },
+  {
+    id: "immobilien",
+    label: "Immobilien",
+    headline: "Neu im Angebot. Helle 3-Zimmer-Wohnung.",
+    sub: "Provisionsfrei für Käufer, Besichtigung nach Vereinbarung.",
+    subAccent: "Provisionsfrei",
+    bullets: ["Provisionsfrei für Käufer", "Energieausweis liegt vor"],
+    features: [
+      { icon: "house", title: "86 m², 3 Zimmer", text: "Balkon nach Süden" },
+      { icon: "key", title: "Provisionsfrei", text: "für Käufer" },
+      { icon: "file", title: "Exposé anfordern", text: "Energieausweis liegt vor" },
+    ],
+    cta: "Exposé anfordern",
+    ctaSub: "Besichtigung nach Vereinbarung",
+    theme: "dark",
+    tint: "#4F9BFF",
+    tintSoft: "#E3EDF9",
+  },
 ];
 
 export type DesignFormat = {
