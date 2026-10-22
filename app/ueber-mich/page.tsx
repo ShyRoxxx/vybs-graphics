@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { FinalCta } from "@/components/final-cta";
+import { WorkCollage } from "@/components/work-collage";
 import { aboutPhillip } from "@/lib/content";
 import { site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
@@ -22,13 +22,10 @@ export default function AboutPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <Reveal from="left" className="relative lg:sticky lg:top-28 lg:self-start">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-[radial-gradient(circle_at_30%_20%,#1b6b8f_0%,#0d1420_55%,#070b12_100%)] shadow-[inset_0_0_0_1px_var(--line)]">
-              <div aria-hidden className="orb left-[15%] top-[25%] h-[70%] w-[70%] bg-accent opacity-25" />
-              <Image src="/images/logo.png" alt="Logo von Vybs Graphics" fill sizes="(min-width:1024px) 40vw, 90vw" className="object-contain p-[18%]" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
-                <p className="display text-2xl text-white">Phillip</p>
-                <p className="text-sm text-text-2">Gestaltung, Vybs Graphics</p>
-              </div>
+            <WorkCollage className="mx-auto w-full max-w-[24rem]" />
+            <div className="mt-8">
+              <p className="display text-2xl text-white">Phillip Franke</p>
+              <p className="text-sm text-text-2">Gestaltung, Vybs Graphics · Langenhagen</p>
             </div>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">
               <InstagramLogoIcon size={20} aria-hidden />

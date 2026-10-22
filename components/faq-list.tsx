@@ -1,8 +1,6 @@
 "use client";
 
 import { useId, useState } from "react";
-import { DUR, EASE_OUT } from "@/lib/motion";
-import { AnimatePresence, m } from "motion/react";
 import { faqs } from "@/lib/content";
 import { PlusIcon } from "@phosphor-icons/react/dist/ssr/Plus";
 
@@ -45,22 +43,11 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
                 </span>
               </button>
             </Heading>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <m.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={btnId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ height: { duration: 0.28, ease: EASE_OUT }, opacity: { duration: DUR.ui, ease: "easeOut" } }}
-                  className="overflow-hidden"
-                >
-                  <p className="measure pb-7 text-text-2">{item.a}</p>
-                </m.div>
-              )}
-            </AnimatePresence>
+            <div id={panelId} role="region" aria-labelledby={btnId} className="acc" data-open={isOpen} aria-hidden={!isOpen} inert={!isOpen}>
+              <div>
+                <p className="measure pb-7 text-text-2">{item.a}</p>
+              </div>
+            </div>
           </li>
         );
       })}

@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
-import { m } from "motion/react";
-import { DUR, EASE_OUT } from "@/lib/motion";
 import { XIcon } from "@phosphor-icons/react/dist/ssr/X";
 import { CaretLeftIcon } from "@phosphor-icons/react/dist/ssr/CaretLeft";
 import { CaretRightIcon } from "@phosphor-icons/react/dist/ssr/CaretRight";
@@ -77,13 +75,7 @@ export function Lightbox({ items, children }: Props) {
             }}
             className="flex h-full flex-col items-center justify-center gap-4 p-4 md:p-10"
           >
-            <m.figure
-              key={item.src}
-              initial={{ opacity: 0, scale: 0.96, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: DUR.panel, ease: EASE_OUT }}
-              className="relative flex max-h-full w-full max-w-5xl flex-col items-center"
-            >
+            <figure key={item.src} className="anim-fade-up relative flex max-h-full w-full max-w-5xl flex-col items-center">
               <Image
                 src={item.src}
                 alt={item.alt}
@@ -94,7 +86,7 @@ export function Lightbox({ items, children }: Props) {
                 priority
               />
               {item.caption && <figcaption className="mt-4 text-center text-sm text-text-2">{item.caption}</figcaption>}
-            </m.figure>
+            </figure>
 
             <div className="flex items-center gap-3">
               {items.length > 1 && (

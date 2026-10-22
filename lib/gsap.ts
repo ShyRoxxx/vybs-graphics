@@ -14,10 +14,19 @@ function showStatic() {
   document.documentElement.classList.add("reduce-motion");
 }
 
+function whenIdle(): Promise<void> {
+  return new Promise((resolve) => {
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback;
+    if (typeof ric === "function") ric(() => resolve(), { timeout: 1200 });
+    else window.setTimeout(resolve, 300);
+  });
+}
+
 export function loadGsap(): Promise<Bundle> {
   if (!bundle) {
     const guard = window.setTimeout(showStatic, 6000);
-    bundle = Promise.all([import("gsap"), import("gsap/ScrollTrigger")])
+    bundle = whenIdle()
+      .then(() => Promise.all([import("gsap"), import("gsap/ScrollTrigger")]))
       .then(([g, s]) => {
         window.clearTimeout(guard);
         g.gsap.registerPlugin(s.ScrollTrigger);

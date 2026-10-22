@@ -26,7 +26,7 @@ export default function ContactPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <Reveal stagger={0.1} className="space-y-4 lg:sticky lg:top-28 lg:self-start">
-            <a href={`mailto:${site.email}`} className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
+            <a href={`mailto:${site.email}`} className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <EnvelopeSimpleIcon size={22} aria-hidden />
               </span>
@@ -35,7 +35,7 @@ export default function ContactPage() {
                 <span className="block font-semibold text-text [overflow-wrap:anywhere]">{site.email}</span>
               </span>
             </a>
-            <a href={site.phoneHref} className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
+            <a href={site.phoneHref} className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <PhoneIcon size={22} aria-hidden />
               </span>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                 <span className="block font-semibold text-text">{site.phone}</span>
               </span>
             </a>
-            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="card group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
               <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
                 <InstagramLogoIcon size={22} aria-hidden />
               </span>
@@ -59,7 +59,7 @@ export default function ContactPage() {
                 <SparkleIcon size={22} weight="fill" aria-hidden />
               </span>
               <span>
-                <span className="block text-sm opacity-85">Noch unsicher?</span>
+                <span className="block text-sm">Noch unsicher?</span>
                 <span className="block font-semibold">Kostenloses Beispieldesign anfordern</span>
               </span>
             </Link>

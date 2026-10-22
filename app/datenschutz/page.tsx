@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <PageHero title="Datenschutzerklärung" />
+      <PageHero narrow title="Datenschutzerklärung" />
       <section className="pb-[var(--section)]">
-        <div className="container-x max-w-3xl">
+        <div className="container-x max-w-4xl">
           <LegalText sections={privacy} />
         </div>
       </section>

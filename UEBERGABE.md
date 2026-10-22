@@ -9,6 +9,34 @@ alle Änderungen gegenüber der Demo betreffen Inhalte, Rechtstexte, Funktionen 
   Kundenlogos) sind am 12.10.2026 über Bilbao Consulting als passend bestätigt worden.
 - Navigation und Seitentitel heißen „Über mich“ statt „Über Phillip“.
 
+## Überarbeitung vom 22.10.2026 (Prüfung und Aufwertung)
+
+Prüfung: alle Seiten gecrawlt (keine toten Links, keine Konsolenfehler, keine Überläufe bei 320 bis 1440 px),
+axe-Scan ohne Befunde, zwei Review-Durchgänge (Barrierefreiheit/Robustheit und Art Direction).
+
+Umgesetzt:
+
+- Weniger JavaScript: Menü, Akkordeon, Lightbox, Ablauf-Vorschau und Formular-Bestätigung laufen mit CSS statt
+  einer Animationsbibliothek; das Animationspaket für Scroll-Effekte lädt erst, wenn der Browser Leerlauf hat.
+  Lighthouse-Performance der Startseite (mobil, lokal) von 76 auf 86.
+- Hero: Überschrift bricht nicht mehr mit einem Einzelwort um, die drei Slides verdecken sich weniger,
+  Vertrauenspunkte als Chips, kürzere Einleitung, schnellerer Einstieg.
+- Startseite um rund ein Viertel kürzer: Leistungen als drei Karten mit Ab-Preis, Preise als drei Kacheln mit
+  Beispielen statt der kompletten Liste (die bleibt auf /leistungen). Nummerierte Sektionslabels geben Rhythmus.
+- Leitsatz: ruhige Einblendung statt umherfliegender Wörter, zentriert.
+- Arbeiten: Farbglühen je Projekt, Slide-Badges verdecken keine Kundenlogos mehr.
+- Abschluss-Band in der Seitenpalette (vorher fremdes Blau), auf /leistungen mit eigenem Text.
+- Über mich (Startseite und Unterseite): drei echte Arbeiten statt Logo-Platzhalter; ein Foto von Phillip kann
+  die Collage in `components/work-collage.tsx` später ersetzen.
+- Beispielseite: Vorschau aus dem Konfigurator neben dem Formular, auf dem Handy Überschrift, dann Formular.
+- Lichtkante: Karten reagieren dezent auf den Mauszeiger (`components/light-layer.tsx`, nur bei Maus).
+- Kleinere Korrekturen: Mobilmenü-Fußzeile, Trennlinien und Pfeile auf /leistungen, Ausrichtung auf FAQ und
+  Rechtstexten, 404 mit Arbeit statt leerem Raum, einheitliche Chip-Zustände im Konfigurator, Kontrast auf der
+  Kontaktseite, Körnung ohne Kante am Hero-Ende.
+
+Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
+Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
+
 ## Rechtstexte (fertig)
 
 - Impressum und Datenschutzerklärung stehen in `lib/legal.ts`, Grundlage sind die CRM-Texte (Stand 12.10.2026).
@@ -58,9 +86,6 @@ alle Änderungen gegenüber der Demo betreffen Inhalte, Rechtstexte, Funktionen 
 - Google-Unternehmensprofil mit `https://www.vybs-graphics.de` verknüpfen und Suchkonsole einreichen
   (`https://www.vybs-graphics.de/sitemap.xml`).
 - Datei-Upload im Formular (Logo/Fotos) ist nicht nötig: Absender hängen Dateien direkt an die vorbereitete Mail.
-- Bundle-Hinweis: Die Motion-Bibliothek wird trotz Lazy-Wrapper komplett geladen (ca. 250 KB JS gzip auf der
-  Startseite). Für die Lighthouse-Performance wäre ein Umbau der Header-Animationen auf CSS der nächste Schritt;
-  wegen des Design-Freeze nicht angefasst.
 - Kundenstimmen, Flyer/Visitenkarten/Logos als echte Arbeiten, sobald Material vorliegt.
 
 ## Qualitätsprüfung dieses Stands
@@ -70,10 +95,9 @@ alle Änderungen gegenüber der Demo betreffen Inhalte, Rechtstexte, Funktionen 
   keine Konsolenfehler.
 - Formulare getestet (390 px und 1440 px): leere Abgabe zeigt Feldfehler und setzt den Fokus, gültige Abgabe
   erzeugt den Mail-Link mit korrektem Betreff und Text, Vorauswahl der Leistung aus der URL funktioniert.
-- Lighthouse (mobil, lokaler Build): Accessibility 100, Best Practices 100, SEO 100 auf allen geprüften Seiten.
-  Performance lokal 77–85 (simulierte Drosselung, Hauptkostenpunkt ist die JavaScript-Menge der
-  Animationsbibliotheken); gemessen: Largest Contentful Paint ≈ 1,2–1,3 s, CLS 0. Auf Vercel mit Edge-Cache
-  nochmals messen; der Zielwert 90 ist ohne den oben genannten Umbau nicht sicher erreicht.
+- Lighthouse (mobil, lokaler Build, Stand 22.10.2026): Accessibility 100, Best Practices 100, SEO 100 auf
+  allen geprüften Seiten; Performance 84–88 (Startseite 86). Gemessen: Largest Contentful Paint ≈ 0,5–1,2 s,
+  CLS 0. Auf Vercel mit Edge-Cache nochmals messen.
 - Zwei unabhängige Prüfungen (Barrierefreiheit/Robustheit und Code/Sicherheit) durchgeführt, alle als
   „vor Livegang“ eingestuften Befunde umgesetzt; verbleibende Hinweise stehen in diesem Dokument.
 

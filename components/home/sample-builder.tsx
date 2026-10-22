@@ -2,11 +2,10 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { m } from "motion/react";
-import { DUR } from "@/lib/motion";
 import { designFormats, industries, priceItems } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 import { Reveal } from "@/components/reveal";
+import { Eyebrow } from "@/components/ui/eyebrow";
 
 export function SampleBuilder() {
   const [company, setCompany] = useState("");
@@ -23,13 +22,14 @@ export function SampleBuilder() {
   params.set("leistung", priceItems.find((p) => p.id === format.priceId)?.name ?? format.label);
 
   return (
-    <section id="konfigurator" className="section relative scroll-mt-20 overflow-hidden">
+    <section id="konfigurator" className="section relative scroll-mt-20 overflow-hidden bg-ink-2/50 shadow-[inset_0_1px_0_var(--line),inset_0_-1px_0_var(--line)]">
       <div aria-hidden className="orb drift-a right-[-20%] top-[0%] h-[40rem] w-[40rem] opacity-30" style={{ background: industry.tint }} />
       <div className="container-x relative">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
           <div>
-            <Reveal as="h2" className="max-w-[14ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">
-              Probier es aus. Mit deinem Namen.
+            <Reveal>
+              <Eyebrow n="05">Probier es aus</Eyebrow>
+              <h2 className="max-w-[14ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">Probier es aus. Mit deinem Namen.</h2>
             </Reveal>
             <Reveal as="p" className="measure mt-6 text-text-2" delay={0.1}>
               Tipp deinen Firmennamen ein und wähl Branche und Leistung. Die Vorschau zeigt, in welche Richtung
@@ -63,7 +63,7 @@ export function SampleBuilder() {
                         <input type="radio" name="branche" value={ind.id} checked={on} onChange={() => setIndustryId(ind.id)} className="peer sr-only" />
                         <span
                           className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
-                            on ? "bg-text text-ink shadow-[0_10px_30px_-12px_rgba(242,246,252,.6)]" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
+                            on ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
                           }`}
                         >
                           {ind.label}
@@ -107,9 +107,9 @@ export function SampleBuilder() {
 
           <Reveal from="scale" className="relative mx-auto w-full max-w-[22rem] lg:max-w-[24rem]" delay={0.15}>
             <div className="relative" style={{ rotate: "-3deg" }}>
-              <m.div key={format.id} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: DUR.ui }}>
+              <div key={format.id} className="anim-fade">
                 <MockPost company={company} industry={industry} format={format} />
-              </m.div>
+              </div>
             </div>
             <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Dein Design wird individuell gestaltet.</p>
           </Reveal>

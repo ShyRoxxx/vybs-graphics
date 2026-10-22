@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import Link from "next/link";
-import { m } from "motion/react";
 import { site } from "@/lib/site";
-import { DUR, EASE_OUT } from "@/lib/motion";
 import { buildMailto } from "@/lib/inquiry";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
 
@@ -47,15 +45,10 @@ export function ContactForm() {
 
   if (mailto) {
     return (
-      <m.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.panel, ease: EASE_OUT }} className="card p-8" role="status">
-        <m.span
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", duration: 0.5, bounce: 0.2, delay: 0.08 }}
-          className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink"
-        >
+      <div className="anim-fade-up card p-8" role="status">
+        <span className="anim-pop-in inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink" style={{ "--d": "0.08s" } as CSSProperties}>
           <EnvelopeSimpleIcon size={22} weight="bold" aria-hidden />
-        </m.span>
+        </span>
         <h2 ref={doneRef} tabIndex={-1} className="mt-6 text-[1.75rem] outline-none">
           Deine Nachricht liegt jetzt in deinem E-Mail-Programm.
         </h2>
@@ -78,7 +71,7 @@ export function ContactForm() {
         <button type="button" onClick={() => setMailto(null)} className="btn btn-ghost mt-8">
           Zurück zum Formular
         </button>
-      </m.div>
+      </div>
     );
   }
 

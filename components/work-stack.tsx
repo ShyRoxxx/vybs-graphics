@@ -23,13 +23,13 @@ export function WorkStack({ work, sizes = "(min-width: 1024px) 30vw, 90vw", prio
           </div>
         ))}
         <div
-          className="relative overflow-hidden rounded-[1.1rem] shadow-[inset_0_0_0_1px_var(--line),0_40px_80px_-40px_rgba(0,0,0,.9)] transition-transform duration-500 ease-[var(--ease-out)] group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent"
-          style={{ aspectRatio: work.ratio, zIndex: 5 }}
+          className="relative overflow-hidden rounded-[1.1rem] transition-transform duration-500 ease-[var(--ease-out)] group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent"
+          style={{ aspectRatio: work.ratio, zIndex: 5, boxShadow: `inset 0 0 0 1px var(--line), 0 40px 80px -40px rgba(0,0,0,.9), 0 30px 80px -24px ${work.tint}66` }}
         >
           <Image data-img src={work.slides[0].src} alt={work.slides[0].alt} fill priority={priority} sizes={sizes} className="object-cover" />
         </div>
         {work.slides.length > 1 && (
-          <span className="absolute -right-2 top-3 z-10 rounded-full bg-text px-3 py-1 text-xs font-semibold text-ink shadow-lg">
+          <span className="absolute -right-2 bottom-4 z-10 rounded-full bg-text px-3 py-1 text-xs font-semibold text-ink shadow-lg">
             {work.slides.length} Slides
           </span>
         )}
