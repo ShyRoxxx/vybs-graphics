@@ -161,7 +161,7 @@ export function SiteHeader() {
                 <Link href={primaryCta.href} onClick={() => setOpen(false)} className="btn btn-primary btn-lg w-full">
                   {primaryCta.label}
                 </Link>
-                <div className="flex items-center justify-between text-text-2">
+                <div className="flex flex-col items-start gap-2 text-text-2 sm:flex-row sm:items-center sm:justify-between">
                   <a href={`mailto:${site.email}`} className="link-u inline-flex min-h-11 items-center">
                     {site.email}
                   </a>

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
-import { designFormats, industries } from "@/lib/content";
+import Image from "next/image";
+import { designFormats, industries, works } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 
 const fmt = (id: string) => designFormats.find((f) => f.id === id)!;
@@ -8,13 +9,18 @@ const ind = (id: string) => industries.find((i) => i.id === id)!;
 /** Composed example per service group, built from the same mock card the configurator uses. Labelled as examples in the UI. */
 export function ServicePreview({ group }: { group: "social" | "print" | "branding" }) {
   if (group === "social") {
+    const a = works[0].slides[0];
+    const b = works[2].slides[0];
     return (
-      <div role="img" aria-label="Beispielmotiv: Instagram-Carousel und Story für einen Reinigungsbetrieb" className="relative mx-auto aspect-[4/5] w-[78%] max-w-[20rem]">
-        <div aria-hidden className="contents">
-        <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={3} className="absolute inset-0 origin-bottom scale-[0.86] opacity-50" style={{ rotate: "7deg" }} />
-        <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={2} className="absolute inset-0 origin-bottom scale-[0.93] opacity-80" style={{ rotate: "3.5deg" }} />
-        <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={1} className="absolute inset-0" />
-        <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("story")} className="absolute -left-[14%] bottom-[-6%] w-[34%] shadow-2xl" style={{ rotate: "-6deg" }} />
+      <div role="img" aria-label="Beispiele aus dem Portfolio: Instagram-Carousels für Cready Online und Nettwerk IT" className="relative mx-auto aspect-[4/5] w-[78%] max-w-[20rem]">
+        <div aria-hidden className="absolute left-[-6%] top-[8%] w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.08)]" style={{ transform: "rotate(-7deg)", aspectRatio: works[0].ratio }}>
+          <Image src={a.src} alt="" fill sizes="14rem" className="object-cover" />
+        </div>
+        <div aria-hidden className="absolute right-[-4%] top-0 w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.08)]" style={{ transform: "rotate(5deg)", aspectRatio: works[2].ratio }}>
+          <Image src={b.src} alt="" fill sizes="14rem" className="object-cover" />
+        </div>
+        <div aria-hidden className="absolute bottom-[-4%] left-[18%] w-[32%] shadow-2xl" style={{ rotate: "-4deg" }}>
+          <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("story")} />
         </div>
       </div>
     );

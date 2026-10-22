@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default function ImprintPage() {
   return (
     <>
-      <PageHero title="Impressum" />
+      <PageHero narrow title="Impressum" />
       <section className="pb-[var(--section)]">
-        <div className="container-x max-w-3xl">
+        <div className="container-x max-w-4xl">
           <LegalText sections={imprint} />
         </div>
       </section>

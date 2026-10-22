@@ -6,6 +6,7 @@ import { useGsapScene } from "@/lib/gsap";
 import { designFormats, industries, processSteps } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 import { Reveal } from "@/components/reveal";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 const industry = industries[0];
@@ -14,7 +15,7 @@ const format = designFormats[0];
 function Preview({ step, dir }: { step: number; dir: 1 | -1 }) {
   const kind = processSteps[step].preview;
   return (
-    <div className="relative mx-auto aspect-[9/17] w-full max-w-[20rem] overflow-hidden rounded-[2.2rem] bg-ink-3 p-2 shadow-[inset_0_0_0_1px_var(--line-strong),0_50px_100px_-40px_rgba(0,0,0,.9)]">
+    <div className="relative mx-auto aspect-[9/17] w-full max-w-[22rem] overflow-hidden rounded-[2.2rem] bg-ink-3 p-2 shadow-[inset_0_0_0_1px_var(--line-strong),0_50px_100px_-40px_rgba(0,0,0,.9)]">
       <div className="relative h-full overflow-hidden rounded-[1.7rem] bg-[#0b1018]">
         <div aria-hidden className="absolute left-1/2 top-2 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-black" />
         <div key={kind} className={`${dir === 1 ? "anim-fade-up" : "anim-fade-down"} absolute inset-0 flex flex-col justify-center p-5`}>
@@ -123,8 +124,9 @@ export function Process() {
     <section ref={root} id="ablauf" className="section relative scroll-mt-20 overflow-x-clip">
       <div aria-hidden className="orb drift-b left-[-10%] top-[20%] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-40" />
       <div className="container-x relative">
-        <Reveal as="h2" className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">
-          So läuft es, vom kostenlosen Beispiel bis zu deinen Dateien.
+        <Reveal>
+          <Eyebrow n="04">Ablauf</Eyebrow>
+          <h2 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">So läuft es, vom kostenlosen Beispiel bis zu deinen Dateien.</h2>
         </Reveal>
 
         <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
@@ -139,7 +141,7 @@ export function Process() {
             <div aria-hidden className="absolute left-[1.1rem] top-4 bottom-4 w-px bg-line" />
             <div data-progress aria-hidden className="absolute left-[1.1rem] top-4 bottom-4 w-px origin-top bg-accent" style={{ transform: "scaleY(0)" }} />
             {processSteps.map((step, i) => (
-              <li key={step.title} data-step className="relative py-8 pl-16 first:pt-0 last:pb-0 lg:min-h-[40vh] lg:py-10">
+              <li key={step.title} data-step className="relative py-8 pl-16 first:pt-0 last:pb-0 lg:min-h-[30vh] lg:py-10">
                 <span
                   className={`absolute left-0 flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-300 ${i === 0 ? "top-0" : "top-8 lg:top-10"} ${
                     i <= active ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)]"

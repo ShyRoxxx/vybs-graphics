@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/logo";
+import { Arrow } from "@/components/ui/arrow";
 import { nav, primaryCta, site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
@@ -17,8 +18,9 @@ export function SiteFooter() {
             Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel für Unternehmen, Selbstständige
             und lokale Betriebe. Feste Preise, das erste Beispieldesign ist kostenlos.
           </p>
-          <Link href={primaryCta.href} className="btn btn-primary mt-8">
+          <Link href={primaryCta.href} className="link-arrow mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-text">
             {primaryCta.label}
+            <Arrow />
           </Link>
         </div>
 

@@ -34,10 +34,10 @@ export function PriceList({ compact = false }: { compact?: boolean }) {
             <Reveal as="ul" stagger={0.06} className="mt-6 divide-y divide-line border-y border-line">
               {items.map((item) => (
                 <li key={item.id} id={`preis-${item.id}`} className="scroll-mt-28 py-7 md:py-8">
-                  <div className={`grid gap-5 md:items-start md:gap-10 ${compact ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[1.4fr_1fr_auto]"}`}>
+                  <div className={`grid gap-5 md:items-start md:gap-10 ${compact ? "md:grid-cols-[1fr_auto]" : "md:grid-cols-[minmax(0,1.3fr)_minmax(0,20rem)_auto]"}`}>
                     <div className="min-w-0">
                       <h4 className="font-sans text-[1.2rem] font-semibold tracking-normal text-text">{item.name}</h4>
-                      <p className="measure mt-2 text-text-2">{item.description}</p>
+                      <p className="mt-2 max-w-[46ch] text-text-2">{item.description}</p>
                       <p className="mt-2 text-sm text-text-3">
                         {item.priceNote}
                         {item.unit ? ` · ${item.unit}` : ""}
@@ -61,7 +61,7 @@ export function PriceList({ compact = false }: { compact?: boolean }) {
                         href={`/kostenloses-beispiel?leistung=${encodeURIComponent(item.name)}`}
                         className="link-arrow min-h-11 text-sm text-text-2 hover:text-text md:whitespace-nowrap"
                       >
-                        Kostenloses Beispiel anfordern
+                        Beispiel anfordern
                         <Arrow />
                       </Link>
                     </div>

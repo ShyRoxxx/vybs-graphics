@@ -7,6 +7,7 @@ import { FinalCta } from "@/components/final-cta";
 import { ServicePreview } from "@/components/service-preview";
 import { serviceGroups } from "@/lib/content";
 import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
+import { Arrow } from "@/components/ui/arrow";
 
 export const metadata: Metadata = {
   title: "Leistungen & Preise",
@@ -35,14 +36,16 @@ export default function ServicesPage() {
       </PageHero>
 
       <section className="overflow-x-clip pb-[var(--section)]">
-        <div className="container-x divide-y divide-line border-t border-line">
+        <div className="container-x">
+          <div className="divide-y divide-line border-t border-line">
           {serviceGroups.map((g, i) => (
             <article key={g.id} id={g.id} className="grid scroll-mt-28 gap-8 py-14 md:py-20 lg:grid-cols-[1fr_1.2fr_0.9fr] lg:items-center lg:gap-12">
               <Reveal from="left">
-                <h2 className="text-[clamp(1.9rem,3.6vw,3rem)]">{g.title}</h2>
+                <h2 className="max-w-[16ch] text-[clamp(1.9rem,3.6vw,3rem)]">{g.title}</h2>
                 <p className="mt-3 text-text-2">{g.short}</p>
                 <Link href={`#preise-${g.id}`} className="link-arrow mt-6 min-h-11 text-sm text-text-2 hover:text-text">
                   Zu den Preisen
+                  <Arrow />
                 </Link>
               </Reveal>
               <Reveal delay={0.05}>
@@ -65,6 +68,7 @@ export default function ServicesPage() {
               </Reveal>
             </article>
           ))}
+          </div>
         </div>
       </section>
 
@@ -82,7 +86,7 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-      <FinalCta />
+      <FinalCta title="Preis steht. Beispiel ist kostenlos." text="Such dir eine Leistung aus und bekomm zuerst ein Beispiel in deinem Namen. Gekauft wird erst, wenn es dir gefällt." />
     </>
   );
 }
