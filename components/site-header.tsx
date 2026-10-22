@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, m, useReducedMotion } from "motion/react";
-import { DUR, EASE_OUT } from "@/lib/motion";
 import { Logo } from "@/components/ui/logo";
 import { nav, primaryCta, site } from "@/lib/site";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
@@ -15,7 +13,6 @@ export function SiteHeader() {
   const pathname = usePathname();
   const closeRef = useRef<HTMLAnchorElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const reduce = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -133,29 +130,19 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <m.div
+      {open && (
+          <div
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Menü"
             data-lenis-prevent
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.18 } }}
-            transition={{ duration: DUR.ui }}
-            className="fixed inset-0 top-[4.5rem] z-40 overflow-y-auto bg-ink/95 backdrop-blur-xl lg:hidden"
+            className="anim-fade fixed inset-0 top-[4.5rem] z-40 overflow-y-auto bg-ink/95 backdrop-blur-xl lg:hidden"
           >
             <div className="container-x flex min-h-full flex-col justify-between py-8">
               <ul className="flex flex-col gap-1">
                 {[{ href: "/", label: "Startseite" }, ...nav].map((item, i) => (
-                  <m.li
-                    key={item.href}
-                    initial={reduce ? false : { opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: DUR.panel, delay: 0.05 + i * 0.05, ease: EASE_OUT }}
-                  >
+                  <li key={item.href} className="anim-fade-up" style={{ "--d": `${0.05 + i * 0.05}s` } as CSSProperties}>
                     <Link
                       href={item.href}
                       ref={i === 0 ? closeRef : undefined}
@@ -167,15 +154,10 @@ export function SiteHeader() {
                         →
                       </span>
                     </Link>
-                  </m.li>
+                  </li>
                 ))}
               </ul>
-              <m.div
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: DUR.panel, delay: 0.25, ease: EASE_OUT }}
-                className="mt-10 flex flex-col gap-4"
-              >
+              <div className="anim-fade-up mt-10 flex flex-col gap-4" style={{ "--d": "0.25s" } as CSSProperties}>
                 <Link href={primaryCta.href} onClick={() => setOpen(false)} className="btn btn-primary btn-lg w-full">
                   {primaryCta.label}
                 </Link>
@@ -189,11 +171,10 @@ export function SiteHeader() {
                     <span className="sr-only">(öffnet in neuem Tab)</span>
                   </a>
                 </div>
-              </m.div>
+              </div>
             </div>
-          </m.div>
+          </div>
         )}
-      </AnimatePresence>
     </header>
   );
 }

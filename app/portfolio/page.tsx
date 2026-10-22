@@ -20,7 +20,7 @@ export default function PortfolioPage() {
       <PageHero
         title="Arbeiten, die man dem Betrieb"
         accent="zuordnen kann."
-        text="Fünf Projekte, jeweils vollständig: Bei Carousels siehst du alle Slides nebeneinander, bei Serien jeden Beitrag. Kundenprojekte und Konzeptarbeiten sind gekennzeichnet. Auf dem Handy wischen, am Rechner klicken."
+        text="Fünf Projekte, jeweils vollständig: Bei Carousels siehst du alle Slides nebeneinander, bei Serien jeden Beitrag. Alles echte Kundenprojekte, keine Übungsstücke. Auf dem Handy wischen, am Rechner klicken."
       >
         <nav aria-label="Projekte" className="flex flex-wrap gap-2">
           {works.map((w) => (

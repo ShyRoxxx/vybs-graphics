@@ -41,7 +41,7 @@ export function WorkSlides({ work, priority = false }: { work: Work; priority?: 
                   className="object-cover transition-transform duration-[500ms] ease-[var(--ease-out)] group-hover:scale-[1.03]"
                 />
                 {cols > 1 && (
-                  <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-ink/70 px-2.5 py-1 text-xs font-semibold text-text backdrop-blur-md">
+                  <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-ink/70 px-2.5 py-1 text-xs font-semibold text-text backdrop-blur-md">
                     {i + 1}/{cols}
                   </span>
                 )}

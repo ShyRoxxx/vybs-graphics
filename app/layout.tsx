@@ -5,7 +5,6 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { MotionProvider } from "@/components/motion-provider";
 import { site } from "@/lib/site";
 
 const display = Bricolage_Grotesque({
@@ -53,7 +52,7 @@ const motionScript = `(function(){try{var m=window.matchMedia('(prefers-reduced-
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${display.variable} ${sans.variable}`}>
+    <html lang="de" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
@@ -65,13 +64,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           Zum Inhalt springen
         </a>
-        <MotionProvider>
-          <SiteHeader />
-          <main id="inhalt" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-        </MotionProvider>
+        <SiteHeader />
+        <main id="inhalt" className="flex-1">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

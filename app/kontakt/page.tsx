@@ -59,7 +59,7 @@ export default function ContactPage() {
                 <SparkleIcon size={22} weight="fill" aria-hidden />
               </span>
               <span>
-                <span className="block text-sm opacity-85">Noch unsicher?</span>
+                <span className="block text-sm">Noch unsicher?</span>
                 <span className="block font-semibold">Kostenloses Beispieldesign anfordern</span>
               </span>
             </Link>

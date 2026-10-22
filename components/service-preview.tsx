@@ -9,11 +9,13 @@ const ind = (id: string) => industries.find((i) => i.id === id)!;
 export function ServicePreview({ group }: { group: "social" | "print" | "branding" }) {
   if (group === "social") {
     return (
-      <div className="relative mx-auto aspect-[4/5] w-[78%] max-w-[20rem]">
+      <div role="img" aria-label="Beispielmotiv: Instagram-Carousel und Story für einen Reinigungsbetrieb" className="relative mx-auto aspect-[4/5] w-[78%] max-w-[20rem]">
+        <div aria-hidden className="contents">
         <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={3} className="absolute inset-0 origin-bottom scale-[0.86] opacity-50" style={{ rotate: "7deg" }} />
         <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={2} className="absolute inset-0 origin-bottom scale-[0.93] opacity-80" style={{ rotate: "3.5deg" }} />
         <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("carousel")} slide={1} className="absolute inset-0" />
         <MockPost company="Glanzwerk Reinigung" industry={ind("reinigung")} format={fmt("story")} className="absolute -left-[14%] bottom-[-6%] w-[34%] shadow-2xl" style={{ rotate: "-6deg" }} />
+        </div>
       </div>
     );
   }

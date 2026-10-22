@@ -2,8 +2,6 @@
 
 import { useId, useState } from "react";
 import Link from "next/link";
-import { m } from "motion/react";
-import { DUR } from "@/lib/motion";
 import { designFormats, industries, priceItems } from "@/lib/content";
 import { MockPost } from "@/components/mock-post";
 import { Reveal } from "@/components/reveal";
@@ -107,9 +105,9 @@ export function SampleBuilder() {
 
           <Reveal from="scale" className="relative mx-auto w-full max-w-[22rem] lg:max-w-[24rem]" delay={0.15}>
             <div className="relative" style={{ rotate: "-3deg" }}>
-              <m.div key={format.id} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: DUR.ui }}>
+              <div key={format.id} className="anim-fade">
                 <MockPost company={company} industry={industry} format={format} />
-              </m.div>
+              </div>
             </div>
             <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Dein Design wird individuell gestaltet.</p>
           </Reveal>

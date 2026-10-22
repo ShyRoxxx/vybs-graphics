@@ -382,4 +382,60 @@ html.reduce-motion .hero-fade,
 html.reduce-motion .hero-card {
   animation: none;
 }
+
+/* small UI entrances (CSS instead of a JS animation runtime) */
+@keyframes ui-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ui-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ui-fade-down {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ui-slide-x {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes ui-pop {
+  0% { opacity: 0; transform: scale(0.8) rotate(-8deg); }
+  60% { opacity: 1; transform: scale(1.06) rotate(-5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+@keyframes ui-pop-in {
+  0% { opacity: 0; transform: scale(0.8); }
+  60% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.anim-fade { animation: ui-fade 0.2s ease-out both; animation-delay: var(--d, 0s); }
+.anim-fade-up { animation: ui-fade-up 0.3s var(--ease-out) both; animation-delay: var(--d, 0s); }
+.anim-fade-down { animation: ui-fade-down 0.3s var(--ease-out) both; animation-delay: var(--d, 0s); }
+.anim-slide-x { animation: ui-slide-x 0.3s var(--ease-out) both; animation-delay: var(--d, 0s); }
+.anim-pop { animation: ui-pop 0.5s var(--ease-out) both; animation-delay: var(--d, 0s); }
+.anim-pop-in { animation: ui-pop-in 0.5s var(--ease-out) both; animation-delay: var(--d, 0s); }
+html.reduce-motion [class*="anim-"] {
+  animation: none;
+}
+
+/* accordion: height via grid rows, works without JS measurement */
+.acc {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.28s var(--ease-out), opacity 0.2s ease-out;
+}
+.acc[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.acc > div {
+  min-height: 0;
+  overflow: hidden;
+}
+html.reduce-motion .acc {
+  transition: none;
+}
 }

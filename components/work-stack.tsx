@@ -29,7 +29,7 @@ export function WorkStack({ work, sizes = "(min-width: 1024px) 30vw, 90vw", prio
           <Image data-img src={work.slides[0].src} alt={work.slides[0].alt} fill priority={priority} sizes={sizes} className="object-cover" />
         </div>
         {work.slides.length > 1 && (
-          <span className="absolute -right-2 top-3 z-10 rounded-full bg-text px-3 py-1 text-xs font-semibold text-ink shadow-lg">
+          <span className="absolute -right-2 bottom-4 z-10 rounded-full bg-text px-3 py-1 text-xs font-semibold text-ink shadow-lg">
             {work.slides.length} Slides
           </span>
         )}
