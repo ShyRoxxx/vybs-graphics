@@ -32,7 +32,7 @@ export function Lightbox({ items, children }: Props) {
       returnFocus.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
       document.documentElement.classList.add("lenis-stopped");
-      document.body.style.overflow = "hidden";
+      document.documentElement.classList.add("scroll-lock");
     }
     if (index === null && dialog.open) {
       dialog.close();
@@ -51,7 +51,7 @@ export function Lightbox({ items, children }: Props) {
 
   const onClose = () => {
     document.documentElement.classList.remove("lenis-stopped");
-    document.body.style.overflow = "";
+    document.documentElement.classList.remove("scroll-lock");
     setIndex(null);
     returnFocus.current?.focus({ preventScroll: true });
   };

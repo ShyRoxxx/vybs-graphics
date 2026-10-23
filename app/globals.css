@@ -68,7 +68,9 @@ html.lenis body {
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
-.lenis.lenis-stopped {
+.lenis.lenis-stopped,
+html.scroll-lock {
+  /* lock the root scroller, not body: body would become its own scroll container and the sticky header would scroll away */
   overflow: hidden;
 }
 
@@ -271,6 +273,22 @@ select.field {
     0 30px 60px -40px rgba(0, 0, 0, 0.8);
 }
 
+/* header: sticky instead of fixed (no trailing on mobile), the bar on its own layer; the menu stays a
+   sibling of the bar so it can still be position: fixed against the viewport */
+.site-header-bar {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari: no blur on the bar, blurred sticky layers jitter while the address bar animates */
+  .site-header-bar[data-scrolled] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: color-mix(in srgb, var(--ink) 96%, transparent) !important;
+  }
+}
+
 /* grain + ambient light: one fixed layer over the whole page, no seams between sections */
 body::after {
   content: "";
@@ -281,6 +299,12 @@ body::after {
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
+}
+@media (pointer: coarse) {
+  /* phones: skip the full-screen fixed grain layer, it costs scroll smoothness and shows nothing at that size */
+  body::after {
+    display: none;
+  }
 }
 
 .eyebrow {
