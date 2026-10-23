@@ -43,8 +43,7 @@ export function SiteHeader() {
     const html = document.documentElement;
     const toggle = toggleRef.current;
     const inertTargets = Array.from(document.querySelectorAll<HTMLElement>("main, footer"));
-    html.classList.add("lenis-stopped");
-    document.body.style.overflow = "hidden";
+    html.classList.add("lenis-stopped", "scroll-lock");
     inertTargets.forEach((el) => el.setAttribute("inert", ""));
     const focusTimer = window.setTimeout(() => closeRef.current?.focus(), 120);
     const onKey = (e: KeyboardEvent) => {
@@ -53,8 +52,7 @@ export function SiteHeader() {
     window.addEventListener("keydown", onKey);
     return () => {
       window.clearTimeout(focusTimer);
-      html.classList.remove("lenis-stopped");
-      document.body.style.overflow = "";
+      html.classList.remove("lenis-stopped", "scroll-lock");
       inertTargets.forEach((el) => el.removeAttribute("inert"));
       window.removeEventListener("keydown", onKey);
       toggle?.focus({ preventScroll: true });
@@ -62,10 +60,11 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="sticky top-0 z-50 -mb-[4.5rem]">
       <div
-        className={`transition-[background-color,box-shadow] duration-200 ${
-          scrolled || open ? "bg-ink/80 backdrop-blur-xl shadow-[inset_0_-1px_0_var(--line)]" : "bg-transparent"
+        data-scrolled={scrolled || open || undefined}
+        className={`site-header-bar transition-[background-color,box-shadow] duration-200 ${
+          scrolled || open ? "bg-ink/95 shadow-[inset_0_-1px_0_var(--line)] lg:bg-ink/80 lg:backdrop-blur-xl" : "bg-transparent"
         }`}
       >
         <div className="container-x flex h-[4.5rem] items-center justify-between gap-6">

@@ -34,6 +34,9 @@ Umgesetzt:
   der Markenfarbe, Marker-Unterstreichung, Subline mit farbigem Satzteil, drei Icon-Karten, großer CTA. Je
   Branche helles Raster- oder dunkles Glow-Layout; Carousel mit drei Slides, Story, Anzeige, Flyer, Visitenkarte
   und Logo in derselben Sprache. Inhalte je Branche in `lib/content.ts` (`industries`).
+- Header (23.10.2026): `position: sticky` statt `fixed`, Leiste auf eigener Compositing-Ebene, auf iOS ohne
+  Backdrop-Blur, Scroll-Sperre für Menü und Lightbox über `html.scroll-lock` statt `body` (sonst scrollt der
+  Sticky-Header weg). Behebt den mitwandernden Header auf dem Handy. Körnungsebene auf Touch-Geräten aus.
 - Lichtkante: Karten reagieren dezent auf den Mauszeiger (`components/light-layer.tsx`, nur bei Maus).
 - Kleinere Korrekturen: Mobilmenü-Fußzeile, Trennlinien und Pfeile auf /leistungen, Ausrichtung auf FAQ und
   Rechtstexten, 404 mit Arbeit statt leerem Raum, einheitliche Chip-Zustände im Konfigurator, Kontrast auf der
