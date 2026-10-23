@@ -13,7 +13,7 @@ export function Logo({ className = "", size = 34 }: { className?: string; size?:
         <Image src="/images/logo.png" alt="" width={size} height={size} className="relative h-full w-full object-contain" />
       </span>
       <span className="display text-[1.15rem] tracking-[-0.02em] leading-none">
-        Vybs<span className="text-text-2 font-sans font-normal">.graphics</span>
+        vybs<span className="text-text-2 font-sans font-normal">.graphics</span>
       </span>
     </Link>
   );
