@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Anton, Bricolage_Grotesque, Manrope } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -13,6 +13,14 @@ const display = Bricolage_Grotesque({
   subsets: ["latin"],
   weight: "variable",
   axes: ["opsz"],
+  display: "swap",
+});
+
+/* Condensed headline face for the preview cards: the look of the real slides (heavy, uppercase, tight). */
+const condensed = Anton({
+  variable: "--font-condensed",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -53,7 +61,7 @@ const motionScript = `(function(){try{var m=window.matchMedia('(prefers-reduced-
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang="de" className={`${display.variable} ${sans.variable} ${condensed.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
