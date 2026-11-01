@@ -60,14 +60,12 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 -mb-[4.5rem]">
+    <header className="sticky top-0 z-50 -mb-[4.25rem] px-2 pt-2 sm:-mb-[4.5rem] sm:px-3 sm:pt-3">
       <div
         data-scrolled={scrolled || open || undefined}
-        className={`site-header-bar transition-[background-color,box-shadow] duration-200 ${
-          scrolled || open ? "bg-ink/95 shadow-[inset_0_-1px_0_var(--line)] lg:bg-ink/80 lg:backdrop-blur-xl" : "bg-transparent"
-        }`}
+        className={`site-header-bar glass mx-auto max-w-[76rem] !rounded-full !bg-[rgb(16_19_31/0.72)] transition-shadow duration-300 ${scrolled || open ? "shadow-[0_1px_0_rgb(255_255_255/0.06)_inset,0_22px_50px_-18px_rgb(0_0_0/0.75)]" : ""}`}
       >
-        <div className="container-x flex h-[4.5rem] items-center justify-between gap-6">
+        <div className="flex h-[3.75rem] items-center justify-between gap-4 pl-4 pr-2 sm:pl-5">
           <Logo />
 
           <nav aria-label="Hauptnavigation" className="hidden lg:block">
@@ -79,14 +77,11 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`relative inline-flex min-h-11 items-center rounded-full px-4 text-[0.95rem] font-semibold transition-colors duration-200 hover:text-text ${
-                        active ? "text-text" : "text-text-2"
+                      className={`relative inline-flex min-h-10 items-center rounded-full px-4 text-[0.95rem] font-semibold transition-colors duration-200 hover:bg-[var(--fill-gray)] hover:text-text ${
+                        active ? "bg-[var(--fill-gray)] text-text" : "text-text-2"
                       }`}
                     >
                       {item.label}
-                      {active && (
-                        <span aria-hidden className="absolute inset-x-4 -bottom-0.5 h-px bg-accent" />
-                      )}
                     </Link>
                   </li>
                 );
@@ -95,7 +90,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link href={primaryCta.href} className="btn btn-primary hidden sm:inline-flex">
+            <Link href={primaryCta.href} className="btn btn-primary hidden !min-h-11 !px-5 text-[0.95rem] sm:inline-flex">
               {primaryCta.short}
             </Link>
             <button
@@ -104,7 +99,7 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls={open ? "mobile-menu" : undefined}
-              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-ink-2/60 shadow-[inset_0_0_0_1px_var(--line-strong)] lg:hidden"
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--fill-gray)] lg:hidden"
             >
               <span className="sr-only">{open ? "Menü schließen" : "Menü öffnen"}</span>
               <span aria-hidden className="relative block h-3.5 w-5">
@@ -130,15 +125,18 @@ export function SiteHeader() {
       </div>
 
       {open && (
+        <div aria-hidden className="anim-fade fixed inset-0 z-30 bg-[rgb(7_10_20/0.55)] lg:hidden" onClick={() => setOpen(false)} />
+      )}
+      {open && (
           <div
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
             aria-label="Menü"
             data-lenis-prevent
-            className="anim-fade fixed inset-0 top-[4.5rem] z-40 overflow-y-auto bg-ink/95 backdrop-blur-xl lg:hidden"
+            className="glass anim-fade-down fixed inset-x-2 top-[4.75rem] z-40 max-h-[calc(100dvh-5.5rem)] overflow-y-auto sm:inset-x-3 sm:top-[5rem] lg:hidden"
           >
-            <div className="container-x flex min-h-full flex-col justify-between py-8">
+            <div className="flex flex-col px-5 py-4">
               <ul className="flex flex-col gap-1">
                 {[{ href: "/", label: "Startseite" }, ...nav].map((item, i) => (
                   <li key={item.href} className="anim-fade-up" style={{ "--d": `${0.05 + i * 0.05}s` } as CSSProperties}>
@@ -146,7 +144,7 @@ export function SiteHeader() {
                       href={item.href}
                       ref={i === 0 ? closeRef : undefined}
                       onClick={() => setOpen(false)}
-                      className="display flex items-center justify-between border-b border-line py-4 text-[2rem] leading-none tracking-[-0.03em] text-text"
+                      className="display flex items-center justify-between border-b border-[var(--glass-edge)] py-3.5 text-[1.65rem] leading-none tracking-[-0.03em] text-text"
                     >
                       {item.label}
                       <span aria-hidden className="text-text-3">
@@ -156,7 +154,7 @@ export function SiteHeader() {
                   </li>
                 ))}
               </ul>
-              <div className="anim-fade-up mt-10 flex flex-col gap-4" style={{ "--d": "0.25s" } as CSSProperties}>
+              <div className="anim-fade-up mt-6 flex flex-col gap-3" style={{ "--d": "0.25s" } as CSSProperties}>
                 <Link href={primaryCta.href} onClick={() => setOpen(false)} className="btn btn-primary btn-lg w-full">
                   {primaryCta.label}
                 </Link>

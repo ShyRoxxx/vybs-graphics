@@ -19,7 +19,7 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
           <li key={item.q} className="relative">
             <span
               aria-hidden
-              className={`absolute -inset-x-4 inset-y-0 -z-10 rounded-2xl bg-ink-2 transition-opacity duration-300 md:-inset-x-6 ${isOpen ? "opacity-100" : "opacity-0"}`}
+              className={`absolute -inset-x-4 inset-y-0 -z-10 rounded-2xl bg-[var(--glass-card)] transition-opacity duration-300 md:-inset-x-6 ${isOpen ? "opacity-100" : "opacity-0"}`}
             />
             <Heading className="font-sans text-base font-normal tracking-normal">
               <button

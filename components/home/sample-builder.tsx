@@ -22,9 +22,10 @@ export function SampleBuilder() {
   params.set("leistung", priceItems.find((p) => p.id === format.priceId)?.name ?? format.label);
 
   return (
-    <section id="konfigurator" className="section relative scroll-mt-20 overflow-hidden bg-ink-2/50 shadow-[inset_0_1px_0_var(--line),inset_0_-1px_0_var(--line)]">
+    <section id="konfigurator" className="section-glass relative scroll-mt-20 overflow-x-clip">
       <div aria-hidden className="orb drift-a right-[-20%] top-[0%] h-[40rem] w-[40rem] opacity-30" style={{ background: industry.tint }} />
-      <div className="container-x relative">
+      <div className="panel-wrap">
+      <div className="glass-panel lit">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-20">
           <div>
             <Reveal>
@@ -62,8 +63,8 @@ export function SampleBuilder() {
                       <label key={ind.id} className="relative">
                         <input type="radio" name="branche" value={ind.id} checked={on} onChange={() => setIndustryId(ind.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
-                            on ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
+                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-spring)] active:scale-[0.95] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                            on ? "bg-accent text-accent-ink scale-[1.04] shadow-[inset_0_1px_0_rgb(255_255_255/0.35),0_8px_20px_-10px_rgb(92_200_255/0.6)]" : "bg-[var(--fill-gray)] text-text-2 hover:bg-[var(--fill-gray-hover)] hover:text-text"
                           }`}
                         >
                           {ind.label}
@@ -83,8 +84,8 @@ export function SampleBuilder() {
                       <label key={f.id} className="relative">
                         <input type="radio" name="format" value={f.id} checked={on} onChange={() => setFormatId(f.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-150 ease-[var(--ease-out)] active:scale-[0.97] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
-                            on ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text"
+                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-spring)] active:scale-[0.95] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                            on ? "bg-accent text-accent-ink scale-[1.04] shadow-[inset_0_1px_0_rgb(255_255_255/0.35),0_8px_20px_-10px_rgb(92_200_255/0.6)]" : "bg-[var(--fill-gray)] text-text-2 hover:bg-[var(--fill-gray-hover)] hover:text-text"
                           }`}
                         >
                           {f.label}
@@ -114,6 +115,7 @@ export function SampleBuilder() {
             <p className="mt-6 text-center text-sm text-text-3">Vorschau mit Beispieltexten. Dein Design wird individuell gestaltet.</p>
           </Reveal>
         </div>
+      </div>
       </div>
     </section>
   );

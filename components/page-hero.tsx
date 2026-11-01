@@ -17,9 +17,10 @@ export function PageHero({
   narrow?: boolean;
 }) {
   return (
-    <section className="relative overflow-hidden pt-[9rem] pb-[clamp(3rem,7vw,5.5rem)]">
+    <section className="relative overflow-x-clip pt-[5.5rem] pb-[clamp(1.5rem,4vw,3rem)] sm:pt-[6rem]">
       <div aria-hidden className="orb drift-a right-[-15%] top-[-20%] h-[34rem] w-[34rem] opacity-40" style={{ background: tint }} />
-      <div className={`container-x relative ${narrow ? "max-w-4xl" : ""}`}>
+      <div className={`panel-wrap relative ${narrow ? "max-w-4xl" : ""}`}>
+      <div className="glass lit px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2rem,5vw,4.5rem)]">
         <h1 className="hero-fade max-w-[18ch] text-[clamp(2.5rem,7.5vw,6.5rem)]" style={{ "--d": "0.05s" } as CSSProperties}>
           {title}
           {accent && (
@@ -39,6 +40,7 @@ export function PageHero({
             {children}
           </div>
         )}
+      </div>
       </div>
     </section>
   );

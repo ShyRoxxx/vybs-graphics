@@ -13,8 +13,9 @@ function fromPrice(group: string) {
 
 export function Services() {
   return (
-    <section id="leistungen" className="section relative scroll-mt-20 overflow-x-clip">
-      <div className="container-x">
+    <section id="leistungen" className="section-glass relative scroll-mt-20">
+      <div className="panel-wrap">
+      <div className="glass-panel lit">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <Reveal>
             <Eyebrow n="02">Leistungen</Eyebrow>
@@ -32,7 +33,7 @@ export function Services() {
           {serviceGroups.map((g) => {
             const from = fromPrice(g.id);
             return (
-              <li key={g.id} className="card lit group relative flex flex-col overflow-hidden p-6 md:p-8">
+              <li key={g.id} className="card lit tilt group relative flex flex-col overflow-hidden p-6 md:p-8">
                 <div aria-hidden className="orb absolute right-[-30%] top-[-20%] h-[22rem] w-[22rem] opacity-20 transition-opacity duration-500 group-hover:opacity-35" style={{ background: g.tint }} />
                 <div className="relative mx-auto w-[72%] max-w-[15rem] pt-2">
                   <ServicePreview group={g.id} />
@@ -66,6 +67,7 @@ export function Services() {
             );
           })}
         </Reveal>
+      </div>
       </div>
     </section>
   );

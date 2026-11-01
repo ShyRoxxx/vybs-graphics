@@ -6,8 +6,8 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo"
 export function FinalCta({ title = "Dein erstes Design wartet.", text }: { title?: string; text?: string }) {
   return (
     <section className="relative overflow-hidden">
-      <div className="container-x py-6">
-        <div className="lit relative isolate overflow-hidden rounded-[2rem] bg-ink-2 px-6 py-16 text-center shadow-[inset_0_0_0_1px_var(--line-strong)] md:px-12 md:py-24">
+      <div className="panel-wrap py-[clamp(0.5rem,1.2vw,0.875rem)]">
+        <div className="glass lit relative overflow-hidden px-6 py-16 text-center md:px-12 md:py-24">
           <div aria-hidden className="orb drift-a left-[-10%] top-[-30%] h-[28rem] w-[28rem] bg-accent opacity-25" />
           <div aria-hidden className="orb drift-b right-[-10%] bottom-[-40%] h-[30rem] w-[30rem] bg-[var(--glow)] opacity-60" />
           <Reveal as="h2" className="mx-auto max-w-[14ch] text-[clamp(2.5rem,6.5vw,5.5rem)]">

@@ -7,7 +7,7 @@ export function WorkStack({ work, sizes = "(min-width: 1024px) 30vw, 90vw", prio
   const back = work.slides.slice(1, 3);
   return (
     <Link href={`/portfolio#${work.slug}`} className="group relative block focus-visible:outline-none" aria-label={`${work.client}: ${work.format} ansehen`}>
-      <div className="relative mx-auto w-[86%]" style={{ aspectRatio: work.ratio }}>
+      <div className="tilt relative mx-auto w-[86%]" style={{ aspectRatio: work.ratio }}>
         {back.map((s, i) => (
           <div
             key={s.src}

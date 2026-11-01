@@ -7,8 +7,9 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 export function Prices() {
   return (
-    <section id="preise" className="section scroll-mt-20">
-      <div className="container-x">
+    <section id="preise" className="section-glass scroll-mt-20">
+      <div className="panel-wrap">
+      <div className="glass-panel lit">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div>
             <Reveal>
@@ -65,6 +66,7 @@ export function Prices() {
             })}
           </Reveal>
         </div>
+      </div>
       </div>
     </section>
   );

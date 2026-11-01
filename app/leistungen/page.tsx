@@ -25,7 +25,7 @@ export default function ServicesPage() {
       >
         <nav aria-label="Leistungsbereiche" className="flex flex-wrap gap-2">
           {serviceGroups.map((g) => (
-            <a key={g.id} href={`#${g.id}`} className="inline-flex min-h-11 items-center rounded-full bg-ink-2 px-4 text-sm font-semibold text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors hover:text-text">
+            <a key={g.id} href={`#${g.id}`} className="inline-flex min-h-11 items-center rounded-full bg-[var(--fill-gray)] px-4 text-sm font-semibold text-text-2 transition-colors hover:bg-[var(--fill-gray-hover)] hover:text-text">
               {g.title}
             </a>
           ))}
@@ -35,9 +35,9 @@ export default function ServicesPage() {
         </nav>
       </PageHero>
 
-      <section className="overflow-x-clip pb-[var(--section)]">
-        <div className="container-x">
-          <div className="divide-y divide-line border-t border-line">
+      <section className="overflow-x-clip section-glass">
+        <div className="panel-wrap">
+          <div className="glass-panel lit divide-y divide-[var(--glass-edge)] !py-[clamp(0.5rem,2vw,1.5rem)]">
           {serviceGroups.map((g, i) => (
             <article key={g.id} id={g.id} className="grid scroll-mt-28 gap-8 py-14 md:py-20 lg:grid-cols-[1fr_1.2fr_0.9fr] lg:items-center lg:gap-12">
               <Reveal from="left">
@@ -72,8 +72,9 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section id="preise" className="scroll-mt-24 pb-[var(--section)]">
-        <div className="container-x">
+      <section id="preise" className="section-glass scroll-mt-24">
+        <div className="panel-wrap">
+        <div className="glass-panel lit">
           <Reveal as="h2" className="max-w-[18ch] text-[clamp(2.25rem,5vw,4.25rem)]">
             Feste Preise pro Design.
           </Reveal>
@@ -84,6 +85,7 @@ export default function ServicesPage() {
           <div className="mt-12 lg:mt-16">
             <PriceList />
           </div>
+        </div>
         </div>
       </section>
       <FinalCta title="Preis steht. Beispiel ist kostenlos." text="Such dir eine Leistung aus und bekomm zuerst ein Beispiel in deinem Namen. Gekauft wird erst, wenn es dir gefällt." />

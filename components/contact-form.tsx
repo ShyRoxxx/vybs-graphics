@@ -45,7 +45,7 @@ export function ContactForm() {
 
   if (mailto) {
     return (
-      <div className="anim-fade-up card p-8" role="status">
+      <div className="anim-fade-up glass p-8" role="status">
         <span className="anim-pop-in inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent text-accent-ink" style={{ "--d": "0.08s" } as CSSProperties}>
           <EnvelopeSimpleIcon size={22} weight="bold" aria-hidden />
         </span>
@@ -83,7 +83,7 @@ export function ContactForm() {
     ) : null;
 
   return (
-    <form onSubmit={onSubmit} noValidate className="card p-6 md:p-8">
+    <form onSubmit={onSubmit} noValidate className="glass p-6 md:p-8">
       <p className="sr-only">Alle Felder sind Pflichtfelder.</p>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>

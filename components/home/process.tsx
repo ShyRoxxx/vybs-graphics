@@ -121,9 +121,10 @@ export function Process() {
   });
 
   return (
-    <section ref={root} id="ablauf" className="section relative scroll-mt-20 overflow-x-clip">
+    <section ref={root} id="ablauf" className="section-glass relative scroll-mt-20 overflow-x-clip">
       <div aria-hidden className="orb drift-b left-[-10%] top-[20%] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-40" />
-      <div className="container-x relative">
+      <div className="panel-wrap">
+      <div className="glass-panel lit">
         <Reveal>
           <Eyebrow n="04">Ablauf</Eyebrow>
           <h2 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">So läuft es, vom kostenlosen Beispiel bis zu deinen Dateien.</h2>
@@ -144,7 +145,7 @@ export function Process() {
               <li key={step.title} data-step className="relative py-8 pl-16 first:pt-0 last:pb-0 lg:min-h-[30vh] lg:py-10">
                 <span
                   className={`absolute left-0 flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-300 ${i === 0 ? "top-0" : "top-8 lg:top-10"} ${
-                    i <= active ? "bg-accent text-accent-ink" : "bg-ink-2 text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)]"
+                    i <= active ? "bg-accent text-accent-ink" : "bg-[var(--fill-gray)] text-text-2"
                   }`}
                   aria-hidden
                 >
@@ -159,6 +160,7 @@ export function Process() {
             ))}
           </ol>
         </div>
+      </div>
       </div>
     </section>
   );
