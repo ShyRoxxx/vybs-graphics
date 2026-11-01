@@ -14,8 +14,10 @@ export default function ImprintPage() {
     <>
       <PageHero narrow title="Impressum" />
       <section className="pb-[var(--section)]">
-        <div className="container-x max-w-4xl">
+        <div className="panel-wrap max-w-4xl">
+        <div className="glass-panel">
           <LegalText sections={imprint} />
+        </div>
         </div>
       </section>
     </>

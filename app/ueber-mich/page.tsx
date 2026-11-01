@@ -46,7 +46,7 @@ export default function AboutPage() {
 
       <section className="pb-[var(--section)]">
         <div className="container-x">
-          <Reveal as="h2" className="max-w-[16ch] text-[clamp(2.25rem,5vw,4.25rem)]">
+          <Reveal as="h2" className="max-w-[16ch] t-section">
             Vier Dinge, auf die du dich verlassen kannst.
           </Reveal>
           <Reveal stagger={0.1} className="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-card)] bg-line sm:grid-cols-2">
@@ -63,10 +63,9 @@ export default function AboutPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x">
           <Reveal className="card relative overflow-hidden p-8 md:p-12">
-            <div aria-hidden className="orb right-[-10%] top-[-50%] h-[20rem] w-[20rem] bg-accent opacity-20" />
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
               <div>
-                <h2 className="text-[clamp(1.75rem,3.5vw,2.75rem)]">Für wen ich bisher gearbeitet habe.</h2>
+                <h2 className="t-title">Für wen ich bisher gearbeitet habe.</h2>
                 <p className="measure mt-4 text-text-2">
                   Eine Gebäudereinigung, zwei Beratungen und einige kleinere Betriebe aus dem Umfeld. Die drei Serien, die
                   am meisten über die Arbeitsweise sagen, stehen mit Hintergrund im Portfolio.

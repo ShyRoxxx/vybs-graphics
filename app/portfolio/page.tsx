@@ -36,10 +36,9 @@ export default function PortfolioPage() {
         <div className="container-x space-y-[clamp(5rem,10vw,8rem)]">
           {works.map((w, i) => (
             <article key={w.slug} id={w.slug} className="relative scroll-mt-28">
-              <div aria-hidden className="orb absolute left-1/2 top-1/2 -z-10 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-[0.16]" style={{ background: w.tint }} />
               <div className="grid gap-8 lg:grid-cols-[0.8fr_1.6fr] lg:gap-14">
                 <div className="lg:sticky lg:top-28 lg:self-start">
-                  <Reveal as="h2" className="text-[clamp(2rem,4vw,3.25rem)]">
+                  <Reveal as="h2" className="t-section">
                     {w.client}
                   </Reveal>
                   <Reveal as="p" delay={0.05} className="mt-3 flex flex-wrap items-center gap-2 text-sm text-text-3">
@@ -72,10 +71,9 @@ export default function PortfolioPage() {
       <section className="pb-[var(--section)]">
         <div className="container-x">
           <Reveal className="card relative overflow-hidden p-8 md:p-12">
-            <div aria-hidden className="orb drift-a right-[-10%] top-[-50%] h-[20rem] w-[20rem] bg-accent opacity-20" />
             <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
               <div>
-                <h2 className="text-[clamp(1.75rem,3.5vw,2.75rem)]">Das nächste Projekt hier könnte deins sein.</h2>
+                <h2 className="t-title">Das nächste Projekt hier könnte deins sein.</h2>
                 <p className="measure mt-4 text-text-2">
                   Ich zeige dir lieber ein Design für deinen Betrieb als zehn für andere. Fordere es kostenlos an, danach entscheidest du.
                 </p>

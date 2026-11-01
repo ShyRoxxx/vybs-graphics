@@ -14,8 +14,10 @@ export default function PrivacyPage() {
     <>
       <PageHero narrow title="Datenschutzerklärung" />
       <section className="pb-[var(--section)]">
-        <div className="container-x max-w-4xl">
+        <div className="panel-wrap max-w-4xl">
+        <div className="glass-panel">
           <LegalText sections={privacy} />
+        </div>
         </div>
       </section>
     </>

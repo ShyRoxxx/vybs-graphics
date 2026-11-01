@@ -66,6 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
       <body className="min-h-dvh flex flex-col">
+        <div aria-hidden="true" className="color-field" />
         <SmoothScroll />
         <LightLayer />
         <a

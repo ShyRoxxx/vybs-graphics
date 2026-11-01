@@ -7,7 +7,7 @@ export function WorkStack({ work, sizes = "(min-width: 1024px) 30vw, 90vw", prio
   const back = work.slides.slice(1, 3);
   return (
     <Link href={`/portfolio#${work.slug}`} className="group relative block focus-visible:outline-none" aria-label={`${work.client}: ${work.format} ansehen`}>
-      <div className="relative mx-auto w-[86%]" style={{ aspectRatio: work.ratio }}>
+      <div className="tilt relative mx-auto w-[86%]" style={{ aspectRatio: work.ratio }}>
         {back.map((s, i) => (
           <div
             key={s.src}
@@ -24,7 +24,7 @@ export function WorkStack({ work, sizes = "(min-width: 1024px) 30vw, 90vw", prio
         ))}
         <div
           className="relative overflow-hidden rounded-[1.1rem] transition-transform duration-500 ease-[var(--ease-out)] group-hover:-translate-y-1 group-focus-visible:ring-2 group-focus-visible:ring-accent"
-          style={{ aspectRatio: work.ratio, zIndex: 5, boxShadow: `inset 0 0 0 1px var(--line), 0 40px 80px -40px rgba(0,0,0,.9), 0 30px 80px -24px ${work.tint}66` }}
+          style={{ aspectRatio: work.ratio, zIndex: 5, boxShadow: "inset 0 0 0 1px var(--line), 0 40px 80px -40px rgba(0,0,0,.9)" }}
         >
           <Image data-img src={work.slides[0].src} alt={work.slides[0].alt} fill priority={priority} sizes={sizes} className="object-cover" />
         </div>

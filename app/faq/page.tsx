@@ -27,10 +27,12 @@ export default function FaqPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <PageHero narrow title="Häufige" accent="Fragen." text="Kostenloses Beispiel, Festpreise, Dateien, Dauer: die Fragen, die vor der ersten Anfrage kommen. Fehlt deine, schreib mir einfach." />
       <section className="pb-[var(--section)]">
-        <div className="container-x max-w-4xl">
+        <div className="panel-wrap max-w-4xl">
+        <div className="glass-panel">
           <Reveal>
             <FaqList items={faqs} headingLevel={2} />
           </Reveal>
+        </div>
         </div>
       </section>
       <FinalCta title="Noch Fragen? Oder gleich ein Beispiel?" />

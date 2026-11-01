@@ -42,7 +42,7 @@ export function Statement() {
   return (
     <section ref={root} className="relative overflow-hidden py-[clamp(4rem,8vw,7rem)]">
       <div className="container-x">
-        <p className="display mx-auto max-w-[24ch] text-center text-[clamp(1.9rem,4.6vw,4rem)] leading-[1.08] tracking-[-0.025em]">
+        <p className="display mx-auto max-w-[24ch] text-center text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.08] tracking-[-0.025em]">
           <span className="sr-only">{plain}</span>
           {sentence.map((piece, pi) =>
             piece.text.split(/(\s+)/).map((chunk, ci) =>
