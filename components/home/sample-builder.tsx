@@ -62,8 +62,8 @@ export function SampleBuilder() {
                       <label key={ind.id} className="relative">
                         <input type="radio" name="branche" value={ind.id} checked={on} onChange={() => setIndustryId(ind.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-spring)] active:scale-[0.95] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
-                            on ? "bg-accent text-accent-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.35)]" : "bg-[var(--fill-gray)] text-text-2 hover:bg-[var(--fill-gray-hover)] hover:text-text"
+                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-[var(--radius-field)] px-4 text-sm font-medium transition-[background-color,color,box-shadow] duration-150 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                            on ? "bg-text text-ink" : "bg-paper text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text hover:shadow-[inset_0_0_0_1px_var(--text)]"
                           }`}
                         >
                           {ind.label}
@@ -83,12 +83,12 @@ export function SampleBuilder() {
                       <label key={f.id} className="relative">
                         <input type="radio" name="format" value={f.id} checked={on} onChange={() => setFormatId(f.id)} className="peer sr-only" />
                         <span
-                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-4 text-sm font-semibold transition-[background-color,color,box-shadow,transform] duration-300 ease-[var(--ease-spring)] active:scale-[0.95] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
-                            on ? "bg-accent text-accent-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.35)]" : "bg-[var(--fill-gray)] text-text-2 hover:bg-[var(--fill-gray-hover)] hover:text-text"
+                          className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-[var(--radius-field)] px-4 text-sm font-medium transition-[background-color,color,box-shadow] duration-150 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent ${
+                            on ? "bg-text text-ink" : "bg-paper text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-text hover:shadow-[inset_0_0_0_1px_var(--text)]"
                           }`}
                         >
                           {f.label}
-                          <span className={`text-xs font-normal ${on ? "text-accent-ink/85" : "text-text-3"}`}>{f.note}</span>
+                          <span className={`text-xs font-normal ${on ? "text-ink/70" : "text-text-3"}`}>{f.note}</span>
                         </span>
                       </label>
                     );

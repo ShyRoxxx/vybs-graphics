@@ -45,22 +45,21 @@ Umgesetzt:
 Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
 Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
 
-## Glas-Optik (01.11.2026)
+## Design „Papier & Tinte“ (01.11.2026, ersetzt die Glas-Optik)
 
-- Die Seite schwebt als Glasflächen über einem festen, statischen Farbfeld (`.color-field` in `app/layout.tsx`,
-  Verläufe in Eisblau, Violett, Grün, Gold). Alle Glaswerte stehen zentral als Tokens in `app/globals.css`
-  (`--glass-*`, `--fill-gray`, `--radius-panel`), dazu die Klassen `.glass` (stark, mit Blur: Header, Hero,
-  Formulare, Abschluss), `.glass-panel` (Inhaltsabschnitte, Blur nur ab 1024 px) und `.card` (halbtransparent,
-  ohne eigenen Blur).
-- Eine Typo-Skala für die ganze Seite: `.t-display` (Seitentitel), `.t-section` (Abschnitte), `.t-title`,
-  `.t-card`. Neue Überschriften bitte damit setzen statt mit Einzelgrößen.
-- Leitplanken: höchstens vier Blur-Flächen gleichzeitig im Bild, nichts Bewegtes hinter Glas, kein
-  `position: fixed` in einem Element mit `backdrop-filter`, keine Deckkraft-Animation auf Glas.
-  `prefers-reduced-transparency` liefert massive Flächen.
-- Auf iOS bleibt die Kopfzeile ohne Blur und deckender (Absicherung aus dem Scroll-Fix).
-- Hinweis zu Screenshots: Headless-Chromium zeigt Inhalt unter fixierten oder klebenden Glasflächen beim
-  Scrollen ungefiltert an; in echten Browsern ist er gefrostet.
-- Next.js steht auf 16.4.3 (Sicherheitsupdate, `npm audit --omit=dev` ohne Befund).
+- Nur heller Modus. Warmes Papierweiß (`--ink: #fafaf8`), schwarze Schrift (`--text: #121212`), ein Akzent
+  Ultramarin (`--accent: #2b39f5`). Keine Verläufe, kein Glas, kein Blur, keine Leuchtschatten. Farbe kommt aus
+  Phillips Arbeiten.
+- Eine Schrift für alles: Schibsted Grotesk (Variable Font, `next/font`), dazu Anton nur in den Vorschaukacheln.
+- Typo-Skala `.t-display`, `.t-section`, `.t-title`, `.t-card`. Abschnitte beginnen mit einer schwarzen Linie
+  (`.glass-panel` heißt aus Kompatibilität noch so, ist aber nur noch Linie und Abstand).
+- Buttons rechteckig: Hauptbutton schwarz (Hover Ultramarin), Zweitbutton mit schwarzer Kontur. Auswahl-Chips
+  und Tags als Haarlinien-Rechtecke, ausgewählt schwarz.
+- Startseite: große Headline, darunter Linie, Text mit Buttons und eine Faktenliste, dann ein Kontaktbogen aller
+  fünf Arbeiten. Arbeiten werden gerade im Haarlinienrahmen gezeigt (`.frame`), ohne gefächerte Stapel.
+- Abschluss-Band als schwarzer Block über die volle Breite.
+- Die Token-Namen (`ink`, `text`) sind aus früheren Versionen übernommen, damit alle Komponenten weiterlaufen:
+  `ink` ist jetzt die Papierfarbe, `text` die Tinte.
 
 ## Rechtstexte (fertig)
 

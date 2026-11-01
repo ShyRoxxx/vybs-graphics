@@ -24,8 +24,8 @@ export default function PortfolioPage() {
       >
         <nav aria-label="Projekte" className="flex flex-wrap gap-2">
           {works.map((w) => (
-            <a key={w.slug} href={`#${w.slug}`} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-ink-2 px-4 text-sm font-semibold text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors hover:text-text">
-              <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: w.tint }} />
+            <a key={w.slug} href={`#${w.slug}`} className="inline-flex min-h-11 items-center rounded-[var(--radius-field)] bg-paper px-4 text-sm font-medium text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors hover:text-text hover:shadow-[inset_0_0_0_1px_var(--text)] gap-2">
+              <span aria-hidden className="h-2 w-2" style={{ background: w.tint }} />
               {w.client}
             </a>
           ))}
@@ -42,7 +42,7 @@ export default function PortfolioPage() {
                     {w.client}
                   </Reveal>
                   <Reveal as="p" delay={0.05} className="mt-3 flex flex-wrap items-center gap-2 text-sm text-text-3">
-                    <span className={`inline-flex items-center rounded-full px-3 py-1 font-semibold ${w.kind === "Kundenprojekt" ? "bg-accent/15 text-accent" : "bg-ink-3 text-text-2"}`}>{w.kind}</span>
+                    <span className={`inline-flex items-center rounded-[var(--radius-field)] px-2 py-0.5 font-medium ${w.kind === "Kundenprojekt" ? "bg-text text-ink" : "bg-ink-3 text-text-2"}`}>{w.kind}</span>
                     <span>{w.format}</span>
                   </Reveal>
                   <Reveal as="p" delay={0.1} className="measure mt-6 text-text-2">

@@ -15,10 +15,9 @@ export function PageHero({
   narrow?: boolean;
 }) {
   return (
-    <section className="relative overflow-x-clip pt-[5.5rem] pb-[clamp(1.5rem,4vw,3rem)] sm:pt-[6rem]">
-      <div className={`panel-wrap relative ${narrow ? "max-w-4xl" : ""}`}>
-      <div className="glass lit px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2rem,5vw,4.5rem)]">
-        <h1 className="hero-fade max-w-[18ch] t-display" style={{ "--d": "0.05s" } as CSSProperties}>
+    <section className="pt-[7.5rem] pb-[clamp(3rem,6vw,5rem)] lg:pt-[9rem]">
+      <div className={`container-x ${narrow ? "max-w-4xl" : ""}`}>
+        <h1 className="hero-fade t-display max-w-[16ch]" style={{ "--d": "0.05s" } as CSSProperties}>
           {title}
           {accent && (
             <>
@@ -37,7 +36,6 @@ export function PageHero({
             {children}
           </div>
         )}
-      </div>
       </div>
     </section>
   );

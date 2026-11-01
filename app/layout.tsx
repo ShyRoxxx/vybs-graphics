@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Anton, Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Anton, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -8,11 +8,11 @@ import { SmoothScroll } from "@/components/smooth-scroll";
 import { LightLayer } from "@/components/light-layer";
 import { site } from "@/lib/site";
 
-const display = Bricolage_Grotesque({
+/* One editorial grotesk for headlines and text: sober, tight, made for print-like layouts. */
+const display = Schibsted_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "variable",
-  axes: ["opsz"],
   display: "swap",
 });
 
@@ -21,13 +21,6 @@ const condensed = Anton({
   variable: "--font-condensed",
   subsets: ["latin"],
   weight: "400",
-  display: "swap",
-});
-
-const sans = Manrope({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -52,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070b12",
+  themeColor: "#fafaf8",
   width: "device-width",
   initialScale: 1,
 };
@@ -61,12 +54,11 @@ const motionScript = `(function(){try{var m=window.matchMedia('(prefers-reduced-
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${display.variable} ${sans.variable} ${condensed.variable}`} suppressHydrationWarning>
+    <html lang="de" className={`${display.variable} ${condensed.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
       <body className="min-h-dvh flex flex-col">
-        <div aria-hidden="true" className="color-field" />
         <SmoothScroll />
         <LightLayer />
         <a

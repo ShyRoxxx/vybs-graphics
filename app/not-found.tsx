@@ -24,7 +24,7 @@ export default function NotFound() {
           </div>
         </div>
         <div className="relative mx-auto hidden w-[70%] max-w-[18rem] lg:block">
-          <div className="relative overflow-hidden rounded-[1.25rem] shadow-[0_40px_80px_-30px_rgba(0,0,0,.85),0_0_0_1px_rgba(255,255,255,.07)]" style={{ transform: "rotate(6deg)", aspectRatio: w.ratio }}>
+          <div className="relative overflow-hidden rounded-[1.25rem] shadow-[0_40px_80px_-30px_rgba(18,18,18,.22),0_0_0_1px_rgba(18,18,18,.08)]" style={{ transform: "rotate(6deg)", aspectRatio: w.ratio }}>
             <Image src={w.slides[0].src} alt={w.slides[0].alt} fill sizes="18rem" className="object-cover" />
           </div>
         </div>
