@@ -66,7 +66,7 @@ export function Lightbox({ items, children }: Props) {
         onClose={onClose}
         aria-label={item ? `${item.alt} (Bild ${index! + 1} von ${items.length})` : "Bildansicht"}
         data-lenis-prevent
-        className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-0 backdrop:bg-ink/90 backdrop:backdrop-blur-md"
+        className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-0 backdrop:bg-ink/95"
       >
         {item && (
           <div
@@ -82,7 +82,7 @@ export function Lightbox({ items, children }: Props) {
                 width={item.width}
                 height={item.height}
                 sizes="(min-width: 1024px) 60vw, 92vw"
-                className="h-auto max-h-[78dvh] w-auto max-w-full rounded-2xl object-contain shadow-[0_60px_120px_-40px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.08)]"
+                className="h-auto max-h-[78dvh] w-auto max-w-full rounded-2xl object-contain shadow-[0_60px_120px_-40px_rgba(18,18,18,.22),0_0_0_1px_rgba(18,18,18,.08)]"
                 priority
               />
               {item.caption && <figcaption className="mt-4 text-center text-sm text-text-2">{item.caption}</figcaption>}

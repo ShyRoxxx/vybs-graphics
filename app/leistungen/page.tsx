@@ -25,11 +25,11 @@ export default function ServicesPage() {
       >
         <nav aria-label="Leistungsbereiche" className="flex flex-wrap gap-2">
           {serviceGroups.map((g) => (
-            <a key={g.id} href={`#${g.id}`} className="inline-flex min-h-11 items-center rounded-full bg-[var(--fill-gray)] px-4 text-sm font-semibold text-text-2 transition-colors hover:bg-[var(--fill-gray-hover)] hover:text-text">
+            <a key={g.id} href={`#${g.id}`} className="inline-flex min-h-11 items-center rounded-full bg-[var(--fill-gray)] px-4 text-sm font-medium text-text-2 transition-colors hover:bg-[var(--fill-gray-hover)] hover:text-text">
               {g.title}
             </a>
           ))}
-          <a href="#preise" className="inline-flex min-h-11 items-center rounded-full bg-accent/15 px-4 text-sm font-semibold text-accent">
+          <a href="#preise" className="inline-flex min-h-11 items-center rounded-full bg-accent px-4 text-sm font-medium text-accent-ink transition-colors hover:bg-accent-deep">
             Alle Preise
           </a>
         </nav>

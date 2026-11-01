@@ -24,7 +24,7 @@ export default function AboutPage() {
           <Reveal from="left" className="relative lg:sticky lg:top-28 lg:self-start">
             <WorkCollage className="mx-auto w-full max-w-[24rem]" />
             <div className="mt-8">
-              <p className="display text-2xl text-white">Phillip Franke</p>
+              <p className="display text-2xl text-text">Phillip Franke</p>
               <p className="text-sm text-text-2">Gestaltung, Vybs Graphics · Langenhagen</p>
             </div>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="link-arrow mt-5 inline-flex min-h-11 items-center gap-2 text-text-2 hover:text-text">

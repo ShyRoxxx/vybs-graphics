@@ -45,22 +45,25 @@ Umgesetzt:
 Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
 Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
 
-## Glas-Optik (01.11.2026)
+## Design „Helles Glas“ (01.11.2026)
 
-- Die Seite schwebt als Glasflächen über einem festen, statischen Farbfeld (`.color-field` in `app/layout.tsx`,
-  Verläufe in Eisblau, Violett, Grün, Gold). Alle Glaswerte stehen zentral als Tokens in `app/globals.css`
-  (`--glass-*`, `--fill-gray`, `--radius-panel`), dazu die Klassen `.glass` (stark, mit Blur: Header, Hero,
-  Formulare, Abschluss), `.glass-panel` (Inhaltsabschnitte, Blur nur ab 1024 px) und `.card` (halbtransparent,
-  ohne eigenen Blur).
-- Eine Typo-Skala für die ganze Seite: `.t-display` (Seitentitel), `.t-section` (Abschnitte), `.t-title`,
-  `.t-card`. Neue Überschriften bitte damit setzen statt mit Einzelgrößen.
-- Leitplanken: höchstens vier Blur-Flächen gleichzeitig im Bild, nichts Bewegtes hinter Glas, kein
-  `position: fixed` in einem Element mit `backdrop-filter`, keine Deckkraft-Animation auf Glas.
-  `prefers-reduced-transparency` liefert massive Flächen.
-- Auf iOS bleibt die Kopfzeile ohne Blur und deckender (Absicherung aus dem Scroll-Fix).
-- Hinweis zu Screenshots: Headless-Chromium zeigt Inhalt unter fixierten oder klebenden Glasflächen beim
-  Scrollen ungefiltert an; in echten Browsern ist er gefrostet.
-- Next.js steht auf 16.4.3 (Sicherheitsupdate, `npm audit --omit=dev` ohne Befund).
+- Nur heller Modus. Hinter der ganzen Seite liegt ein festes, statisches Farbfeld (`.color-field` in
+  `app/layout.tsx`): vier weiche Verläufe in den Markenfarben Eisblau, Violett, Grün und Gold auf dem hellen,
+  leicht getönten Grund `#e8edf7`. Darauf schweben weiße, mattierte Glasflächen.
+- Alle Werte zentral als Tokens in `app/globals.css` (`--glass-surface`, `--glass-panel`, `--glass-card`,
+  `--glass-edge`, `--glass-shadow`, `--hairline-shadow`, `--glass-blur`, `--fill-gray`). Klassen:
+  `.glass` (stark, mit Blur: Header-Pille, Hero, Seitenköpfe, Formulare, Abschluss), `.glass-panel`
+  (Inhaltsabschnitte, Blur erst ab 1024 px, auf dem Handy dichteres Weiß) und `.card` (halbtransparent, ohne
+  eigenen Blur, Haarlinie).
+- Akzent `#1667d9`: das Vybs-Blau, dunkler gesetzt, damit weiße Schrift und blaue Schrift auf Glas den
+  Kontrast nach WCAG AA erfüllen. Eine Schrift für alles: Schibsted Grotesk; Anton nur in den Vorschaukacheln.
+- Buttons, Auswahl-Chips und Tags als Pillen im Apple-Stil: Hauptbutton blau, Zweitbuttons graue Fläche.
+  Felder wie Apple-Suchfelder mit blauem Fokusschein.
+- Leitplanken: höchstens drei bis vier Blur-Flächen gleichzeitig im Bild, nichts Bewegtes hinter Glas, kein
+  `position: fixed` in einem Element mit `backdrop-filter`. `prefers-reduced-transparency` liefert weiße
+  Flächen, auf iOS bleibt die Header-Pille ohne Blur und dafür deckender (Absicherung aus dem Scroll-Fix).
+- Token-Namen (`ink`, `text`) stammen aus früheren Versionen, damit alle Komponenten weiterlaufen:
+  `ink` ist der helle Grund, `text` die dunkle Schrift.
 
 ## Rechtstexte (fertig)
 

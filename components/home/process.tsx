@@ -15,8 +15,8 @@ const format = designFormats[0];
 function Preview({ step, dir }: { step: number; dir: 1 | -1 }) {
   const kind = processSteps[step].preview;
   return (
-    <div className="relative mx-auto aspect-[9/17] w-full max-w-[22rem] overflow-hidden rounded-[2.2rem] bg-ink-3 p-2 shadow-[inset_0_0_0_1px_var(--line-strong),0_50px_100px_-40px_rgba(0,0,0,.9)]">
-      <div className="relative h-full overflow-hidden rounded-[1.7rem] bg-[#0b1018]">
+    <div className="relative mx-auto aspect-[9/17] w-full max-w-[22rem] overflow-hidden rounded-[2.2rem] bg-[#121212] p-2 shadow-[inset_0_0_0_1px_var(--line-strong),0_50px_100px_-40px_rgba(18,18,18,.22)]">
+      <div className="relative h-full overflow-hidden rounded-[1.7rem] bg-ink">
         <div aria-hidden className="absolute left-1/2 top-2 z-10 h-5 w-24 -translate-x-1/2 rounded-full bg-black" />
         <div key={kind} className={`${dir === 1 ? "anim-fade-up" : "anim-fade-down"} absolute inset-0 flex flex-col justify-center p-5`}>
             {kind === "brief" && (

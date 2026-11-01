@@ -19,7 +19,7 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
           <li key={item.q} className="relative">
             <span
               aria-hidden
-              className={`absolute -inset-x-4 inset-y-0 -z-10 rounded-2xl bg-[var(--glass-card)] transition-opacity duration-300 md:-inset-x-6 ${isOpen ? "opacity-100" : "opacity-0"}`}
+              className={`absolute inset-y-0 left-0 -z-10 w-[2px] bg-accent transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
             />
             <Heading className="font-sans text-base font-normal tracking-normal">
               <button
@@ -28,7 +28,7 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : i)}
-                className="group flex w-full items-center justify-between gap-6 py-6 text-left"
+                className="group flex w-full items-center justify-between gap-6 py-6 pl-5 text-left"
               >
                 <span className="display text-[clamp(1.2rem,2vw,1.6rem)] leading-tight tracking-[-0.02em] text-text transition-transform duration-150 ease-[var(--ease-out)] group-hover:translate-x-1">
                   {item.q}
@@ -45,7 +45,7 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
             </Heading>
             <div id={panelId} role="region" aria-labelledby={btnId} className="acc" data-open={isOpen} aria-hidden={!isOpen} inert={!isOpen}>
               <div>
-                <p className="measure pb-7 text-text-2">{item.a}</p>
+                <p className="measure pb-7 pl-5 text-text-2">{item.a}</p>
               </div>
             </div>
           </li>
