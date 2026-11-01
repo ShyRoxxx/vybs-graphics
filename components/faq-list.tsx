@@ -34,7 +34,7 @@ export function FaqList({ items = faqs, defaultOpen = 0, headingLevel = 3 }: { i
                   {item.q}
                 </span>
                 <span
-                  className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-field)] transition-[background-color,color,box-shadow,transform] duration-200 ease-[var(--ease-out)] ${
+                  className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-[background-color,color,box-shadow,transform] duration-200 ease-[var(--ease-out)] ${
                     isOpen ? "rotate-[135deg] bg-text text-ink" : "text-text shadow-[inset_0_0_0_1.5px_var(--line-strong)] group-hover:shadow-[inset_0_0_0_1.5px_var(--accent)]"
                   }`}
                   aria-hidden

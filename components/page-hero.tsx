@@ -15,8 +15,9 @@ export function PageHero({
   narrow?: boolean;
 }) {
   return (
-    <section className="pt-[7.5rem] pb-[clamp(3rem,6vw,5rem)] lg:pt-[9rem]">
-      <div className={`container-x ${narrow ? "max-w-4xl" : ""}`}>
+    <section className="pt-[5.5rem] pb-[clamp(0.625rem,1.4vw,1rem)] sm:pt-[6rem]">
+      <div className={`panel-wrap ${narrow ? "max-w-4xl" : ""}`}>
+        <div className="glass px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2.25rem,5vw,4.5rem)]">
         <h1 className="hero-fade t-display max-w-[16ch]" style={{ "--d": "0.05s" } as CSSProperties}>
           {title}
           {accent && (
@@ -36,6 +37,7 @@ export function PageHero({
             {children}
           </div>
         )}
+        </div>
       </div>
     </section>
   );

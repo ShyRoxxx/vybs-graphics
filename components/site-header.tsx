@@ -60,18 +60,16 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 -mb-[4.5rem]">
+    <header className="sticky top-0 z-50 -mb-[4.25rem] px-2 pt-2 sm:-mb-[4.5rem] sm:px-3 sm:pt-3">
       <div
         data-scrolled={scrolled || open || undefined}
-        className={`site-header-bar border-b transition-[background-color,border-color] duration-200 ${
-          scrolled || open ? "border-line bg-ink" : "border-transparent bg-transparent"
-        }`}
+        className="site-header-bar glass mx-auto max-w-[76rem] !rounded-full"
       >
-        <div className="container-x flex h-[4.5rem] items-center justify-between gap-6">
+        <div className="flex h-[3.75rem] items-center justify-between gap-4 pl-4 pr-2 sm:pl-5">
           <Logo />
 
           <nav aria-label="Hauptnavigation" className="hidden lg:block">
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-1">
               {nav.map((item) => {
                 const active = pathname === item.href || pathname.startsWith(item.href + "/");
                 return (
@@ -79,15 +77,11 @@ export function SiteHeader() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`relative inline-flex min-h-11 items-center text-[0.95rem] font-medium transition-colors duration-200 hover:text-text ${
-                        active ? "text-text" : "text-text-2"
+                      className={`inline-flex min-h-10 items-center rounded-full px-4 text-[0.95rem] font-medium transition-colors duration-200 hover:bg-[var(--fill-gray)] hover:text-text ${
+                        active ? "bg-[var(--fill-gray)] text-text" : "text-text-2"
                       }`}
                     >
                       {item.label}
-                      <span
-                        aria-hidden
-                        className={`absolute inset-x-0 bottom-2.5 h-px origin-left bg-text transition-transform duration-300 ease-[var(--ease-out)] ${active ? "scale-x-100" : "scale-x-0"}`}
-                      />
                     </Link>
                   </li>
                 );
@@ -96,7 +90,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link href={primaryCta.href} className="btn btn-primary hidden !min-h-11 text-[0.95rem] sm:inline-flex">
+            <Link href={primaryCta.href} className="btn btn-primary hidden !min-h-11 !px-5 text-[0.95rem] sm:inline-flex">
               {primaryCta.short}
             </Link>
             <button
@@ -105,17 +99,17 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls={open ? "mobile-menu" : undefined}
-              className="relative inline-flex h-11 w-11 items-center justify-center lg:hidden"
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--fill-gray)] lg:hidden"
             >
               <span className="sr-only">{open ? "Menü schließen" : "Menü öffnen"}</span>
-              <span aria-hidden className="relative block h-3 w-6">
+              <span aria-hidden className="relative block h-3 w-5">
                 <span
-                  className={`absolute left-0 top-0 h-[1.5px] w-full bg-text transition-transform duration-200 ease-[var(--ease-out)] ${
+                  className={`absolute left-0 top-0 h-[1.5px] w-full rounded bg-text transition-transform duration-200 ease-[var(--ease-out)] ${
                     open ? "translate-y-[5.25px] rotate-45" : ""
                   }`}
                 />
                 <span
-                  className={`absolute bottom-0 left-0 h-[1.5px] w-full bg-text transition-transform duration-200 ease-[var(--ease-out)] ${
+                  className={`absolute bottom-0 left-0 h-[1.5px] w-full rounded bg-text transition-transform duration-200 ease-[var(--ease-out)] ${
                     open ? "-translate-y-[5.25px] -rotate-45" : ""
                   }`}
                 />
@@ -125,6 +119,7 @@ export function SiteHeader() {
         </div>
       </div>
 
+      {open && <div aria-hidden className="anim-fade fixed inset-0 z-30 bg-[rgb(30_41_82/0.18)] lg:hidden" onClick={() => setOpen(false)} />}
       {open && (
         <div
           id="mobile-menu"
@@ -132,27 +127,27 @@ export function SiteHeader() {
           aria-modal="true"
           aria-label="Menü"
           data-lenis-prevent
-          className="anim-fade fixed inset-0 top-[4.5rem] z-40 overflow-y-auto bg-ink lg:hidden"
+          className="glass anim-fade-down fixed inset-x-2 top-[4.75rem] z-40 max-h-[calc(100dvh-5.5rem)] overflow-y-auto !bg-[rgb(255_255_255/0.8)] sm:inset-x-3 sm:top-[5rem] lg:hidden"
         >
-          <div className="container-x flex min-h-full flex-col justify-between pb-8 pt-2">
+          <div className="flex flex-col px-5 py-3">
             <ul className="flex flex-col">
               {[{ href: "/", label: "Startseite" }, ...nav].map((item, i) => (
-                <li key={item.href} className="anim-fade-up border-b border-line" style={{ "--d": `${0.04 + i * 0.04}s` } as CSSProperties}>
+                <li key={item.href} className="anim-fade-up border-b border-line last:border-0" style={{ "--d": `${0.04 + i * 0.04}s` } as CSSProperties}>
                   <Link
                     href={item.href}
                     ref={i === 0 ? closeRef : undefined}
                     onClick={() => setOpen(false)}
-                    className="display flex items-baseline justify-between py-4 text-[1.9rem] leading-none tracking-[-0.04em] text-text"
+                    className="display flex items-center justify-between py-3.5 text-[1.6rem] leading-none text-text"
                   >
                     {item.label}
-                    <span aria-hidden className="text-base font-normal text-text-3">
-                      {String(i + 1).padStart(2, "0")}
+                    <span aria-hidden className="text-lg font-normal text-text-3">
+                      →
                     </span>
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="anim-fade-up mt-10 flex flex-col gap-4" style={{ "--d": "0.25s" } as CSSProperties}>
+            <div className="anim-fade-up mt-5 flex flex-col gap-3 pb-2" style={{ "--d": "0.25s" } as CSSProperties}>
               <Link href={primaryCta.href} onClick={() => setOpen(false)} className="btn btn-primary btn-lg w-full">
                 {primaryCta.label}
               </Link>

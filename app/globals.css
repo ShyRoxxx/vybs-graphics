@@ -1,42 +1,57 @@
 @import "tailwindcss";
 
 /*
- * Vybs Graphics — "Papier & Tinte"
- * Light only. Paper white, black ink, one ultramarine accent. Hairlines and a strict grid instead of
- * effects: no glass, no glows, no gradients. The work is the colour on this page.
+ * Vybs Graphics — "Helles Glas"
+ * Light only. Frosted white glass floating over a calm, static colour field in the brand colours
+ * (ice blue, violet, green, gold) on a lightly tinted base. Clean type, few surfaces, no gimmicks:
+ * no glows, no gradient text, no moving parts behind glass.
  * Token names are kept from earlier versions (ink = page, text = ink) so components keep working.
  */
 
 /* ------------------------------------------------------------------ tokens */
 :root {
-  --ink: #fafaf8; /* page */
-  --ink-2: #f1f0ec; /* quiet surface */
-  --ink-3: #e7e5df; /* stronger surface */
-  --paper: #ffffff; /* cards, fields */
-  --line: rgba(18, 18, 18, 0.1);
-  --line-strong: rgba(18, 18, 18, 0.22);
-  --rule: #121212; /* section rules */
-  --text: #121212;
-  --text-2: #46464a;
-  --text-3: #66666b;
-  --accent: #2b39f5;
-  --accent-deep: #1c27c9;
+  --ink: #e8edf7; /* tinted base under the colour field */
+  --ink-2: rgb(255 255 255 / 0.6); /* quiet surface */
+  --ink-3: rgb(255 255 255 / 0.8); /* stronger surface */
+  --paper: #ffffff;
+  --line: rgb(30 41 82 / 0.1);
+  --line-strong: rgb(30 41 82 / 0.2);
+  --rule: rgb(30 41 82 / 0.14);
+  --text: #0f1424;
+  --text-2: #3c4459;
+  --text-3: #556079;
+  --accent: #1667d9; /* brand blue, deepened for contrast on light glass */
+  --accent-deep: #0f52b3;
   --accent-ink: #ffffff;
-  --glow: #dcdffe;
+  --brand-ice: 92 200 255;
+  --brand-violet: 139 92 246;
+  --brand-green: 91 194 118;
+  --brand-gold: 201 169 106;
+  --glow: #dbe7ff;
   --tint-branding: #8b5cf6;
   --tint-carousel: #5bc276;
   --tint-social: #c9a96a;
   --danger: #c4302b;
 
-  /* kept for components that still reference them */
-  --fill-gray: rgba(18, 18, 18, 0.06);
-  --fill-gray-hover: rgba(18, 18, 18, 0.1);
-  --glass-card: rgba(18, 18, 18, 0.035);
-  --glass-edge: rgba(18, 18, 18, 0.1);
+  /* glass */
+  --glass-surface: rgb(255 255 255 / 0.5); /* header, hero, forms */
+  --glass-panel: rgb(255 255 255 / 0.32); /* large content panels */
+  --glass-card: rgb(255 255 255 / 0.58); /* cards inside a panel, no own blur */
+  --glass-edge: rgb(255 255 255 / 0.7);
+  --glass-shadow:
+    0 1px 0 rgb(255 255 255 / 0.65) inset,
+    0 18px 50px -20px rgb(30 41 82 / 0.28);
+  --hairline-shadow:
+    0 1px 2px rgb(30 41 82 / 0.04),
+    0 12px 32px -20px rgb(30 41 82 / 0.28);
+  --glass-blur: blur(28px) saturate(170%);
+  --fill-gray: rgb(118 118 128 / 0.12);
+  --fill-gray-hover: rgb(118 118 128 / 0.2);
 
-  --radius-card: 0.375rem;
-  --radius-field: 0.25rem;
-  --radius-pill: 999px;
+  --radius-panel: 1.75rem;
+  --radius-card: 1rem;
+  --radius-field: 0.625rem;
+  --radius-pill: 9999px;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -46,6 +61,11 @@
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --measure: 62ch;
   --font-sans: var(--font-display); /* one family for headlines and text */
+}
+@media (max-width: 639px) {
+  :root {
+    --radius-panel: 1.25rem;
+  }
 }
 
 @theme inline {
@@ -94,7 +114,7 @@ html.scroll-lock {
 }
 
 body {
-  background: var(--ink);
+  background: transparent; /* the fixed colour field shows through; html keeps the base colour */
   color: var(--text);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.0625rem;
@@ -138,14 +158,14 @@ h2,
 h3,
 .display {
   font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 650;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
 h3 {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   line-height: 1.12;
 }
 
@@ -174,14 +194,14 @@ p {
 
 /* type scale */
 .t-display {
-  font-size: clamp(2.6rem, 6.6vw, 6.25rem);
-  line-height: 0.95;
-  letter-spacing: -0.05em;
+  font-size: clamp(2.1rem, 6vw, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
 }
 .t-section {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 .t-title {
   font-size: clamp(1.45rem, 2.3vw, 1.9rem);
@@ -206,22 +226,17 @@ p {
   text-transform: uppercase;
   color: var(--text-3);
 }
-.eyebrow::before {
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  background: var(--accent);
-}
 
-/* buttons: rectangles, ink on paper */
+
+/* buttons: pills, Apple style */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
   min-height: 3rem;
-  padding: 0 1.4rem;
-  border-radius: var(--radius-field);
+  padding: 0 1.5rem;
+  border-radius: var(--radius-pill);
   font-weight: 600;
   font-size: 1rem;
   line-height: 1.15;
@@ -231,34 +246,40 @@ p {
   transition:
     background-color 180ms var(--ease-out),
     color 180ms var(--ease-out),
-    box-shadow 180ms var(--ease-out),
-    transform 160ms var(--ease-press);
+    box-shadow 180ms var(--ease-out);
 }
 @media (prefers-reduced-motion: no-preference) {
+  .btn {
+    transition:
+      transform 160ms var(--ease-press),
+      background-color 180ms var(--ease-out),
+      color 180ms var(--ease-out),
+      box-shadow 180ms var(--ease-out);
+  }
   .btn:active {
-    transform: translateY(1px);
+    transform: scale(0.97);
   }
 }
 .btn-primary {
-  background: var(--text);
-  color: var(--ink);
-}
-.btn-primary:hover {
   background: var(--accent);
   color: var(--accent-ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.18),
+    0 1px 2px rgb(22 103 217 / 0.3);
+}
+.btn-primary:hover {
+  background: var(--accent-deep);
 }
 .btn-ghost {
-  background: transparent;
+  background: var(--fill-gray);
   color: var(--text);
-  box-shadow: inset 0 0 0 1px var(--text);
 }
 .btn-ghost:hover {
-  background: var(--text);
-  color: var(--ink);
+  background: var(--fill-gray-hover);
 }
 .btn-lg {
   min-height: 3.5rem;
-  padding: 0 1.75rem;
+  padding: 0 1.9rem;
   font-size: 1.0625rem;
 }
 
@@ -290,63 +311,102 @@ p {
   color: var(--text);
 }
 
-/* fields */
+/* fields: like Apple search fields */
 .field {
   width: 100%;
   min-height: 3.25rem;
   padding: 0.85rem 1rem;
   border-radius: var(--radius-field);
-  background: var(--paper);
+  background: var(--fill-gray);
   color: var(--text);
-  box-shadow: inset 0 0 0 1px var(--line-strong);
-  transition: box-shadow 180ms var(--ease-out);
+  box-shadow: none;
+  transition: box-shadow 180ms var(--ease-out), background-color 180ms var(--ease-out);
   font-size: 1rem;
 }
 .field::placeholder {
-  color: #8a8a8f;
+  color: #6b7387;
 }
 .field:hover {
-  box-shadow: inset 0 0 0 1px rgba(18, 18, 18, 0.4);
+  background: var(--fill-gray-hover);
 }
 .field:focus {
   outline: none;
-  box-shadow:
-    inset 0 0 0 1px var(--text),
-    0 0 0 3px rgba(43, 57, 245, 0.18);
+  box-shadow: 0 0 0 3.5px rgb(22 103 217 / 0.3);
 }
 .field[aria-invalid="true"] {
   box-shadow: inset 0 0 0 1px var(--danger);
 }
 select.field {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%2346464a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%233c4459' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem center;
   padding-right: 2.75rem;
 }
 
-/* surfaces */
-.card,
-.glass {
-  position: relative;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  transition: border-color 180ms var(--ease-out);
-}
-.card:hover {
-  border-color: var(--line-strong);
+/* ---------- glass ---------- */
+/* fixed colour field behind everything: static, no blur, no animation */
+.color-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 32rem at 8% 12%, rgb(var(--brand-ice) / 0.38), transparent 70%),
+    radial-gradient(38rem 30rem at 92% 6%, rgb(var(--brand-violet) / 0.32), transparent 70%),
+    radial-gradient(44rem 34rem at 78% 92%, rgb(var(--brand-green) / 0.32), transparent 70%),
+    radial-gradient(36rem 28rem at 18% 96%, rgb(var(--brand-gold) / 0.24), transparent 70%),
+    var(--ink);
 }
 
-/* a section on the page: a black rule on top, generous room below (formerly a glass panel) */
+/* strong glass: header, hero, page heads, forms, call to action */
+.glass {
+  position: relative;
+  background: var(--glass-surface);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-panel);
+}
+
+/* large content panels: clearer; blur only on large screens (phones get a slightly denser white instead) */
 .glass-panel {
   position: relative;
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(1.75rem, 3.5vw, 3rem);
-  padding-bottom: clamp(4rem, 8vw, 7rem);
+  background: rgb(255 255 255 / 0.55);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-panel);
+  padding: clamp(2.25rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3.5rem);
+}
+@media (min-width: 1024px) {
+  .glass-panel {
+    background: var(--glass-panel);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+.panel-wrap {
+  width: 100%;
+  max-width: 92rem;
+  margin-inline: auto;
+  padding-inline: clamp(0.5rem, 2vw, 1.5rem);
 }
 .section-glass {
-  padding-block: 0;
+  padding-block: clamp(0.625rem, 1.4vw, 1rem);
+}
+
+/* cards inside a panel: half transparent, hairline edge, no own blur */
+.card {
+  position: relative;
+  background: var(--glass-card);
+  border: 0.5px solid var(--glass-edge);
+  border-radius: var(--radius-card);
+  box-shadow: var(--hairline-shadow);
+  transition: background-color 180ms var(--ease-out);
+}
+.card:hover {
+  background: rgb(255 255 255 / 0.72);
 }
 
 /* retired effects, kept as harmless hooks */
@@ -354,42 +414,46 @@ select.field {
 .tilt {
   position: relative;
 }
-.color-field,
 .orb {
   display: none;
 }
 
-/* faint paper grain */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.025;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-}
-@media (pointer: coarse) {
-  body::after {
-    display: none;
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-panel,
+  .site-header-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #ffffff !important;
+  }
+  .card {
+    background: #ffffff;
   }
 }
 
-/* header bar: solid paper, its own layer (no trailing on mobile) */
+/* header bar: its own layer (no trailing on mobile); on iOS Safari no blur, a denser white instead,
+   blurred sticky layers jitter there while the address bar animates */
 .site-header-bar {
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+@supports (-webkit-touch-callout: none) {
+  .site-header-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgb(255 255 255 / 0.9) !important;
+  }
 }
 
 /* images of real work: a hairline frame instead of heavy shadows */
 .frame {
   overflow: hidden;
   border-radius: var(--radius-card);
-  box-shadow: 0 0 0 1px var(--line);
-  background: var(--ink-2);
+  box-shadow:
+    0 0 0 0.5px rgb(30 41 82 / 0.12),
+    var(--hairline-shadow);
+  background: #ffffff;
 }
 
 /* tabular numbers for prices */
@@ -403,10 +467,10 @@ body::after {
   container-type: inline-size;
   position: relative;
   overflow: hidden;
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   box-shadow:
-    0 24px 48px -28px rgba(18, 18, 18, 0.35),
-    0 0 0 1px rgba(18, 18, 18, 0.06);
+    0 24px 48px -26px rgb(30 41 82 / 0.4),
+    0 0 0 0.5px rgb(30 41 82 / 0.12);
 }
 }
 

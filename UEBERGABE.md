@@ -45,21 +45,25 @@ Umgesetzt:
 Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
 Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
 
-## Design „Papier & Tinte“ (01.11.2026, ersetzt die Glas-Optik)
+## Design „Helles Glas“ (01.11.2026)
 
-- Nur heller Modus. Warmes Papierweiß (`--ink: #fafaf8`), schwarze Schrift (`--text: #121212`), ein Akzent
-  Ultramarin (`--accent: #2b39f5`). Keine Verläufe, kein Glas, kein Blur, keine Leuchtschatten. Farbe kommt aus
-  Phillips Arbeiten.
-- Eine Schrift für alles: Schibsted Grotesk (Variable Font, `next/font`), dazu Anton nur in den Vorschaukacheln.
-- Typo-Skala `.t-display`, `.t-section`, `.t-title`, `.t-card`. Abschnitte beginnen mit einer schwarzen Linie
-  (`.glass-panel` heißt aus Kompatibilität noch so, ist aber nur noch Linie und Abstand).
-- Buttons rechteckig: Hauptbutton schwarz (Hover Ultramarin), Zweitbutton mit schwarzer Kontur. Auswahl-Chips
-  und Tags als Haarlinien-Rechtecke, ausgewählt schwarz.
-- Startseite: große Headline, darunter Linie, Text mit Buttons und eine Faktenliste, dann ein Kontaktbogen aller
-  fünf Arbeiten. Arbeiten werden gerade im Haarlinienrahmen gezeigt (`.frame`), ohne gefächerte Stapel.
-- Abschluss-Band als schwarzer Block über die volle Breite.
-- Die Token-Namen (`ink`, `text`) sind aus früheren Versionen übernommen, damit alle Komponenten weiterlaufen:
-  `ink` ist jetzt die Papierfarbe, `text` die Tinte.
+- Nur heller Modus. Hinter der ganzen Seite liegt ein festes, statisches Farbfeld (`.color-field` in
+  `app/layout.tsx`): vier weiche Verläufe in den Markenfarben Eisblau, Violett, Grün und Gold auf dem hellen,
+  leicht getönten Grund `#e8edf7`. Darauf schweben weiße, mattierte Glasflächen.
+- Alle Werte zentral als Tokens in `app/globals.css` (`--glass-surface`, `--glass-panel`, `--glass-card`,
+  `--glass-edge`, `--glass-shadow`, `--hairline-shadow`, `--glass-blur`, `--fill-gray`). Klassen:
+  `.glass` (stark, mit Blur: Header-Pille, Hero, Seitenköpfe, Formulare, Abschluss), `.glass-panel`
+  (Inhaltsabschnitte, Blur erst ab 1024 px, auf dem Handy dichteres Weiß) und `.card` (halbtransparent, ohne
+  eigenen Blur, Haarlinie).
+- Akzent `#1667d9`: das Vybs-Blau, dunkler gesetzt, damit weiße Schrift und blaue Schrift auf Glas den
+  Kontrast nach WCAG AA erfüllen. Eine Schrift für alles: Schibsted Grotesk; Anton nur in den Vorschaukacheln.
+- Buttons, Auswahl-Chips und Tags als Pillen im Apple-Stil: Hauptbutton blau, Zweitbuttons graue Fläche.
+  Felder wie Apple-Suchfelder mit blauem Fokusschein.
+- Leitplanken: höchstens drei bis vier Blur-Flächen gleichzeitig im Bild, nichts Bewegtes hinter Glas, kein
+  `position: fixed` in einem Element mit `backdrop-filter`. `prefers-reduced-transparency` liefert weiße
+  Flächen, auf iOS bleibt die Header-Pille ohne Blur und dafür deckender (Absicherung aus dem Scroll-Fix).
+- Token-Namen (`ink`, `text`) stammen aus früheren Versionen, damit alle Komponenten weiterlaufen:
+  `ink` ist der helle Grund, `text` die dunkle Schrift.
 
 ## Rechtstexte (fertig)
 

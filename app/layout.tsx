@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fafaf8",
+  themeColor: "#e8edf7",
   width: "device-width",
   initialScale: 1,
 };
@@ -59,6 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
       <body className="min-h-dvh flex flex-col">
+        <div aria-hidden="true" className="color-field" />
         <SmoothScroll />
         <LightLayer />
         <a

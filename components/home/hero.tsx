@@ -13,8 +13,9 @@ const facts = [
 
 export function Hero() {
   return (
-    <section className="pt-[7.5rem] lg:pt-[9rem]">
-      <div className="container-x">
+    <section className="pt-[5.5rem] sm:pt-[6rem]">
+      <div className="panel-wrap">
+        <div className="glass px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2.25rem,5.5vw,5rem)]">
         <h1 className="t-display max-w-[15ch]">
           {lines.map((line, i) => (
             <span key={line} className="hero-line block overflow-hidden pb-[0.06em] -mb-[0.06em]">
@@ -25,7 +26,7 @@ export function Hero() {
           ))}
         </h1>
 
-        <div className="mt-10 grid gap-10 border-t border-rule pt-8 lg:mt-14 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="mt-10 grid gap-10 border-t border-line pt-8 lg:mt-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
           <div className="hero-fade" style={{ "--d": "0.35s" } as CSSProperties}>
             <p className="measure text-lg leading-relaxed text-text-2 md:text-xl">
               Instagram-Designs, Flyer, Visitenkarten und Logos für Unternehmen, Selbstständige und lokale Betriebe.
@@ -49,10 +50,11 @@ export function Hero() {
             ))}
           </dl>
         </div>
+        </div>
       </div>
 
       {/* contact sheet of the real work */}
-      <div className="container-x mt-16 lg:mt-24">
+      <div className="container-x mt-10 lg:mt-14">
         <ul aria-label="Arbeiten von Vybs Graphics" className="-mx-[var(--gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--gutter)] pb-2 md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
           {works.map((w, i) => (
             <li key={w.slug} className="hero-card w-[64%] shrink-0 snap-start sm:w-[40%] md:w-auto" style={{ "--d": `${0.5 + i * 0.07}s` } as CSSProperties}>
