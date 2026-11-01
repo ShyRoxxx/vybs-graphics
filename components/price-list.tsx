@@ -27,7 +27,7 @@ export function PriceList({ compact = false }: { compact?: boolean }) {
           <section key={g.id} id={`preise-${g.id}`} aria-labelledby={`preise-${g.id}-h`} className="scroll-mt-28">
             <Reveal className="flex items-baseline gap-4">
               <span aria-hidden className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: g.tint }} />
-              <h3 id={`preise-${g.id}-h`} className="text-[clamp(1.5rem,2.8vw,2.25rem)]">
+              <h3 id={`preise-${g.id}-h`} className="t-title">
                 {g.title}
               </h3>
             </Reveal>

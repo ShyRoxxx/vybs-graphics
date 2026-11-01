@@ -45,6 +45,23 @@ Umgesetzt:
 Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
 Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
 
+## Glas-Optik (01.11.2026)
+
+- Die Seite schwebt als Glasflächen über einem festen, statischen Farbfeld (`.color-field` in `app/layout.tsx`,
+  Verläufe in Eisblau, Violett, Grün, Gold). Alle Glaswerte stehen zentral als Tokens in `app/globals.css`
+  (`--glass-*`, `--fill-gray`, `--radius-panel`), dazu die Klassen `.glass` (stark, mit Blur: Header, Hero,
+  Formulare, Abschluss), `.glass-panel` (Inhaltsabschnitte, Blur nur ab 1024 px) und `.card` (halbtransparent,
+  ohne eigenen Blur).
+- Eine Typo-Skala für die ganze Seite: `.t-display` (Seitentitel), `.t-section` (Abschnitte), `.t-title`,
+  `.t-card`. Neue Überschriften bitte damit setzen statt mit Einzelgrößen.
+- Leitplanken: höchstens vier Blur-Flächen gleichzeitig im Bild, nichts Bewegtes hinter Glas, kein
+  `position: fixed` in einem Element mit `backdrop-filter`, keine Deckkraft-Animation auf Glas.
+  `prefers-reduced-transparency` liefert massive Flächen.
+- Auf iOS bleibt die Kopfzeile ohne Blur und deckender (Absicherung aus dem Scroll-Fix).
+- Hinweis zu Screenshots: Headless-Chromium zeigt Inhalt unter fixierten oder klebenden Glasflächen beim
+  Scrollen ungefiltert an; in echten Browsern ist er gefrostet.
+- Next.js steht auf 16.4.3 (Sicherheitsupdate, `npm audit --omit=dev` ohne Befund).
+
 ## Rechtstexte (fertig)
 
 - Impressum und Datenschutzerklärung stehen in `lib/legal.ts`, Grundlage sind die CRM-Texte (Stand 12.10.2026).

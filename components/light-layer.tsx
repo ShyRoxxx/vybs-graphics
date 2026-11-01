@@ -45,8 +45,8 @@ export function LightLayer() {
         const r = tilt.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width - 0.5;
         const y = (e.clientY - r.top) / r.height - 0.5;
-        tilt.style.setProperty("--tx", `${(x * 9).toFixed(2)}deg`);
-        tilt.style.setProperty("--ty", `${(-y * 7).toFixed(2)}deg`);
+        tilt.style.setProperty("--tx", `${(x * 5).toFixed(2)}deg`);
+        tilt.style.setProperty("--ty", `${(-y * 4).toFixed(2)}deg`);
       }
     };
 

@@ -16,7 +16,6 @@ export function SamplePreview() {
 
   return (
     <div className="relative mx-auto mt-12 w-full max-w-[15rem] lg:mx-0">
-      <div aria-hidden className="orb absolute inset-[-10%] -z-10 opacity-30" style={{ background: industry.tint }} />
       <div style={{ rotate: "-4deg" }}>
         <MockPost company={firma} industry={industry} format={format} />
       </div>

@@ -8,9 +8,7 @@ export function FinalCta({ title = "Dein erstes Design wartet.", text }: { title
     <section className="relative overflow-hidden">
       <div className="panel-wrap py-[clamp(0.5rem,1.2vw,0.875rem)]">
         <div className="glass lit relative overflow-hidden px-6 py-16 text-center md:px-12 md:py-24">
-          <div aria-hidden className="orb drift-a left-[-10%] top-[-30%] h-[28rem] w-[28rem] bg-accent opacity-25" />
-          <div aria-hidden className="orb drift-b right-[-10%] bottom-[-40%] h-[30rem] w-[30rem] bg-[var(--glow)] opacity-60" />
-          <Reveal as="h2" className="mx-auto max-w-[14ch] text-[clamp(2.5rem,6.5vw,5.5rem)]">
+          <Reveal as="h2" className="mx-auto max-w-[14ch] t-display">
             {title}
           </Reveal>
           <Reveal as="p" className="mx-auto mt-6 max-w-[48ch] text-lg text-text-2" delay={0.1}>

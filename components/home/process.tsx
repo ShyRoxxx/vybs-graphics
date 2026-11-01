@@ -122,12 +122,11 @@ export function Process() {
 
   return (
     <section ref={root} id="ablauf" className="section-glass relative scroll-mt-20 overflow-x-clip">
-      <div aria-hidden className="orb drift-b left-[-10%] top-[20%] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-40" />
       <div className="panel-wrap">
       <div className="glass-panel lit">
         <Reveal>
-          <Eyebrow n="04">Ablauf</Eyebrow>
-          <h2 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">So läuft es, vom kostenlosen Beispiel bis zu deinen Dateien.</h2>
+          <Eyebrow>Ablauf</Eyebrow>
+          <h2 className="max-w-[16ch] t-section">So läuft es, vom kostenlosen Beispiel bis zu deinen Dateien.</h2>
         </Reveal>
 
         <div className="mt-14 grid gap-12 lg:mt-20 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
@@ -152,7 +151,7 @@ export function Process() {
                   {i + 1}
                 </span>
                 <Reveal from="left" distance={24}>
-                  <h3 className="text-[clamp(1.5rem,2.6vw,2.25rem)]">{step.title}</h3>
+                  <h3 className="t-title">{step.title}</h3>
                   <p className="mt-2 text-sm font-semibold text-accent">{step.duration}</p>
                   <p className="measure mt-3 text-text-2">{step.text}</p>
                 </Reveal>

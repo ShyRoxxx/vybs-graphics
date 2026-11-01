@@ -11,7 +11,6 @@ export function WorkCollage({ className = "" }: { className?: string }) {
   ];
   return (
     <div role="img" aria-label="Drei Arbeiten von Vybs Graphics: Eifelhaus Auszeit, Grundstein Betriebswirte und Sandeck Media" className={`relative aspect-square ${className}`}>
-      <div aria-hidden className="orb left-[15%] top-[20%] h-[70%] w-[70%] bg-accent opacity-20" />
       {picks.map((s, i) => (
         <div
           key={s.src}

@@ -31,8 +31,8 @@ export function WorkColumns() {
       <div className="container-x">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <Reveal>
-            <Eyebrow n="01">Arbeiten</Eyebrow>
-            <h2 className="max-w-[16ch] text-[clamp(2.25rem,5.5vw,4.75rem)]">Ausgewählte Arbeiten.</h2>
+            <Eyebrow>Arbeiten</Eyebrow>
+            <h2 className="max-w-[16ch] t-section">Ausgewählte Arbeiten.</h2>
           </Reveal>
           <Reveal delay={0.1}>
             <Link href="/portfolio" className="link-arrow min-h-11 text-text-2 hover:text-text">
@@ -46,10 +46,9 @@ export function WorkColumns() {
           {featuredWorks.map((w, i) => (
             <Reveal key={w.slug} from={i === 1 ? "down" : "up"} delay={i * 0.08} className={i === 1 ? "lg:mt-20" : ""}>
               <article data-col className="group relative">
-                <div aria-hidden className="orb absolute left-1/2 top-[30%] -z-10 h-[28rem] w-[28rem] -translate-x-1/2 opacity-[0.38] blur-[90px] transition-opacity duration-500 group-hover:opacity-[0.55]" style={{ background: w.tint }} />
                 <WorkStack work={w} />
                 <div className="mt-7">
-                  <h3 className="text-[clamp(1.6rem,2.6vw,2.2rem)]">{w.client}</h3>
+                  <h3 className="t-title">{w.client}</h3>
                   <p className="mt-1.5 text-sm text-text-3">
                     <span className="font-semibold text-text-2">{w.kind}</span> · {w.format}
                   </p>

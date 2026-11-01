@@ -13,8 +13,8 @@ export function Prices() {
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div>
             <Reveal>
-              <Eyebrow n="03">Preise</Eyebrow>
-              <h2 className="max-w-[14ch] text-[clamp(2rem,4vw,3.5rem)]">Feste Preise. Pro Design.</h2>
+              <Eyebrow>Preise</Eyebrow>
+              <h2 className="max-w-[14ch] t-section">Feste Preise. Pro Design.</h2>
             </Reveal>
             <Reveal as="p" className="measure mt-5 text-text-2" delay={0.1}>
               Du siehst vorher, was eine Leistung kostet und was enthalten ist. Und bevor du zahlst, bekommst du für

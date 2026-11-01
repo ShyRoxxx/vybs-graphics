@@ -15,8 +15,8 @@ export function AboutTeaser() {
           </Reveal>
           <div>
             <Reveal>
-              <Eyebrow n="06">Über mich</Eyebrow>
-              <h2 className="max-w-[16ch] text-[clamp(2rem,4vw,3.5rem)]">Du arbeitest direkt mit mir.</h2>
+              <Eyebrow>Über mich</Eyebrow>
+              <h2 className="max-w-[16ch] t-section">Du arbeitest direkt mit mir.</h2>
             </Reveal>
             <Reveal as="p" className="measure mt-5 text-lg text-text-2" delay={0.1}>
               {aboutPhillip.intro}

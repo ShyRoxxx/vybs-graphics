@@ -41,7 +41,7 @@ export default function ServicesPage() {
           {serviceGroups.map((g, i) => (
             <article key={g.id} id={g.id} className="grid scroll-mt-28 gap-8 py-14 md:py-20 lg:grid-cols-[1fr_1.2fr_0.9fr] lg:items-center lg:gap-12">
               <Reveal from="left">
-                <h2 className="max-w-[16ch] text-[clamp(1.9rem,3.6vw,3rem)]">{g.title}</h2>
+                <h2 className="max-w-[16ch] t-title">{g.title}</h2>
                 <p className="mt-3 text-text-2">{g.short}</p>
                 <Link href={`#preise-${g.id}`} className="link-arrow mt-6 min-h-11 text-sm text-text-2 hover:text-text">
                   Zu den Preisen
@@ -62,7 +62,6 @@ export default function ServicesPage() {
                 </ul>
               </Reveal>
               <Reveal from={i % 2 ? "scale" : "right"} delay={0.1} className="relative">
-                <div aria-hidden className="orb absolute inset-[5%] -z-10 opacity-25" style={{ background: g.tint }} />
                 <ServicePreview group={g.id} />
                 <p className="mt-4 text-center text-xs text-text-3">Beispielmotiv zur Veranschaulichung</p>
               </Reveal>
@@ -75,7 +74,7 @@ export default function ServicesPage() {
       <section id="preise" className="section-glass scroll-mt-24">
         <div className="panel-wrap">
         <div className="glass-panel lit">
-          <Reveal as="h2" className="max-w-[18ch] text-[clamp(2.25rem,5vw,4.25rem)]">
+          <Reveal as="h2" className="max-w-[18ch] t-section">
             Feste Preise pro Design.
           </Reveal>
           <Reveal as="p" className="measure mt-6 text-text-2" delay={0.1}>

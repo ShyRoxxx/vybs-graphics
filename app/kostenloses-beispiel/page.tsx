@@ -17,11 +17,9 @@ export default function SamplePage() {
   return (
     <>
       <section className="relative overflow-x-clip pt-[9rem] pb-[var(--section)]">
-        <div aria-hidden className="orb drift-a left-[-15%] top-[-8rem] h-[36rem] w-[36rem] bg-[var(--glow)] opacity-60" />
-        <div aria-hidden className="orb drift-b right-[-10%] top-[26rem] h-[30rem] w-[30rem] bg-accent opacity-[0.1]" />
         <div className="container-x relative grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-x-16 lg:gap-y-0">
           <div className="order-1">
-            <Reveal as="h1" className="max-w-[14ch] text-[clamp(2.75rem,6.5vw,5.5rem)]">
+            <Reveal as="h1" className="max-w-[14ch] t-display">
               {sampleIntro.headline}
             </Reveal>
             <Reveal as="p" className="measure mt-6 text-lg text-text-2" delay={0.1}>
