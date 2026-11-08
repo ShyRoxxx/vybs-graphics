@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Anton, Bricolage_Grotesque, Manrope } from "next/font/google";
+import { Anton, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { SmoothScroll } from "@/components/smooth-scroll";
+import { RouteRefresh } from "@/components/route-refresh";
 import { LightLayer } from "@/components/light-layer";
 import { site } from "@/lib/site";
 
-const display = Bricolage_Grotesque({
+/* One editorial grotesk for headlines and text: sober, tight, made for print-like layouts. */
+const display = Schibsted_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "variable",
-  axes: ["opsz"],
   display: "swap",
 });
 
@@ -24,21 +24,14 @@ const condensed = Anton({
   display: "swap",
 });
 
-const sans = Manrope({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – Grafikdesign für dein Unternehmen`,
+    default: `${site.name} – Grafikdesign aus Langenhagen für Social Media, Print & Logos`,
     template: `%s – ${site.name}`,
   },
   description:
-    "Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel. Feste Preise pro Design, kostenloses Beispieldesign vorab.",
+    "Grafikdesign aus Langenhagen bei Hannover: Instagram-Designs, Flyer, Visitenkarten und Logos für Unternehmen. Feste Preise ab 15 €, kostenloses Beispieldesign vorab.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -59,15 +52,19 @@ export const viewport: Viewport = {
 
 const motionScript = `(function(){try{var m=window.matchMedia('(prefers-reduced-motion: reduce)');if(m.matches){document.documentElement.classList.add('reduce-motion')}document.documentElement.classList.add('js')}catch(e){}})();`;
 
+/* Dark is the default; a stored choice from the theme toggle wins. Runs before the first paint, so no flash. */
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;var c=document.querySelector('meta[name="theme-color"]');if(c)c.setAttribute('content',t==='light'?'#e8edf7':'#070b12')}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${display.variable} ${sans.variable} ${condensed.variable}`} suppressHydrationWarning>
+    <html lang="de" data-theme="dark" className={`${display.variable} ${condensed.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
       <body className="min-h-dvh flex flex-col">
         <div aria-hidden="true" className="color-field" />
-        <SmoothScroll />
+        <RouteRefresh />
         <LightLayer />
         <a
           href="#inhalt"

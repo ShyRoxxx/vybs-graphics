@@ -16,8 +16,10 @@ export function SamplePreview() {
 
   return (
     <div className="relative mx-auto mt-12 w-full max-w-[15rem] lg:mx-0">
-      <div style={{ rotate: "-4deg" }}>
-        <MockPost company={firma} industry={industry} format={format} />
+      <div role="img" aria-label={`Vorschau: ${format.label} für ${firma}`}>
+        <div aria-hidden style={{ rotate: "-4deg" }}>
+          <MockPost company={firma} industry={industry} format={format} />
+        </div>
       </div>
       <p className="mt-5 text-sm text-text-3">So könnte es anfangen. Dein echtes Beispiel wird individuell gestaltet.</p>
     </div>

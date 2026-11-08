@@ -22,7 +22,7 @@ function Paragraph({ text }: { text: string }) {
     <p className="text-text-2">
       {parts.map((part, i) =>
         part.startsWith("[") ? (
-          <mark key={i} className="rounded bg-[#2a1f0c] px-1.5 py-0.5 text-[#f3d9a4]">
+          <mark key={i} className="rounded bg-[#fff1c2] px-1.5 py-0.5 text-[#5a4300] dark:bg-[#2a1f0c] dark:text-[#f3d9a4]">
             {part}
           </mark>
         ) : (

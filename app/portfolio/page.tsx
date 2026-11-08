@@ -10,7 +10,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 export const metadata: Metadata = {
   title: "Arbeiten",
-  description: "Instagram-Carousels und Beitragsserien von vybs.graphics, jeweils mit allen Slides: Beratung, IT, Ferienhaus, Webagentur.",
+  description: "Arbeiten von Vybs Graphics, Grafikdesign aus Langenhagen: Instagram-Carousels und Beitragsserien für Beratung, IT, Ferienhaus und Webagentur, jeweils mit allen Slides.",
   alternates: { canonical: "/portfolio" },
 };
 
@@ -24,7 +24,7 @@ export default function PortfolioPage() {
       >
         <nav aria-label="Projekte" className="flex flex-wrap gap-2">
           {works.map((w) => (
-            <a key={w.slug} href={`#${w.slug}`} className="inline-flex min-h-11 items-center gap-2 rounded-full bg-ink-2 px-4 text-sm font-semibold text-text-2 shadow-[inset_0_0_0_1px_var(--line-strong)] transition-colors hover:text-text">
+            <a key={w.slug} href={`#${w.slug}`} className="inline-flex min-h-11 items-center rounded-full bg-[var(--fill-gray)] px-4 text-sm font-medium text-text-2 transition-colors hover:bg-[var(--fill-gray-hover)] hover:text-text gap-2">
               <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: w.tint }} />
               {w.client}
             </a>
@@ -42,7 +42,7 @@ export default function PortfolioPage() {
                     {w.client}
                   </Reveal>
                   <Reveal as="p" delay={0.05} className="mt-3 flex flex-wrap items-center gap-2 text-sm text-text-3">
-                    <span className={`inline-flex items-center rounded-full px-3 py-1 font-semibold ${w.kind === "Kundenprojekt" ? "bg-accent/15 text-accent" : "bg-ink-3 text-text-2"}`}>{w.kind}</span>
+                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-medium ${w.kind === "Kundenprojekt" ? "bg-accent text-accent-ink" : "bg-[var(--fill-gray)] text-text-2"}`}>{w.kind}</span>
                     <span>{w.format}</span>
                   </Reveal>
                   <Reveal as="p" delay={0.1} className="measure mt-6 text-text-2">

@@ -1,140 +1,86 @@
-"use client";
-
-import { useRef } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useGsapScene } from "@/lib/gsap";
-import { featuredWorks } from "@/lib/content";
+import { works } from "@/lib/content";
 import { primaryCta } from "@/lib/site";
-import { reduceMotion, scrubFor } from "@/lib/motion";
 
 const lines = ["Professionelles", "Grafikdesign für", "dein Unternehmen."];
-const rotations = [-12, 0, 12];
-const chips = ["Kostenloses Beispiel vorab", "Festpreise ab 15 €", "Komplett digital"];
+const facts = [
+  { k: "Vorab", v: "Kostenloses Beispieldesign" },
+  { k: "Preise", v: "Fest, ab 15 € pro Design" },
+  { k: "Ablauf", v: "Komplett digital" },
+];
 
 export function Hero() {
-  const root = useRef<HTMLElement>(null);
-  const stack = useRef<HTMLDivElement>(null);
-
-  useGsapScene(root, (gsap, _ScrollTrigger, el) => {
-      if (reduceMotion()) return;
-      const scrub = scrubFor();
-      const cards = gsap.utils.toArray<HTMLElement>("[data-card]", el);
-
-      // signature moment: the stack of real work fans out while the hero scrolls away
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 1024px)", () => {
-        gsap
-          .timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub },
-          })
-          .to(cards[0], { xPercent: -46, yPercent: -22, rotate: -18 }, 0)
-          .to(cards[1], { yPercent: -36, scale: 1.06 }, 0)
-          .to(cards[2], { xPercent: 46, yPercent: -10, rotate: 18 }, 0)
-          // no opacity on the glass panel: an opacity < 1 would cut its backdrop blur off from the page
-          .to("[data-hero-copy]", { yPercent: 14 }, 0);
-
-        return;
-      });
-      mm.add("(min-width: 1024px) and (hover: hover) and (pointer: fine)", () => {
-        const st = stack.current;
-        if (!st) return;
-        const qx = gsap.quickTo(st, "rotationY", { duration: 0.8, ease: "power3.out" });
-        const qy = gsap.quickTo(st, "rotationX", { duration: 0.8, ease: "power3.out" });
-        gsap.set(st, { transformPerspective: 1200 });
-        const onMove = (e: PointerEvent) => {
-          const r = el.getBoundingClientRect();
-          qx(((e.clientX - r.left) / r.width - 0.5) * 10);
-          qy(-((e.clientY - r.top) / r.height - 0.5) * 8);
-        };
-        const onLeave = () => {
-          qx(0);
-          qy(0);
-        };
-        el.addEventListener("pointermove", onMove);
-        el.addEventListener("pointerleave", onLeave);
-        return () => {
-          el.removeEventListener("pointermove", onMove);
-          el.removeEventListener("pointerleave", onLeave);
-        };
-      });
-      mm.add("(max-width: 1023px)", () => {
-        gsap.to(cards, {
-          yPercent: (i) => -14 * (i + 1),
-          ease: "none",
-          scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub },
-        });
-      });
-  });
-
   return (
-    <section ref={root} className="relative isolate flex min-h-dvh flex-col justify-end overflow-x-clip pt-[7rem] pb-10 lg:pb-14">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="orb drift-a left-[-15%] top-[-10%] h-[42rem] w-[42rem] bg-[var(--glow)] opacity-60" />
-        <div className="orb drift-b right-[-10%] top-[10%] h-[36rem] w-[36rem] bg-accent opacity-[0.12]" />
+    <section className="pt-[5.5rem] sm:pt-[6rem]">
+      <div className="panel-wrap">
+        <div className="glass px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2.25rem,5.5vw,5rem)]">
+        <p className="eyebrow hero-fade !mb-6" style={{ "--d": "0s" } as CSSProperties}>
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+          Grafikdesign aus Langenhagen bei Hannover
+        </p>
+        <h1 className="t-display max-w-[15ch]">
+          {lines.map((line, i) => (
+            <span key={line} className="hero-line block overflow-hidden pb-[0.06em] -mb-[0.06em]">
+              <span className={`block ${i === 2 ? "text-accent" : ""}`} style={{ "--d": `${0.05 + i * 0.08}s` } as CSSProperties}>
+                {line}
+              </span>
+            </span>
+          ))}
+        </h1>
+
+        <div className="mt-10 grid gap-10 border-t border-line pt-8 lg:mt-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div className="hero-fade" style={{ "--d": "0.35s" } as CSSProperties}>
+            <p className="measure text-lg leading-relaxed text-text-2 md:text-xl">
+              Instagram-Designs, Flyer, Visitenkarten und Logos für Unternehmen, Selbstständige und lokale Betriebe.
+              Du siehst dein Design, bevor du etwas bezahlst.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link href={primaryCta.href} className="btn btn-primary btn-lg">
+                {primaryCta.label}
+              </Link>
+              <Link href="/portfolio" className="btn btn-ghost btn-lg">
+                Arbeiten ansehen
+              </Link>
+            </div>
+          </div>
+          <dl className="hero-fade grid content-start divide-y divide-line border-y border-line" style={{ "--d": "0.45s" } as CSSProperties}>
+            {facts.map((f) => (
+              <div key={f.k} className="grid grid-cols-[6.5rem_1fr] items-baseline gap-4 py-4">
+                <dt className="text-sm text-text-3">{f.k}</dt>
+                <dd className="font-medium text-text">{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        </div>
       </div>
 
-      <div className="container-x grid items-center gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-0">
-        <div data-hero-copy className="glass relative z-10 max-w-[52rem] p-6 sm:p-9 lg:p-12">
-          <h1 className="t-display leading-[0.95]">
-            {lines.map((line, i) => (
-              <span key={line} className="hero-line block overflow-hidden pb-[0.08em] -mb-[0.08em] pr-[0.12em]">
-                <span className={`block ${i === 2 ? "text-accent" : ""}`} style={{ "--d": `${0.05 + i * 0.07}s` } as React.CSSProperties}>
-                  {line}
-                </span>
-              </span>
-            ))}
-          </h1>
-          <p className="hero-fade measure mt-7 text-lg leading-relaxed text-text-2 md:text-xl" style={{ "--d": "0.3s" } as React.CSSProperties}>
-            Instagram-Designs, Flyer, Visitenkarten und Logos für Unternehmen, Selbstständige und lokale Betriebe.
-            Du siehst dein Design, bevor du etwas bezahlst.
-          </p>
-          <div className="hero-fade mt-9 flex flex-wrap items-center gap-x-7 gap-y-4" style={{ "--d": "0.38s" } as React.CSSProperties}>
-            <Link href={primaryCta.href} className="btn btn-primary btn-lg">
-              {primaryCta.label}
-            </Link>
-            <Link href="/portfolio" className="btn btn-ghost btn-lg">
-              Arbeiten ansehen
-            </Link>
-          </div>
-          <ul className="hero-fade mt-8 flex flex-wrap gap-2" style={{ "--d": "0.46s" } as React.CSSProperties}>
-            {chips.map((c) => (
-              <li key={c} className="inline-flex items-center rounded-full bg-[var(--fill-gray)] px-3.5 py-1.5 text-sm text-text-2">
-                {c}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div
-          ref={stack}
-          role="group"
-          aria-label="Drei Beispiele aus dem Portfolio: Cready Online, Eifelhaus Auszeit und Nettwerk IT"
-          className="relative mx-auto h-[min(68vw,24rem)] w-full max-w-[26rem] lg:-ml-24 lg:h-[34rem] lg:max-w-none"
-        >
-          {featuredWorks.map((w, i) => {
-            const pos = ["left-0 top-[16%] lg:top-[22%]", "left-1/2 top-[2%] -translate-x-1/2 lg:top-0", "right-0 top-[20%] lg:top-[26%]"][i];
-            return (
-              <div
-                key={w.slug}
-                className={`hero-card absolute ${pos} ${i === 1 ? "w-[44%] lg:w-[42%]" : "w-[40%]"}`}
-                style={{ zIndex: i === 1 ? 3 : 2, "--d": `${0.2 + i * 0.1}s` } as React.CSSProperties}
-              >
-                <div
-                  data-card
-                  className="overflow-hidden rounded-[1.25rem]"
-                  style={{
-                    transform: `rotate(${rotations[i]}deg)`,
-                    boxShadow: "0 40px 80px -30px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07)",
-                  }}
-                >
-                  <Image src={w.slides[0].src} alt={w.slides[0].alt} width={1080} height={1350} priority={i === 1} sizes="(min-width: 1024px) 24vw, 50vw" className="h-auto w-full" />
+      {/* the work, as a slowly running reel; stops on hover, static with reduced motion */}
+      <div className="reel mt-10 lg:mt-14" aria-label="Arbeiten von Vybs Graphics" role="region">
+        <ul className="reel-track">
+          {[...works, ...works].map((w, i) => (
+            <li key={`${w.slug}-${i}`} className="reel-item" aria-hidden={i >= works.length || undefined}>
+              <Link href={`/portfolio#${w.slug}`} tabIndex={i >= works.length ? -1 : undefined} className="group block">
+                <div className="frame relative aspect-[4/5]">
+                  <Image
+                    src={w.slides[0].src}
+                    alt={i >= works.length ? "" : w.slides[0].alt}
+                    fill
+                    priority={i < 2}
+                    sizes="(min-width: 768px) 17rem, 60vw"
+                    className="object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+                  />
                 </div>
-              </div>
-            );
-          })}
-        </div>
+                <p className="mt-3 flex items-baseline justify-between gap-3 text-sm">
+                  <span className="truncate font-medium text-text">{w.client}</span>
+                  <span className="hidden shrink-0 text-text-3 xl:inline">{w.format.split(",")[0]}</span>
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

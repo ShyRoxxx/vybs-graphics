@@ -10,13 +10,12 @@ import { FaqTeaser } from "@/components/home/faq-teaser";
 import { FinalCta } from "@/components/final-cta";
 import { site } from "@/lib/site";
 
-const jsonLd = {
-  "@context": "https://schema.org",
+const business = {
   "@type": "ProfessionalService",
   "@id": `${site.url}/#business`,
   name: site.name,
   legalName: site.legalName,
-  description: "Grafikdesign für Unternehmen, Selbstständige und lokale Betriebe: Instagram-Designs, Flyer, Visitenkarten, Logos. Feste Preise, kostenloses Beispiel vorab.",
+  description: "Grafikdesign aus Langenhagen bei Hannover für Unternehmen, Selbstständige und lokale Betriebe: Instagram-Designs, Flyer, Visitenkarten, Logos. Feste Preise, kostenloses Beispiel vorab.",
   url: site.url,
   image: `${site.url}/images/logo.png`,
   logo: `${site.url}/images/logo.png`,
@@ -33,8 +32,19 @@ const jsonLd = {
   areaServed: ["Langenhagen", "Region Hannover", "Deutschland"],
   founder: { "@type": "Person", name: site.owner },
   priceRange: "€",
-  inLanguage: "de",
+  knowsAbout: ["Grafikdesign", "Social Media Design", "Instagram-Design", "Flyer", "Visitenkarten", "Logodesign"],
 };
+
+const website = {
+  "@type": "WebSite",
+  "@id": `${site.url}/#website`,
+  url: site.url,
+  name: site.name,
+  inLanguage: "de-DE",
+  publisher: { "@id": `${site.url}/#business` },
+};
+
+const jsonLd = { "@context": "https://schema.org", "@graph": [business, website] };
 
 export default function HomePage() {
   return (

@@ -1,7 +1,6 @@
-/** Lenis already smooths the scroll; a second numeric scrub lag would trail the wheel. */
+/** A short scrub lag so scroll-linked motion feels soft with native scrolling. */
 export function scrubFor(): number | boolean {
-  if (typeof document === "undefined") return true;
-  return document.documentElement.classList.contains("lenis") ? true : 0.4;
+  return 0.4;
 }
 
 export function reduceMotion(): boolean {

@@ -12,7 +12,7 @@ import { MapPinIcon } from "@phosphor-icons/react/dist/ssr/MapPin";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: "Allgemeine Anfragen, individuelle Projekte und laufende Zusammenarbeit: So erreichst du Vybs Graphics.",
+  description: "Kontakt zu Vybs Graphics in Langenhagen: E-Mail, Telefon und Instagram für Anfragen, individuelle Projekte und laufende Zusammenarbeit.",
   alternates: { canonical: "/kontakt" },
 };
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
         <div className="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <Reveal stagger={0.1} className="space-y-4 lg:sticky lg:top-28 lg:self-start">
             <a href={`mailto:${site.email}`} className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <EnvelopeSimpleIcon size={22} aria-hidden />
               </span>
               <span className="min-w-0">
@@ -36,7 +36,7 @@ export default function ContactPage() {
               </span>
             </a>
             <a href={site.phoneHref} className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <PhoneIcon size={22} aria-hidden />
               </span>
               <span>
@@ -45,7 +45,7 @@ export default function ContactPage() {
               </span>
             </a>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="card lit group flex items-center gap-5 p-6 transition-colors duration-300 hover:bg-ink-3">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
                 <InstagramLogoIcon size={22} aria-hidden />
               </span>
               <span className="min-w-0">
@@ -55,7 +55,7 @@ export default function ContactPage() {
               </span>
             </a>
             <Link href="/kostenloses-beispiel" className="card group flex items-center gap-5 bg-accent p-6 text-accent-ink transition-transform duration-300 hover:-translate-y-0.5">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent-ink/10">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent-ink/15">
                 <SparkleIcon size={22} weight="fill" aria-hidden />
               </span>
               <span>

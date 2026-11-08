@@ -13,10 +13,10 @@ export function ServicePreview({ group }: { group: "social" | "print" | "brandin
     const b = works[2].slides[0];
     return (
       <div role="img" aria-label="Beispiele aus dem Portfolio: Instagram-Carousels für Cready Online und Nettwerk IT" className="relative mx-auto aspect-[4/5] w-[78%] max-w-[20rem]">
-        <div aria-hidden className="absolute left-[-6%] top-[8%] w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.08)]" style={{ transform: "rotate(-7deg)", aspectRatio: works[0].ratio }}>
+        <div aria-hidden className="absolute left-[-6%] top-[8%] w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(18,18,18,.22),0_0_0_1px_rgba(18,18,18,.08)]" style={{ transform: "rotate(-7deg)", aspectRatio: works[0].ratio }}>
           <Image src={a.src} alt="" fill sizes="14rem" className="object-cover" />
         </div>
-        <div aria-hidden className="absolute right-[-4%] top-0 w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(0,0,0,.9),0_0_0_1px_rgba(255,255,255,.08)]" style={{ transform: "rotate(5deg)", aspectRatio: works[2].ratio }}>
+        <div aria-hidden className="absolute right-[-4%] top-0 w-[70%] overflow-hidden rounded-[0.9rem] shadow-[0_30px_60px_-30px_rgba(18,18,18,.22),0_0_0_1px_rgba(18,18,18,.08)]" style={{ transform: "rotate(5deg)", aspectRatio: works[2].ratio }}>
           <Image src={b.src} alt="" fill sizes="14rem" className="object-cover" />
         </div>
         <div aria-hidden className="absolute bottom-[-4%] left-[18%] w-[32%] shadow-2xl" style={{ rotate: "-4deg" }}>

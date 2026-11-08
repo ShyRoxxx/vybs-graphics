@@ -166,7 +166,8 @@ function Cta({ industry, dark, compact = false }: { industry: Industry; dark: bo
         gap: "3cqw",
         padding: compact ? "2cqw 4cqw" : "2.3cqw 4.2cqw",
         borderRadius: "2.4cqw",
-        background: "var(--t)",
+        /* light slides: deepen the brand colour a little so white text stays readable (WCAG AA) */
+        background: dark ? "var(--t)" : "color-mix(in srgb, var(--t) 78%, #000)",
         color: dark ? "#0A0E14" : "#fff",
         boxShadow: "0 3cqw 6cqw -3cqw rgba(0,0,0,.45)",
       }}
@@ -176,7 +177,7 @@ function Cta({ industry, dark, compact = false }: { industry: Industry; dark: bo
           {industry.cta}
         </span>
         {!compact && (
-          <span className="block" style={{ fontSize: "2.6cqw", fontWeight: 500, opacity: 0.9, marginTop: "0.4cqw" }}>
+          <span className="block" style={{ fontSize: "2.6cqw", fontWeight: 500, marginTop: "0.4cqw" }}>
             {industry.ctaSub}
           </span>
         )}
