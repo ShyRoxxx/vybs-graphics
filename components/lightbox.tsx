@@ -31,7 +31,6 @@ export function Lightbox({ items, children }: Props) {
     if (index !== null && !dialog.open) {
       returnFocus.current = document.activeElement as HTMLElement | null;
       dialog.showModal();
-      document.documentElement.classList.add("lenis-stopped");
       document.documentElement.classList.add("scroll-lock");
     }
     if (index === null && dialog.open) {
@@ -50,7 +49,6 @@ export function Lightbox({ items, children }: Props) {
   }, [index, step]);
 
   const onClose = () => {
-    document.documentElement.classList.remove("lenis-stopped");
     document.documentElement.classList.remove("scroll-lock");
     setIndex(null);
     returnFocus.current?.focus({ preventScroll: true });
@@ -65,7 +63,6 @@ export function Lightbox({ items, children }: Props) {
         ref={dialogRef}
         onClose={onClose}
         aria-label={item ? `${item.alt} (Bild ${index! + 1} von ${items.length})` : "Bildansicht"}
-        data-lenis-prevent
         className="m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-0 backdrop:bg-ink/95"
       >
         {item && (

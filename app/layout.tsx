@@ -4,7 +4,7 @@ import { Anton, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { SmoothScroll } from "@/components/smooth-scroll";
+import { RouteRefresh } from "@/components/route-refresh";
 import { LightLayer } from "@/components/light-layer";
 import { site } from "@/lib/site";
 
@@ -27,11 +27,11 @@ const condensed = Anton({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – Grafikdesign für dein Unternehmen`,
+    default: `${site.name} – Grafikdesign aus Langenhagen für Social Media, Print & Logos`,
     template: `%s – ${site.name}`,
   },
   description:
-    "Instagram-Designs, Flyer, Visitenkarten, Logos und weitere Werbemittel. Feste Preise pro Design, kostenloses Beispieldesign vorab.",
+    "Grafikdesign aus Langenhagen bei Hannover: Instagram-Designs, Flyer, Visitenkarten und Logos für Unternehmen. Feste Preise ab 15 €, kostenloses Beispieldesign vorab.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="min-h-dvh flex flex-col">
         <div aria-hidden="true" className="color-field" />
-        <SmoothScroll />
+        <RouteRefresh />
         <LightLayer />
         <a
           href="#inhalt"

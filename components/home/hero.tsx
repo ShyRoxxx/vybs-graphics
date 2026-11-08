@@ -16,6 +16,10 @@ export function Hero() {
     <section className="pt-[5.5rem] sm:pt-[6rem]">
       <div className="panel-wrap">
         <div className="glass px-[clamp(1.25rem,4vw,3.5rem)] py-[clamp(2.25rem,5.5vw,5rem)]">
+        <p className="eyebrow hero-fade !mb-6" style={{ "--d": "0s" } as CSSProperties}>
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
+          Grafikdesign aus Langenhagen bei Hannover
+        </p>
         <h1 className="t-display max-w-[15ch]">
           {lines.map((line, i) => (
             <span key={line} className="hero-line block overflow-hidden pb-[0.06em] -mb-[0.06em]">
@@ -53,25 +57,25 @@ export function Hero() {
         </div>
       </div>
 
-      {/* contact sheet of the real work */}
-      <div className="container-x mt-10 lg:mt-14">
-        <ul aria-label="Arbeiten von Vybs Graphics" className="-mx-[var(--gutter)] flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--gutter)] pb-2 md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0">
-          {works.map((w, i) => (
-            <li key={w.slug} className="hero-card w-[64%] shrink-0 snap-start sm:w-[40%] md:w-auto" style={{ "--d": `${0.5 + i * 0.07}s` } as CSSProperties}>
-              <Link href={`/portfolio#${w.slug}`} className="group block">
+      {/* the work, as a slowly running reel; stops on hover, static with reduced motion */}
+      <div className="reel mt-10 lg:mt-14" aria-label="Arbeiten von Vybs Graphics" role="region">
+        <ul className="reel-track">
+          {[...works, ...works].map((w, i) => (
+            <li key={`${w.slug}-${i}`} className="reel-item" aria-hidden={i >= works.length || undefined}>
+              <Link href={`/portfolio#${w.slug}`} tabIndex={i >= works.length ? -1 : undefined} className="group block">
                 <div className="frame relative aspect-[4/5]">
                   <Image
                     src={w.slides[0].src}
-                    alt={w.slides[0].alt}
+                    alt={i >= works.length ? "" : w.slides[0].alt}
                     fill
                     priority={i < 2}
-                    sizes="(min-width: 768px) 18vw, 64vw"
-                    className="object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.03]"
+                    sizes="(min-width: 768px) 17rem, 60vw"
+                    className="object-cover transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
                   />
                 </div>
                 <p className="mt-3 flex items-baseline justify-between gap-3 text-sm">
-                  <span className="font-medium text-text">{w.client}</span>
-                  <span className="hidden text-text-3 xl:inline">{w.format.split(",")[0]}</span>
+                  <span className="truncate font-medium text-text">{w.client}</span>
+                  <span className="hidden shrink-0 text-text-3 xl:inline">{w.format.split(",")[0]}</span>
                 </p>
               </Link>
             </li>

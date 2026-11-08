@@ -12,7 +12,7 @@ import { MapPinIcon } from "@phosphor-icons/react/dist/ssr/MapPin";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description: "Allgemeine Anfragen, individuelle Projekte und laufende Zusammenarbeit: So erreichst du Vybs Graphics.",
+  description: "Kontakt zu Vybs Graphics in Langenhagen: E-Mail, Telefon und Instagram für Anfragen, individuelle Projekte und laufende Zusammenarbeit.",
   alternates: { canonical: "/kontakt" },
 };
 

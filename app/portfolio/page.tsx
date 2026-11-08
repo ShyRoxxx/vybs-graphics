@@ -10,7 +10,7 @@ import { CheckIcon } from "@phosphor-icons/react/dist/ssr/Check";
 
 export const metadata: Metadata = {
   title: "Arbeiten",
-  description: "Instagram-Carousels und Beitragsserien von vybs.graphics, jeweils mit allen Slides: Beratung, IT, Ferienhaus, Webagentur.",
+  description: "Arbeiten von Vybs Graphics, Grafikdesign aus Langenhagen: Instagram-Carousels und Beitragsserien für Beratung, IT, Ferienhaus und Webagentur, jeweils mit allen Slides.",
   alternates: { canonical: "/portfolio" },
 };
 

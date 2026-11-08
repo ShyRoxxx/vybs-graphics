@@ -11,7 +11,7 @@ import { Arrow } from "@/components/ui/arrow";
 
 export const metadata: Metadata = {
   title: "Leistungen & Preise",
-  description: "Social Media Design, Printdesign, Branding. Feste Preise pro Design, kostenloses Beispiel vorab.",
+  description: "Social Media Design, Flyer, Visitenkarten und Logos aus Langenhagen: feste Preise pro Design ab 15 €, kostenloses Beispiel vorab. Für Betriebe in der Region Hannover und online.",
   alternates: { canonical: "/leistungen" },
 };
 

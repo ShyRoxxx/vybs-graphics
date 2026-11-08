@@ -65,6 +65,25 @@ Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in d
 - Token-Namen (`ink`, `text`) stammen aus früheren Versionen, damit alle Komponenten weiterlaufen:
   `ink` ist der helle Grund, `text` die dunkle Schrift.
 
+### Nachtrag 08.11.2026: Header, Menü, Hero, SEO
+
+- Kein Smooth Scroll mehr: Lenis ist entfernt, die Seite scrollt nativ. `components/route-refresh.tsx` setzt
+  nach einem Seitenwechsel nach oben und aktualisiert die GSAP-Scroll-Animationen.
+- Header: Glas-Pille, die beim Scrollen schmaler und flacher wird. Auf dem Desktop gleitet eine weiße
+  Glasfläche unter dem Menüpunkt mit, über dem die Maus steht; die aktive Seite trägt einen blauen Punkt.
+  Der Button „Kostenloses Beispiel“ hat einen Pfeil, der beim Überfahren anstößt.
+- Mobilmenü: Pillen-Button mit „Menü“/„Schließen“, darunter ein Vollbild-Glasmenü mit nummerierten, großen
+  Einträgen, die nacheinander hereingleiten, einem Streifen „Aktuelle Arbeiten“ und unten dem Hauptbutton plus
+  E-Mail und Instagram. Seite dahinter ist gesperrt (`html.scroll-lock`) und `inert`, Escape schließt, der Fokus
+  springt zurück auf den Button. Auf iOS ohne Blur, dafür fast deckend.
+- Hero: Ortszeile „Grafikdesign aus Langenhagen bei Hannover“ über der Überschrift; die Arbeiten laufen darunter
+  als langsames Endlosband (`.reel`), das beim Überfahren oder Fokussieren anhält und bei reduzierter Bewegung
+  zu einer normal scrollbaren Reihe wird.
+- SEO: Titel und Beschreibungen nennen Langenhagen/Hannover, JSON-LD als `@graph` mit `ProfessionalService`
+  und `WebSite`, neues helles Open-Graph-Bild (`app/opengraph-image.tsx`). Technisch war nichts blockiert
+  (robots erlaubt alles, Sitemap mit allen Seiten, kanonische URLs auf www, apex leitet per 308 um); die Seite
+  war bei Google schlicht noch nicht eingereicht. Search Console ist seit 08.11.2026 angemeldet.
+
 ## Rechtstexte (fertig)
 
 - Impressum und Datenschutzerklärung stehen in `lib/legal.ts`, Grundlage sind die CRM-Texte (Stand 12.10.2026).
@@ -131,9 +150,9 @@ Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in d
 
 ## Technik kurz
 
-- Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind v4, `next/font` (Bricolage Grotesque,
-  Manrope, selbst gehostet), GSAP ScrollTrigger und Lenis nur bei Bedarf geladen, Motion für Mikroanimationen,
-  `prefers-reduced-motion` wird respektiert.
+- Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind v4, `next/font` (anfangs Bricolage Grotesque und Manrope,
+  selbst gehostet; heute Schibsted Grotesk und Anton), GSAP ScrollTrigger nur bei Bedarf geladen, natives
+  Scrollen ohne Smooth-Scroll-Bibliothek, `prefers-reduced-motion` wird respektiert.
 - Inhalte: `lib/content.ts` (Leistungen, Preise, Ablauf, FAQ, Portfolio), `lib/site.ts` (Firmendaten),
   `lib/legal.ts` (Rechtstexte), `DIRECTION.md` (Gestaltungsrichtung „Studio bei Nacht“).
 - Hinweis zur Git-Historie: Der erste Commit auf `main` enthält noch Hilfsordner der Entwicklungsumgebung,

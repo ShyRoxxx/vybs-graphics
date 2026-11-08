@@ -10,7 +10,7 @@ import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo"
 
 export const metadata: Metadata = {
   title: "Über mich",
-  description: "Wer hinter vybs.graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
+  description: "Phillip Franke, Grafikdesigner aus Langenhagen: wer hinter Vybs Graphics steht, wie die Arbeit abläuft und warum das erste Design kostenlos ist.",
   alternates: { canonical: "/ueber-mich" },
 };
 

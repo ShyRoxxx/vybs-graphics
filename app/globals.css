@@ -100,14 +100,6 @@ html {
   scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
 }
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-stopped,
 html.scroll-lock {
   /* lock the root scroller, not body: body would become its own scroll container and the sticky header would scroll away */
   overflow: hidden;
@@ -428,6 +420,66 @@ select.field {
   }
   .card {
     background: #ffffff;
+  }
+}
+
+/* hero reel of the real work */
+.reel {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.reel-track {
+  display: flex;
+  width: max-content;
+  gap: 0.875rem;
+  padding-inline: 0.4375rem;
+  animation: reel 55s linear infinite;
+}
+.reel:hover .reel-track,
+.reel:focus-within .reel-track {
+  animation-play-state: paused;
+}
+.reel-item {
+  width: clamp(12rem, 22vw, 17rem);
+  flex: none;
+}
+@keyframes reel {
+  to { transform: translateX(-50%); }
+}
+html.reduce-motion .reel {
+  overflow-x: auto;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+html.reduce-motion .reel-track {
+  animation: none;
+}
+
+/* mobile menu: a full-screen sheet of frosted glass behind the header pill */
+.menu-sheet {
+  background: rgb(240 244 251 / 0.86);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  animation: ui-fade 0.25s ease-out both;
+}
+.menu-item {
+  animation: menu-in 0.5s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+html.reduce-motion .menu-sheet,
+html.reduce-motion .menu-item {
+  animation: none;
+}
+@supports (-webkit-touch-callout: none) {
+  .menu-sheet {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgb(240 244 251 / 0.98);
   }
 }
 
