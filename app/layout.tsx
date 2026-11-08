@@ -45,17 +45,21 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e8edf7",
+  themeColor: "#070b12",
   width: "device-width",
   initialScale: 1,
 };
 
 const motionScript = `(function(){try{var m=window.matchMedia('(prefers-reduced-motion: reduce)');if(m.matches){document.documentElement.classList.add('reduce-motion')}document.documentElement.classList.add('js')}catch(e){}})();`;
 
+/* Dark is the default; a stored choice from the theme toggle wins. Runs before the first paint, so no flash. */
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.dataset.theme=t;var c=document.querySelector('meta[name="theme-color"]');if(c)c.setAttribute('content',t==='light'?'#e8edf7':'#070b12')}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${display.variable} ${condensed.variable}`} suppressHydrationWarning>
+    <html lang="de" data-theme="dark" className={`${display.variable} ${condensed.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script dangerouslySetInnerHTML={{ __html: motionScript }} />
       </head>
       <body className="min-h-dvh flex flex-col">

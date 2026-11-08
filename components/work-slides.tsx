@@ -41,11 +41,11 @@ export function WorkSlides({ work, priority = false }: { work: Work; priority?: 
                   className="object-cover transition-transform duration-[500ms] ease-[var(--ease-out)] group-hover:scale-[1.03]"
                 />
                 {cols > 1 && (
-                  <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-white/85 px-2.5 py-0.5 text-xs font-medium text-text">
+                  <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-ink/80 backdrop-blur-md px-2.5 py-0.5 text-xs font-medium text-text">
                     {i + 1}/{cols}
                   </span>
                 )}
-                <span className="pointer-events-none absolute bottom-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-text opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <span className="pointer-events-none absolute bottom-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-ink/80 backdrop-blur-md text-text opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <MagnifyingGlassPlusIcon size={18} aria-hidden />
                 </span>
               </button>

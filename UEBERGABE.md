@@ -45,7 +45,7 @@ Umgesetzt:
 Nicht umgesetzt (Vorschläge für später): Vorher/Nachher-Schieber mit einem echten Kundenbeispiel, Instagram-
 Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in die Arbeiten.
 
-## Design „Helles Glas“ (01.11.2026)
+## Design „Helles Glas“ (01.11.2026, heute die helle Variante)
 
 - Nur heller Modus. Hinter der ganzen Seite liegt ein festes, statisches Farbfeld (`.color-field` in
   `app/layout.tsx`): vier weiche Verläufe in den Markenfarben Eisblau, Violett, Grün und Gold auf dem hellen,
@@ -64,6 +64,18 @@ Profil-Simulation aus dem Konfigurator, GSAP-Flip-Übergang vom Hero-Stapel in d
   Flächen, auf iOS bleibt die Header-Pille ohne Blur und dafür deckender (Absicherung aus dem Scroll-Fix).
 - Token-Namen (`ink`, `text`) stammen aus früheren Versionen, damit alle Komponenten weiterlaufen:
   `ink` ist der helle Grund, `text` die dunkle Schrift.
+
+### Nachtrag 08.11.2026: Dunkel als Standard, Schalter Hell/Dunkel
+
+- Standard ist wieder das dunkle Glas aus der Live-Version vom 01.11. (Grund `#070b12`, Akzent `#5cc8ff`),
+  das helle Glas gibt es weiterhin als zweite Variante. Header, Menü, Hero-Band und SEO sind in beiden gleich.
+- Technik: `:root` enthält die dunklen Tokens, `:root[data-theme="light"]` die hellen (`app/globals.css`).
+  Alles Farbige läuft über Tokens; für Einzelfälle gibt es die Tailwind-Varianten `light:` und `dark:`
+  (z. B. Logo `light:invert`).
+- Schalter: Sonne/Mond-Knopf im Header (`components/theme-toggle.tsx`), im Handy-Menü zusätzlich „Dunkel | Hell“.
+  Die Wahl liegt im `localStorage` (`theme`) und wird von einem kleinen Inline-Skript in `app/layout.tsx`
+  vor dem ersten Bild gesetzt, also ohne Aufblitzen. Ohne gespeicherte Wahl gilt immer Dunkel, unabhängig von
+  der Systemeinstellung. Die Browserleisten-Farbe (`theme-color`) zieht mit.
 
 ### Nachtrag 08.11.2026: Header, Menü, Hero, SEO
 

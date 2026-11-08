@@ -9,7 +9,7 @@ import { MapPinIcon } from "@phosphor-icons/react/dist/ssr/MapPin";
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-[clamp(0.625rem,1.4vw,1rem)] overflow-hidden border-t border-[var(--glass-edge)] bg-[rgb(255_255_255/0.6)]">
+    <footer className="relative mt-[clamp(0.625rem,1.4vw,1rem)] overflow-hidden border-t border-[var(--glass-edge)] bg-[var(--footer-bg)]">
       <div className="container-x relative grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr] md:py-20">
         <div className="max-w-md">
           <Logo size={40} />

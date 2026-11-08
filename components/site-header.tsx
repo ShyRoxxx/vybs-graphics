@@ -10,6 +10,7 @@ import { works } from "@/lib/content";
 import { InstagramLogoIcon } from "@phosphor-icons/react/dist/ssr/InstagramLogo";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
+import { ThemeSwitch, ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -78,7 +79,7 @@ export function SiteHeader() {
       <div
         data-scrolled={scrolled || open || undefined}
         className={`site-header-bar glass mx-auto !rounded-full transition-[max-width,box-shadow] duration-500 ease-[var(--ease-out)] ${
-          scrolled && !open ? "max-w-[62rem] shadow-[0_1px_0_rgb(255_255_255/0.65)_inset,0_22px_44px_-22px_rgb(30_41_82/0.35)]" : "max-w-[76rem]"
+          scrolled && !open ? "max-w-[67rem] shadow-[var(--scrolled-shadow)]" : "max-w-[76rem]"
         }`}
       >
         <div className={`flex items-center justify-between gap-4 pl-4 pr-2 transition-[height] duration-500 ease-[var(--ease-out)] sm:pl-5 ${scrolled && !open ? "h-[3.4rem]" : "h-[3.75rem]"}`}>
@@ -88,7 +89,7 @@ export function SiteHeader() {
             <ul ref={navRef} className="relative flex items-center" onMouseLeave={() => setGlide((g) => ({ ...g, on: false }))}>
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-y-0 rounded-full bg-white/80 shadow-[0_1px_0_rgb(255_255_255/0.9)_inset,0_6px_16px_-8px_rgb(30_41_82/0.35)] transition-[transform,width,opacity] duration-300 ease-[var(--ease-out)]"
+                className="pointer-events-none absolute inset-y-0 rounded-full bg-[var(--glide)] shadow-[var(--hairline-shadow)] transition-[transform,width,opacity] duration-300 ease-[var(--ease-out)]"
                 style={{ width: glide.w, transform: `translateX(${glide.x}px)`, opacity: glide.on ? 1 : 0 }}
               />
               {nav.map((item) => {
@@ -100,7 +101,7 @@ export function SiteHeader() {
                       aria-current={active ? "page" : undefined}
                       onMouseEnter={(e) => moveGlide(e.currentTarget)}
                       onFocus={(e) => moveGlide(e.currentTarget)}
-                      className={`relative inline-flex min-h-10 items-center gap-2 rounded-full px-4 text-[0.95rem] font-medium transition-colors duration-200 hover:text-text ${
+                      className={`relative inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full px-3 text-[0.95rem] xl:px-4 font-medium transition-colors duration-200 hover:text-text ${
                         active ? "text-text" : "text-text-2"
                       }`}
                     >
@@ -114,7 +115,8 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link href={primaryCta.href} className="btn btn-primary group hidden !min-h-11 !px-5 text-[0.95rem] sm:inline-flex">
+            <ThemeToggle className={open ? "max-sm:hidden" : ""} />
+            <Link href={primaryCta.href} className="btn btn-primary group hidden !min-h-11 whitespace-nowrap !px-5 text-[0.95rem] sm:inline-flex">
               {primaryCta.short}
               <ArrowUpRightIcon size={16} weight="bold" aria-hidden className="transition-transform duration-300 ease-[var(--ease-out)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
@@ -125,7 +127,7 @@ export function SiteHeader() {
               aria-expanded={open}
               aria-controls={open ? "mobile-menu" : undefined}
               className={`relative inline-flex h-11 items-center gap-2.5 rounded-full pl-4 pr-3 text-sm font-semibold transition-colors duration-300 lg:hidden ${
-                open ? "bg-text text-white" : "bg-[var(--fill-gray)] text-text"
+                open ? "bg-text text-ink" : "bg-[var(--fill-gray)] text-text"
               }`}
             >
               <span aria-hidden>{open ? "Schließen" : "Menü"}</span>
@@ -166,7 +168,7 @@ export function SiteHeader() {
                       ref={i === 0 ? closeRef : undefined}
                       aria-current={active ? "page" : undefined}
                       onClick={() => setOpen(false)}
-                      className="group flex items-baseline gap-4 border-b border-[rgb(30_41_82/0.08)] py-3"
+                      className="group flex items-baseline gap-4 border-b border-line py-3"
                     >
                       <span className="tnum w-6 text-sm font-medium text-text-3">{String(i + 1).padStart(2, "0")}</span>
                       <span className={`display text-[clamp(2rem,9vw,2.75rem)] leading-none transition-colors ${active ? "text-accent" : "text-text group-active:text-accent"}`}>
@@ -189,6 +191,11 @@ export function SiteHeader() {
                   </Link>
                 ))}
               </div>
+            </div>
+
+            <div className="menu-item mt-8 flex items-center justify-between gap-4" style={{ "--d": "0.44s" } as CSSProperties}>
+              <p className="eyebrow !mb-0">Design</p>
+              <ThemeSwitch />
             </div>
 
             <div className="menu-item mt-auto flex flex-col gap-3 pt-8" style={{ "--d": "0.48s" } as CSSProperties}>
